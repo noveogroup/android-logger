@@ -6,7 +6,7 @@ TODO write a description
 Known Issues
 ============
 
-1. There are no description
+1. There are no known issues
 
 Developed By
 ============
