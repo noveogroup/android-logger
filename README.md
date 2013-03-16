@@ -2,6 +2,7 @@ Android Logger
 ==============
 
 TODO write a description
+TODO add an example
 
 Known Issues
 ============
