@@ -1,0 +1,14 @@
+# Eclipse
+.classpath
+.project
+.settings
+
+# IntelliJ IDEA
+.idea
+*.iml
+*.ipr
+*.iws
+
+# Maven
+target
+pom.xml.*
