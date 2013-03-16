@@ -1,13 +1,16 @@
 Android Logger
 ==============
 
-TODO write a description
+Useful logging system for Android based on standard android.util.Log class.
+Simple lightweight (< 50 Kb) implementation of SLF4J API. Easy but powerful
+configuration via properties file and some additional helpful logging methods.
+
 TODO add an example
 
 Known Issues
 ============
 
-1. There are no known issues.
+1. ...
 
 Developed By
 ============
