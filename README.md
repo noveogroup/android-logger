@@ -4,6 +4,7 @@ Android Logger
 Useful logging system for Android based on standard android.util.Log class.
 Simple lightweight (< 50 Kb) implementation of SLF4J API. Easy but powerful
 configuration via properties file and some additional helpful logging methods.
+Easy analogue of popular log4j library.
 
 TODO add an example
 
