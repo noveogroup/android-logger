@@ -51,7 +51,33 @@ configuration files.
 
 3. You need to get logger instance to print messages
 
-TODO add an example
+You can use LoggerManager to get a logger instance to print messages.
+
+    package com.example.ui;
+
+    import com.noveogroup.android.log.Logger;
+    import com.noveogroup.android.log.LoggerManager;
+
+    public class MainActivity extends Activity {
+
+      // get a logger instance by name
+      private static final Logger logger = LoggerManager.getLogger("com.example.ui.MyActivity");
+      // get a logger instance by class
+      private static final Logger logger = LoggerManager.getLogger(MainActivity.class);
+      // just to use current class
+      private static final Logger logger = LoggerManager.getLogger();
+
+      private void foo(int value) {
+        logger.i("entered MainActivity::foo value=%d", value);
+        
+        try {
+          // some code
+        } catch(IOException e) {
+          logger.e("I/O error occurred", e);
+        }
+      }
+
+    }
 
 SLF4J compatibility
 -------------------
