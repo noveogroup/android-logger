@@ -78,17 +78,17 @@ public class SimpleLogger extends AbstractLogger {
     @Override
     public boolean isEnabled(Level level) {
         return this.level != null && this.level.includes(level)
-                && level != null && _Log_.isLoggable(tag, level.intValue());
+                && level != null && Log.isLoggable(tag, level.intValue());
     }
 
     @Override
     public void print(Level level, String message, Throwable throwable) {
         if (isEnabled(level)) {
             if (throwable != null) {
-                message = message + '\n' + _Log_.getStackTraceString(throwable);
+                message = message + '\n' + Log.getStackTraceString(throwable);
             }
 
-            _Log_.println(level.intValue(), tag, message);
+            Log.println(level.intValue(), tag, message);
         }
     }
 
@@ -105,17 +105,17 @@ public class SimpleLogger extends AbstractLogger {
                 if (throwable == null) {
                     message = "";
                 } else {
-                    message = _Log_.getStackTraceString(throwable);
+                    message = Log.getStackTraceString(throwable);
                 }
             } else {
                 if (throwable == null) {
                     message = String.format(messageFormat, args);
                 } else {
-                    message = String.format(messageFormat, args) + '\n' + _Log_.getStackTraceString(throwable);
+                    message = String.format(messageFormat, args) + '\n' + Log.getStackTraceString(throwable);
                 }
             }
 
-            _Log_.println(level.intValue(), tag, message);
+            Log.println(level.intValue(), tag, message);
         }
     }
 
