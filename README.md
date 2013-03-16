@@ -6,6 +6,18 @@ Simple lightweight (< 50 Kb) implementation of SLF4J API. Easy but powerful
 configuration via properties file and some additional helpful logging methods.
 Easy analogue of popular log4j library.
 
+Getting Started
+---------------
+
+If you want to use Android Logger in your Android application you need to do
+just the following simple steps:
+
+1. Add Android Logger as a library.
+
+2. You need to configure Android Logger
+
+3. You need to get logger instance to print messages
+
 TODO add an example
 
 SLF4J compatibility
