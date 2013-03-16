@@ -16,6 +16,39 @@ just the following simple steps:
 
 2. You need to configure Android Logger
 
+Place the following android-logger.properties file to your source directory:
+
+    # Android Logger configuration example
+    
+    # By default logger will print only ERROR (and higher) messages
+    # with "MyApplication" tag
+    root=ERROR:MyApplication
+    
+    # DEBUG (and higher) messages from classes of com.example.database
+    # will be logged with "MyApplication-Database" tag
+    logger.com.example.database=DEBUG:MyApplication-Database
+    
+    # All messages from classes of com.example.ui will be logged with
+    # "MyApplication-UI" tag
+    logger.com.example.ui=MyApplication-UI
+
+The configuration manages which log tag will be used to print messages and
+which logging level filter will be applied.
+
+
+    logger.<package/classname>=<level>:<tag>
+    # or
+    logger.<package/classname>=<tag>
+
+The rest of messages will be managed by root logger:
+
+    root=<level>:<tag>
+    # or
+    root=<tag>
+
+You can use VERBOSE, DEBUG, INFO, WARN, ERROR, ASSERT as level in
+configuration files.
+
 3. You need to get logger instance to print messages
 
 TODO add an example
