@@ -11,7 +11,8 @@ TODO add an example
 SLF4J compatibility
 -------------------
 
-Android Logger is SLF4J compatible:
+Android Logger is SLF4J compatible. For example, you can write such code in
+your library:
 
     import org.slf4j.Logger;
     import org.slf4j.LoggerFactory;
@@ -31,6 +32,15 @@ Android Logger is SLF4J compatible:
       }
 
     }
+
+Suppose you compiled your library as JAR-file and publish it. After that anyone
+who uses your JAR library will be able to add any SLF4J implementation to
+change the way how the library logs messages.
+The most powerful implementation of SLF4J is [LOGBack](http://logback.qos.ch/)
+available for Android. Unfortunately, it has about 1 Mb size and it may be
+critical for some Android applications.
+Android Logger is SLF4J compatible too. So you can just add its JAR as
+a library to get all your log messages in Android LogCat.
 
 Known Issues
 ============
