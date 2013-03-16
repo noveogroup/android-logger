@@ -28,10 +28,7 @@ package com.noveogroup.android.log;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -107,6 +104,8 @@ public final class LoggerManager {
             try {
                 return new SimpleLogger(tag, Logger.Level.valueOf(levelString));
             } catch (IllegalArgumentException e) {
+                LOG.w(String.format("Cannot parse %s as logging level. Only %s are allowed",
+                        levelString, Arrays.toString(Logger.Level.values())));
                 return new SimpleLogger(loggerString, CONF_DEFAULT_LEVEL);
             }
         } else {
