@@ -8,6 +8,30 @@ Easy analogue of popular log4j library.
 
 TODO add an example
 
+SLF4J compatibility
+-------------------
+
+Android Logger is SLF4J compatible:
+
+    import org.slf4j.Logger;
+    import org.slf4j.LoggerFactory;
+
+    public class Bar {
+
+      private static final Logger logger = LoggerFactory.getLogger(Bar.class);
+
+      public void foo(int value) {
+        logger.info("entered Bar::foo value={}", value);
+
+        try {
+          // some code
+        } catch(IOException e) {
+          logger.error("I/O error occurred", e);
+        }
+      }
+
+    }
+
 Known Issues
 ============
 
