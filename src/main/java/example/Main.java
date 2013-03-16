@@ -27,9 +27,10 @@
 package example;
 
 import com.noveogroup.android.log.LoggerManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 // todo delete class _Log_
-// todo implement slf4j adapter
 public class Main {
 
     public static void main(String[] args) {
@@ -38,6 +39,9 @@ public class Main {
         LoggerManager.getLogger("fr.customer.MainActivity").i("fr.customer.MainActivity");
         LoggerManager.getLogger("unknown-tag").i("unknown-tag");
         LoggerManager.getLogger().i("simple call");
+
+        Logger logger = LoggerFactory.getLogger(Main.class);
+        logger.info("some info message from slf4j");
     }
 
 }
