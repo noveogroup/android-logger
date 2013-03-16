@@ -44,6 +44,7 @@ import java.util.regex.Pattern;
  * # package / class logger configuration
  * logger.&lt;package or class name&gt;=&lt;level&gt;:&lt;tag&gt;
  * </pre>
+ * You can use values of {@link Logger.Level} enum as level constants.
  * For example, the following configuration will
  * log all ERROR messages with tag "MyApplication" and all
  * messages from classes {@code com.example.server.*} with
