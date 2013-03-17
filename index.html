@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>android-logger by noveogroup</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>android-logger</h1>
+        <h2>Useful logger for Android based on standard android.util.Log class. Simple lightweight (&lt; 50 Kb) implementation of SLF4J API. Easy but powerful configuration via properties file and some additional helpful logging methods. Easy analogue of popular log4j library.</h2>
+        <a href="https://github.com/noveogroup/android-logger" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>Android Logger</h1>
+
+<p>Useful logger for Android based on standard android.util.Log class.
+Simple lightweight (&lt; 50 Kb) implementation of SLF4J API. Easy but powerful
+configuration via properties file and some additional helpful logging methods.
+Easy analogue of popular log4j library.</p>
+
+<h2>Getting Started</h2>
+
+<p>If you want to use Android Logger in your Android application you need to do
+just the following simple steps:</p>
+
+<ol>
+<li><p>Add Android Logger as a library.</p></li>
+<li><p>You need to configure Android Logger</p></li>
+</ol><p>Place the following android-logger.properties file to your source directory:</p>
+
+<pre><code># Android Logger configuration example
+
+# By default logger will print only ERROR (and higher) messages
+# with "MyApplication" tag
+root=ERROR:MyApplication
+
+# DEBUG (and higher) messages from classes of com.example.database
+# will be logged with "MyApplication-Database" tag
+logger.com.example.database=DEBUG:MyApplication-Database
+
+# All messages from classes of com.example.ui will be logged with
+# "MyApplication-UI" tag
+logger.com.example.ui=MyApplication-UI
+</code></pre>
+
+<p>The configuration manages which log tag will be used to print messages and
+which logging level filter will be applied.</p>
+
+<pre><code>logger.&lt;package/classname&gt;=&lt;level&gt;:&lt;tag&gt;
+# or
+logger.&lt;package/classname&gt;=&lt;tag&gt;
+</code></pre>
+
+<p>The rest of messages will be managed by root logger:</p>
+
+<pre><code>root=&lt;level&gt;:&lt;tag&gt;
+# or
+root=&lt;tag&gt;
+</code></pre>
+
+<p>You can use VERBOSE, DEBUG, INFO, WARN, ERROR, ASSERT as level in
+configuration files.</p>
+
+<ol>
+<li>You need to get logger instance to print messages</li>
+</ol><p>You can use LoggerManager to get a logger instance to print messages.</p>
+
+<pre><code>package com.example.ui;
+
+import com.noveogroup.android.log.Logger;
+import com.noveogroup.android.log.LoggerManager;
+
+public class MainActivity extends Activity {
+
+  // get a logger instance by name
+  private static final Logger logger = LoggerManager.getLogger("com.example.ui.MyActivity");
+  // get a logger instance by class
+  private static final Logger logger = LoggerManager.getLogger(MainActivity.class);
+  // just to use current class
+  private static final Logger logger = LoggerManager.getLogger();
+
+  private void foo(int value) {
+    logger.i("entered MainActivity::foo value=%d", value);
+
+    try {
+      // some code
+    } catch(IOException e) {
+      logger.e("I/O error occurred", e);
+    }
+  }
+
+}
+</code></pre>
+
+<h2>SLF4J compatibility</h2>
+
+<p>Android Logger is SLF4J compatible. For example, you can write such code in
+your library:</p>
+
+<pre><code>import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class Bar {
+
+  private static final Logger logger = LoggerFactory.getLogger(Bar.class);
+
+  public void foo(int value) {
+    logger.info("entered Bar::foo value={}", value);
+
+    try {
+      // some code
+    } catch(IOException e) {
+      logger.error("I/O error occurred", e);
+    }
+  }
+
+}
+</code></pre>
+
+<p>Suppose you compiled your library as JAR-file and publish it. After that anyone
+who uses your JAR library will be able to add any SLF4J implementation to
+change the way how the library logs messages.
+The most powerful implementation of SLF4J is <a href="http://logback.qos.ch/">LOGBack</a>
+available for Android. Unfortunately, it has about 1 Mb size and it may be
+critical for some Android applications.
+Android Logger is SLF4J compatible too. So you can just add its JAR as
+a library to get all your log messages in Android LogCat.</p>
+
+<h1>Known Issues</h1>
+
+<ol>
+<li>...</li>
+</ol><h1>Developed By</h1>
+
+<ul>
+<li><a href="http://noveogroup.com/">Noveo Group</a></li>
+<li>Pavel Stepanov - <a href="mailto:pstepanov@noveogroup.com">pstepanov@noveogroup.com</a>
+</li>
+</ul><h1>License</h1>
+
+<pre><code>Copyright (c) 2013 Noveo Group
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+Except as contained in this notice, the name(s) of the above copyright holders
+shall not be used in advertising or otherwise to promote the sale, use or
+other dealings in this Software without prior written authorization.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+</code></pre>
+
+<h3>Welcome to GitHub Pages.</h3>
+
+<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+
+<pre><code>$ cd your_repo_root/repo_name
+$ git fetch origin
+$ git checkout gh-pages
+</code></pre>
+
+<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+
+<h3>Designer Templates</h3>
+
+<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+
+<h3>Rather Drive Stick?</h3>
+
+<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+
+<h3>Authors and Contributors</h3>
+
+<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+
+<h3>Support or Contact</h3>
+
+<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/noveogroup/android-logger/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/noveogroup/android-logger/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/noveogroup/android-logger"></a> is maintained by <a href="https://github.com/noveogroup">noveogroup</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
