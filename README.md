@@ -9,8 +9,8 @@ Easy analogue of popular log4j library.
 Downloads
 ---------
 
- - [android-logger-1.1.0.jar](https://github.com/noveogroup/android-logger/blob/gh-downloads/android-logger-1.1.0.jar?raw=true)
- - [android-logger-1.1.0-sources.jar](https://github.com/noveogroup/android-logger/blob/gh-downloads/android-logger-1.1.0-sources.jar?raw=true)
+ - [android-logger-1.2.0.jar](https://github.com/noveogroup/android-logger/blob/gh-downloads/android-logger-1.2.0.jar?raw=true)
+ - [android-logger-1.2.0-sources.jar](https://github.com/noveogroup/android-logger/blob/gh-downloads/android-logger-1.2.0-sources.jar?raw=true)
 
 [Previous versions](https://github.com/noveogroup/android-logger/tree/gh-downloads)
 
@@ -87,11 +87,12 @@ You can use LoggerManager to get a logger instance to print messages.
 
     }
 
- - You can use LoggerManager.LOG to get a root logger.
+ - You can use LOG to make logging calls shorter.
 
-You can use static import to make logging calls shorter:
+Any call like LOG.someMethod() is equal to LoggerManager.getLogger().someMethod().
+So, there will be some additional overhead to get a logger each time.
 
-    import static com.noveogroup.android.log.LoggerManager.LOG;
+    import static com.noveogroup.android.log.LOG;
 
     public class Bar {
 
