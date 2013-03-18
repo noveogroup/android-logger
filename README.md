@@ -12,22 +12,6 @@ Getting Started
 If you want to use Android Logger in your Android application you need to do
 just the following simple steps:
 
- - You can use LoggerManager.LOG for debugging purposes.
-
-For example:
-
-    import static com.noveogroup.android.log.LoggerManager.LOG;
-
-    public class Bar {
-
-      public void foo() {
-        // debugging messages are not managed by configuration
-        // they will be printed with tag "XXX" without any filtering
-        LOG.i("debugging message");
-      }
-
-    }
-
  - Add Android Logger as a library.
 
  - You need to configure Android Logger
@@ -91,6 +75,22 @@ You can use LoggerManager to get a logger instance to print messages.
         } catch(IOException e) {
           logger.e("I/O error occurred", e);
         }
+      }
+
+    }
+
+ - You can use LoggerManager.LOG for debugging purposes.
+
+For example:
+
+    import static com.noveogroup.android.log.LoggerManager.LOG;
+
+    public class Bar {
+
+      public void foo() {
+        // debugging messages are not managed by configuration
+        // they will be printed with tag "XXX" without any filtering
+        LOG.i("debugging message");
       }
 
     }
