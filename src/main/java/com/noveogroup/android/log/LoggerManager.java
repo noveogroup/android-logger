@@ -61,21 +61,21 @@ public final class LoggerManager {
         throw new UnsupportedOperationException();
     }
 
-    private static final String TAG = "XXX";
+    private static final Logger DEFAULT_LOGGER = new SimpleLogger("XXX", Logger.Level.VERBOSE);
 
     /**
-     * Debug logger that not managed by configuration.
+     * Root logger.
      * <p/>
      * It is recommended to use this logger for debugging purposes only.
      * It is useful to add static import to make logging calls shorter.
      */
-    public static final Logger LOG = new SimpleLogger(TAG, Logger.Level.VERBOSE);
+    public static final Logger LOG = getLogger((String) null);
 
     private static final String PROPERTIES_NAME = "android-logger.properties";
     private static final String CONF_ROOT = "root";
     private static final String CONF_LOGGER = "logger.";
     private static final Pattern CONF_LOGGER_REGEX = Pattern.compile("(.*?):(.*)");
-    private static final Logger.Level CONF_DEFAULT_LEVEL = Logger.Level.INFO;
+    private static final Logger.Level CONF_DEFAULT_LEVEL = Logger.Level.VERBOSE;
     private static final Map<String, Logger> loggerMap;
 
     private static void loadProperties(Properties properties) throws IOException {
@@ -105,7 +105,7 @@ public final class LoggerManager {
             try {
                 return new SimpleLogger(tag, Logger.Level.valueOf(levelString));
             } catch (IllegalArgumentException e) {
-                LOG.w(String.format("Cannot parse %s as logging level. Only %s are allowed",
+                DEFAULT_LOGGER.w(String.format("Cannot parse %s as logging level. Only %s are allowed",
                         levelString, Arrays.toString(Logger.Level.values())));
                 return new SimpleLogger(loggerString, CONF_DEFAULT_LEVEL);
             }
@@ -121,14 +121,14 @@ public final class LoggerManager {
         try {
             loadProperties(properties);
         } catch (IOException e) {
-            LOG.e(String.format("Cannot configure logger from %s. Default configuration will be used", PROPERTIES_NAME), e);
-            loggerMap.put(null, LOG);
+            DEFAULT_LOGGER.e(String.format("Cannot configure logger from %s. Default configuration will be used", PROPERTIES_NAME), e);
+            loggerMap.put(null, DEFAULT_LOGGER);
             return loggerMap;
         }
 
         if (properties.stringPropertyNames().isEmpty()) {
-            LOG.e("Logger configuration file is empty. Default configuration will be used");
-            loggerMap.put(null, LOG);
+            DEFAULT_LOGGER.e("Logger configuration file is empty. Default configuration will be used");
+            loggerMap.put(null, DEFAULT_LOGGER);
             return loggerMap;
         }
 
