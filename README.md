@@ -6,6 +6,14 @@ Simple lightweight (< 50 Kb) implementation of SLF4J API. Easy but powerful
 configuration via properties file and some additional helpful logging methods.
 Easy analogue of popular log4j library.
 
+Downloads
+---------
+
+ - [android-logger-1.0.0.jar](https://github.com/noveogroup/android-logger/blob/gh-downloads/android-logger-1.0.0.jar?raw=true)
+ - [android-logger-1.0.0-sources.jar](https://github.com/noveogroup/android-logger/blob/gh-downloads/android-logger-1.0.0-sources.jar?raw=true)
+
+[Previous versions](https://github.com/noveogroup/android-logger/tree/gh-downloads)
+
 Getting Started
 ---------------
 
