@@ -63,14 +63,6 @@ public final class LoggerManager {
 
     private static final Logger DEFAULT_LOGGER = new SimpleLogger("XXX", Logger.Level.VERBOSE);
 
-    /**
-     * Root logger.
-     * <p/>
-     * It is recommended to use this logger for debugging purposes only.
-     * It is useful to add static import to make logging calls shorter.
-     */
-    public static final Logger LOG = getLogger((String) null);
-
     private static final String PROPERTIES_NAME = "android-logger.properties";
     private static final String CONF_ROOT = "root";
     private static final String CONF_LOGGER = "logger.";
@@ -198,12 +190,13 @@ public final class LoggerManager {
      */
     public static Logger getLogger() {
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-        if (stackTrace.length < 3) {
-            throw new RuntimeException("unexpected stack trace");
-        } else {
-            StackTraceElement stackTraceElement = stackTrace[2];
-            return findLogger(stackTraceElement.getClassName());
+        for (int i = 1; i < stackTrace.length; i++) {
+            StackTraceElement stackTraceElement = stackTrace[i];
+            if (!stackTraceElement.getClassName().startsWith("com.noveogroup.android.log")) {
+                return findLogger(stackTraceElement.getClassName());
+            }
         }
+        return findLogger(null);
     }
 
 }
