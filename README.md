@@ -24,7 +24,7 @@ just the following simple steps:
 
  - You need to configure Android Logger
 
-Place the following android-logger.properties file to your source directory:
+Place the following android-logger.properties file to your source directory (src/android-logger.properties):
 
     # Android Logger configuration example
     
