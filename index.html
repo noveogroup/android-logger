@@ -35,15 +35,22 @@ Simple lightweight (&lt; 50 Kb) implementation of SLF4J API. Easy but powerful
 configuration via properties file and some additional helpful logging methods.
 Easy analogue of popular log4j library.</p>
 
+<h2>Downloads</h2>
+
+<ul>
+<li><a href="https://github.com/noveogroup/android-logger/blob/gh-downloads/android-logger-1.2.0.jar?raw=true">android-logger-1.2.0.jar</a></li>
+<li><a href="https://github.com/noveogroup/android-logger/blob/gh-downloads/android-logger-1.2.0-sources.jar?raw=true">android-logger-1.2.0-sources.jar</a></li>
+</ul><p><a href="https://github.com/noveogroup/android-logger/tree/gh-downloads">Previous versions</a></p>
+
 <h2>Getting Started</h2>
 
 <p>If you want to use Android Logger in your Android application you need to do
 just the following simple steps:</p>
 
-<ol>
+<ul>
 <li><p>Add Android Logger as a library.</p></li>
 <li><p>You need to configure Android Logger</p></li>
-</ol><p>Place the following android-logger.properties file to your source directory:</p>
+</ul><p>Place the following android-logger.properties file to your source directory (src/android-logger.properties):</p>
 
 <pre><code># Android Logger configuration example
 
@@ -78,9 +85,9 @@ root=&lt;tag&gt;
 <p>You can use VERBOSE, DEBUG, INFO, WARN, ERROR, ASSERT as level in
 configuration files.</p>
 
-<ol>
+<ul>
 <li>You need to get logger instance to print messages</li>
-</ol><p>You can use LoggerManager to get a logger instance to print messages.</p>
+</ul><p>You can use LoggerManager to get a logger instance to print messages.</p>
 
 <pre><code>package com.example.ui;
 
@@ -104,6 +111,22 @@ public class MainActivity extends Activity {
     } catch(IOException e) {
       logger.e("I/O error occurred", e);
     }
+  }
+
+}
+</code></pre>
+
+<ul>
+<li>You can use LOG to make logging calls shorter.</li>
+</ul><p>Any call like LOG.someMethod() is equal to LoggerManager.getLogger().someMethod().
+So, there will be some additional overhead to get a logger each time.</p>
+
+<pre><code>import static com.noveogroup.android.log.LOG;
+
+public class Bar {
+
+  public void foo() {
+    LOG.i("some log message");
   }
 
 }
