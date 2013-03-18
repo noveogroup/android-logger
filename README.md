@@ -87,22 +87,6 @@ You can use LoggerManager to get a logger instance to print messages.
 
     }
 
- - You can use LoggerManager.LOG for debugging purposes.
-
-For example:
-
-    import static com.noveogroup.android.log.LoggerManager.LOG;
-
-    public class Bar {
-
-      public void foo() {
-        // debugging messages are not managed by configuration
-        // they will be printed with tag "XXX" without any filtering
-        LOG.i("debugging message");
-      }
-
-    }
-
 SLF4J compatibility
 -------------------
 
