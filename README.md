@@ -15,6 +15,16 @@ Downloads
 
 [Previous versions](https://github.com/noveogroup/android-logger/tree/gh-downloads)
 
+Maven Dependency
+----------------
+
+    <dependency>
+        <groupId>com.noveogroup.android</groupId>
+        <artifactId>android-logger</artifactId>
+        <version>1.2.1</version>
+    </dependency>
+
+
 Getting Started
 ---------------
 
