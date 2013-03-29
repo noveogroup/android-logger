@@ -77,8 +77,7 @@ public class SimpleLogger extends AbstractLogger {
 
     @Override
     public boolean isEnabled(Level level) {
-        return this.level != null && this.level.includes(level)
-                && level != null && Log.isLoggable(tag, level.intValue());
+        return this.level != null && level != null && this.level.includes(level);
     }
 
     @Override
