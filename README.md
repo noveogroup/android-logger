@@ -11,6 +11,7 @@ Downloads
 
  - [android-logger-1.2.1.jar](https://github.com/noveogroup/android-logger/blob/gh-downloads/android-logger-1.2.1.jar?raw=true)
  - [android-logger-1.2.1-sources.jar](https://github.com/noveogroup/android-logger/blob/gh-downloads/android-logger-1.2.1-sources.jar?raw=true)
+ - [android-logger-1.2.1-javadoc.jar](https://github.com/noveogroup/android-logger/blob/gh-downloads/android-logger-1.2.1-javadoc.jar?raw=true)
 
 [Previous versions](https://github.com/noveogroup/android-logger/tree/gh-downloads)
 
