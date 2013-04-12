@@ -38,8 +38,8 @@ import android.util.Log;
  * printed using this logger.
  * <p/>
  * <b>Attention</b>: Android may set its own requirement for logging level
- * using {@link Log#isLoggable(String, int)} method. This logger takes it
- * into account in {@link #isEnabled(Level)}.
+ * using {@link Log#isLoggable(String, int)} method. This logger doesn't take
+ * it into account in {@link #isEnabled(Level)}.
  */
 public class SimpleLogger extends AbstractLogger {
 
