@@ -109,6 +109,7 @@ public final class LoggerManager {
     private static Map<String, Logger> loadConfiguration() {
         Map<String, Logger> loggerMap = new HashMap<String, Logger>();
 
+        // read properties file
         Properties properties = new Properties();
         try {
             loadProperties(properties);
@@ -118,12 +119,14 @@ public final class LoggerManager {
             return loggerMap;
         }
 
+        // something is wrong if property file is empty
         if (properties.stringPropertyNames().isEmpty()) {
             DEFAULT_LOGGER.e("Logger configuration file is empty. Default configuration will be used");
             loggerMap.put(null, DEFAULT_LOGGER);
             return loggerMap;
         }
 
+        // parse properties to logger map
         for (String propertyName : properties.stringPropertyNames()) {
             String propertyValue = properties.getProperty(propertyName);
 
