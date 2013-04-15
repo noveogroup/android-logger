@@ -139,6 +139,12 @@ public final class LoggerManager {
                 DEFAULT_LOGGER.e(String.format("unknown key %s in %s file", propertyName, PROPERTIES_NAME));
             }
         }
+
+        // logger map should have root logger (corresponding to "null" key)
+        if (!loggerMap.containsKey(null)) {
+            loggerMap.put(null, DEFAULT_LOGGER);
+        }
+
         return loggerMap;
     }
 
@@ -159,7 +165,7 @@ public final class LoggerManager {
             }
         }
         Logger logger = loggerMap.get(currentKey);
-        return logger != null ? logger : new SimpleLogger("", Logger.Level.VERBOSE);
+        return logger != null ? logger : DEFAULT_LOGGER;
     }
 
     /**
