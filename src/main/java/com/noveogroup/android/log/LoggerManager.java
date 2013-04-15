@@ -132,10 +132,11 @@ public final class LoggerManager {
 
             if (propertyName.equals(CONF_ROOT)) {
                 loggerMap.put(null, decodeLogger(propertyValue));
-            }
-            if (propertyName.startsWith(CONF_LOGGER)) {
+            } else if (propertyName.startsWith(CONF_LOGGER)) {
                 String loggerName = propertyName.substring(CONF_LOGGER.length());
                 loggerMap.put(loggerName, decodeLogger(propertyValue));
+            } else {
+                DEFAULT_LOGGER.e(String.format("unknown key %s in %s file", propertyName, PROPERTIES_NAME));
             }
         }
         return loggerMap;
