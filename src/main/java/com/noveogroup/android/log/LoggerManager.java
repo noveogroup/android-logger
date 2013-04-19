@@ -63,6 +63,8 @@ public final class LoggerManager {
 
     private static final Logger DEFAULT_LOGGER = new SimpleLogger("XXX", Logger.Level.VERBOSE);
 
+    private static final int MAX_LOG_TAG_LENGTH = 23;
+
     private static final String PROPERTIES_NAME = "android-logger.properties";
     private static final String CONF_ROOT = "root";
     private static final String CONF_LOGGER = "logger.";
@@ -94,6 +96,11 @@ public final class LoggerManager {
         if (matcher.matches()) {
             String levelString = matcher.group(1);
             String tag = matcher.group(2);
+            if (tag.length() > 23) {
+                String trimmedTag = tag.substring(0, MAX_LOG_TAG_LENGTH);
+                DEFAULT_LOGGER.w(String.format("Android doesn't supports tags %d characters longer. Tag %s will be trimmed to %s", MAX_LOG_TAG_LENGTH, tag, trimmedTag));
+                tag = trimmedTag;
+            }
             try {
                 return new SimpleLogger(tag, Logger.Level.valueOf(levelString));
             } catch (IllegalArgumentException e) {
