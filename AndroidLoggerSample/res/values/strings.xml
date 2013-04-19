@@ -4,4 +4,7 @@
 
     <string name="application_name">Android Logger Sample</string>
 
+    <string name="sample_simple">Simple logging</string>
+    <string name="sample_download">Downloading</string>
+
 </resources>

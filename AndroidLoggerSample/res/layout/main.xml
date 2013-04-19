@@ -6,4 +6,18 @@
         android:layout_height="fill_parent"
         android:orientation="vertical">
 
+    <Button
+            android:id="@+id/sample_simple"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sample_simple"
+            android:onClick="onSampleSimple"/>
+
+    <Button
+            android:id="@+id/sample_download"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sample_download"
+            android:onClick="onSampleDownload"/>
+
 </LinearLayout>
