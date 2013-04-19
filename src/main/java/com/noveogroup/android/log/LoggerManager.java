@@ -120,14 +120,15 @@ public final class LoggerManager {
         }
 
         // something is wrong if property file is empty
-        if (properties.stringPropertyNames().isEmpty()) {
+        if (!properties.propertyNames().hasMoreElements()) {
             DEFAULT_LOGGER.e("Logger configuration file is empty. Default configuration will be used");
             loggerMap.put(null, DEFAULT_LOGGER);
             return loggerMap;
         }
 
         // parse properties to logger map
-        for (String propertyName : properties.stringPropertyNames()) {
+        for (Enumeration<?> names = properties.propertyNames(); names.hasMoreElements(); ) {
+            String propertyName = (String) names.nextElement();
             String propertyValue = properties.getProperty(propertyName);
 
             if (propertyName.equals(CONF_ROOT)) {
