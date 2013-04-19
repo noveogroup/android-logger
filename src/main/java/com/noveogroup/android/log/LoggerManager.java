@@ -98,13 +98,13 @@ public final class LoggerManager {
             String tag = matcher.group(2);
             if (tag.length() > 23) {
                 String trimmedTag = tag.substring(0, MAX_LOG_TAG_LENGTH);
-                DEFAULT_LOGGER.w(String.format("Android doesn't supports tags %d characters longer. Tag %s will be trimmed to %s", MAX_LOG_TAG_LENGTH, tag, trimmedTag));
+                DEFAULT_LOGGER.w(String.format("Android doesn't supports tags %d characters longer. Tag '%s' will be trimmed to '%s'", MAX_LOG_TAG_LENGTH, tag, trimmedTag));
                 tag = trimmedTag;
             }
             try {
                 return new SimpleLogger(tag, Logger.Level.valueOf(levelString));
             } catch (IllegalArgumentException e) {
-                DEFAULT_LOGGER.w(String.format("Cannot parse %s as logging level. Only %s are allowed",
+                DEFAULT_LOGGER.w(String.format("Cannot parse '%s' as logging level. Only %s are allowed",
                         levelString, Arrays.toString(Logger.Level.values())));
                 return new SimpleLogger(loggerString, CONF_DEFAULT_LEVEL);
             }
@@ -121,7 +121,7 @@ public final class LoggerManager {
         try {
             loadProperties(properties);
         } catch (IOException e) {
-            DEFAULT_LOGGER.e(String.format("Cannot configure logger from %s. Default configuration will be used", PROPERTIES_NAME), e);
+            DEFAULT_LOGGER.e(String.format("Cannot configure logger from '%s'. Default configuration will be used", PROPERTIES_NAME), e);
             loggerMap.put(null, DEFAULT_LOGGER);
             return loggerMap;
         }
@@ -144,7 +144,7 @@ public final class LoggerManager {
                 String loggerName = propertyName.substring(CONF_LOGGER.length());
                 loggerMap.put(loggerName, decodeLogger(propertyValue));
             } else {
-                DEFAULT_LOGGER.e(String.format("unknown key %s in %s file", propertyName, PROPERTIES_NAME));
+                DEFAULT_LOGGER.e(String.format("unknown key '%s' in '%s' file", propertyName, PROPERTIES_NAME));
             }
         }
 
