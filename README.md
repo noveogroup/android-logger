@@ -8,7 +8,7 @@ Easy analogue of popular log4j library.
 
 __Android SDK Version__: API 7 [ Android 2.1 ]
 
-__Code Samples__: [[here]](https://github.com/noveogroup/android-logger/tree/gh-downloads)
+__Code Samples__: [[here]](https://github.com/noveogroup/android-logger/tree/sample)
 
 Downloads
 ---------
