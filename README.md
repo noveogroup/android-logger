@@ -6,6 +6,8 @@ Simple lightweight (< 50 Kb) implementation of SLF4J API. Easy but powerful
 configuration via properties file and some additional helpful logging methods.
 Easy analogue of popular log4j library.
 
+__Android SDK Version__: API 7 [ Android 2.1 ]
+
 Downloads
 ---------
 
