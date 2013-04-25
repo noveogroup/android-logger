@@ -6,27 +6,39 @@ final class Utils {
         throw new UnsupportedOperationException();
     }
 
-    private static final String LIBRARY_PACKAGE = "com.noveogroup.android.log";
+    /**
+     * Returns caller's {@link StackTraceElement}.
+     *
+     * @param aClass a class used as starting point to find a caller.
+     * @return the caller stack trace element.
+     */
+    public static StackTraceElement getCaller(Class<?> aClass) {
+        String className = aClass.getName();
+
+        boolean packageFound = false;
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        for (StackTraceElement stackTraceElement : stackTrace) {
+            if (!packageFound) {
+                if (stackTraceElement.getClassName().equals(className)) {
+                    packageFound = true;
+                }
+            } else {
+                if (!stackTraceElement.getClassName().equals(className)) {
+                    return stackTraceElement;
+                }
+            }
+        }
+        return stackTrace[stackTrace.length - 1];
+    }
 
     /**
      * Returns caller's class name.
      *
+     * @param aClass a class used as starting point to find a caller.
      * @return the class name of a caller.
      */
-    public static String getCallerClassName() {
-        boolean packageFound = false;
-        for (StackTraceElement stackTraceElement : Thread.currentThread().getStackTrace()) {
-            if (!packageFound) {
-                if (stackTraceElement.getClassName().startsWith(LIBRARY_PACKAGE)) {
-                    packageFound = true;
-                }
-            } else {
-                if (!stackTraceElement.getClassName().startsWith(LIBRARY_PACKAGE)) {
-                    return stackTraceElement.getClassName();
-                }
-            }
-        }
-        return null;
+    public static String getCallerClassName(Class<?> aClass) {
+        return getCaller(aClass).getClassName();
     }
 
     /**
