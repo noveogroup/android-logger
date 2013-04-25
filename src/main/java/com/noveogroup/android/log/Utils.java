@@ -13,7 +13,7 @@ final class Utils {
      *
      * @return the class name of a caller.
      */
-    static String getCallerClassName() {
+    public static String getCallerClassName() {
         boolean packageFound = false;
         for (StackTraceElement stackTraceElement : Thread.currentThread().getStackTrace()) {
             if (!packageFound) {
@@ -27,6 +27,46 @@ final class Utils {
             }
         }
         return null;
+    }
+
+    /**
+     * Shortens class name till the specified length.
+     * <p/>
+     * Note that only packages can be shortened so this method returns at least simple class name.
+     *
+     * @param className the class name.
+     * @param maxLength the desired maximum length of result.
+     * @return the shortened class name.
+     */
+    public static String shortenClassName(String className, int maxLength) {
+        if (className == null) return null;
+        if (maxLength > className.length()) return className;
+
+        StringBuilder builder = new StringBuilder();
+        for (int index = className.length() - 1; index > 0; ) {
+            int i = className.lastIndexOf('.', index);
+
+            if (i == -1) {
+                if (builder.length() > 0
+                        && builder.length() + index + 1 > maxLength) {
+                    builder.insert(0, '*');
+                    break;
+                }
+
+                builder.insert(0, className.substring(0, index + 1));
+            } else {
+                if (builder.length() > 0
+                        && builder.length() + (index + 1 - i) + 1 > maxLength) {
+                    builder.insert(0, '*');
+                    break;
+                }
+
+                builder.insert(0, className.substring(i, index + 1));
+            }
+
+            index = i - 1;
+        }
+        return builder.toString();
     }
 
 }
