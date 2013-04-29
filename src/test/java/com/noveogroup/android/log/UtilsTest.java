@@ -9,7 +9,6 @@ public class UtilsTest {
     public void getCallerTest() {
         Assert.assertEquals("com.noveogroup.android.log.UtilsTest.getCallerTest(UtilsTest.java:10)",
                 Utils.getCaller(Utils.class).toString());
-        System.out.println("com.noveogroup.android.log.UtilsTest.getCallerTest(UtilsTest.java:10)");
     }
 
     @Test
