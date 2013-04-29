@@ -9,6 +9,7 @@ public class UtilsTest {
     public void getCallerTest() {
         Assert.assertEquals("com.noveogroup.android.log.UtilsTest.getCallerTest(UtilsTest.java:10)",
                 Utils.getCaller(Utils.class).toString());
+        System.out.println("com.noveogroup.android.log.UtilsTest.getCallerTest(UtilsTest.java:10)");
     }
 
     @Test
@@ -38,6 +39,11 @@ public class UtilsTest {
         Assert.assertEquals("*...Logger", Utils.shortenClassName(loggerName, 10));
         Assert.assertEquals("com...Logger", Utils.shortenClassName(loggerName, 12));
         Assert.assertEquals("com...Logger", Utils.shortenClassName(loggerName, Integer.MAX_VALUE));
+    }
+
+    @Test
+    public void formatTest() {
+        System.out.println(Utils.format("asdasd %% asdasd %nasd %C %M %L", Utils.class, "logger", "tag", Logger.Level.INFO, "message", new Throwable()));
     }
 
 }
