@@ -1,3 +1,25 @@
+The main ideas of this library was integrated into LOGBack logger.
+The result is available at https://github.com/noveogroup/logback-android.
+Use ch.qos.logback.classic.android.Log class:
+
+    package com.example.ui;
+
+    import ch.qos.logback.classic.android.Log;
+
+    public class MainActivity extends Activity {
+
+      private void foo(int value) {
+        Log.i("entered MainActivity::foo value=%d", value);
+        
+        try {
+          // some code
+        } catch(IOException e) {
+          Log.e("I/O error occurred", e);
+        }
+      }
+
+    }
+
 Android Logger
 ==============
 
