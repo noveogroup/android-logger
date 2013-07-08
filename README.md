@@ -1,5 +1,7 @@
 The main ideas of this library was integrated into LOGBack logger.
 The result is available at https://github.com/noveogroup/logback-android.
+You can download JAR file here: [logback-android-1.0.10-3-SNAPSHOT-android-logger.jar](https://github.com/noveogroup/android-logger/blob/gh-downloads/logback-android-1.0.10-3-SNAPSHOT-android-logger.jar?raw=true)
+
 Use ch.qos.logback.classic.android.Log class:
 
     package com.example.ui;
