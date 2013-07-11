@@ -28,6 +28,10 @@ Maven Dependency
         <version>1.2.1</version>
     </dependency>
 
+Gradle Dependency
+-----------------
+
+    'com.noveogroup.android:android-logger:1.2.1'
 
 Getting Started
 ---------------
