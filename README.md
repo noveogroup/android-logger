@@ -152,7 +152,7 @@ Android Logger is SLF4J compatible too. So you can just add its JAR as
 a library to get all your log messages in Android LogCat.
 
 LOGBack
-=======
+-------
 
 The main ideas of this library was integrated into LOGBack logger.
 The result is available at https://github.com/noveogroup/logback-android.
