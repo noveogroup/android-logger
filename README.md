@@ -1,27 +1,3 @@
-The main ideas of this library was integrated into LOGBack logger.
-The result is available at https://github.com/noveogroup/logback-android.
-You can download JAR file here: [logback-android-1.0.10-3-SNAPSHOT-android-logger.jar](https://github.com/noveogroup/android-logger/blob/gh-downloads/logback-android-1.0.10-3-SNAPSHOT-android-logger.jar?raw=true)
-
-Use ch.qos.logback.classic.android.Log class:
-
-    package com.example.ui;
-
-    import ch.qos.logback.classic.android.Log;
-
-    public class MainActivity extends Activity {
-
-      private void foo(int value) {
-        Log.i("entered MainActivity::foo value=%d", value);
-        
-        try {
-          // some code
-        } catch(IOException e) {
-          Log.e("I/O error occurred", e);
-        }
-      }
-
-    }
-
 Android Logger
 ==============
 
@@ -174,6 +150,33 @@ available for Android. Unfortunately, it has about 1 Mb size and it may be
 critical for some Android applications.
 Android Logger is SLF4J compatible too. So you can just add its JAR as
 a library to get all your log messages in Android LogCat.
+
+LOGBack
+=======
+
+The main ideas of this library was integrated into LOGBack logger.
+The result is available at https://github.com/noveogroup/logback-android.
+You can download JAR file here: [logback-android-1.0.10-3-SNAPSHOT-android-logger.jar](https://github.com/noveogroup/android-logger/blob/gh-downloads/logback-android-1.0.10-3-SNAPSHOT-android-logger.jar?raw=true)
+
+Use ch.qos.logback.classic.android.Log class:
+
+    package com.example.ui;
+
+    import ch.qos.logback.classic.android.Log;
+
+    public class MainActivity extends Activity {
+
+      private void foo(int value) {
+        Log.i("entered MainActivity::foo value=%d", value);
+        
+        try {
+          // some code
+        } catch(IOException e) {
+          Log.e("I/O error occurred", e);
+        }
+      }
+
+    }
 
 Known Issues
 ============
