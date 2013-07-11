@@ -178,4 +178,86 @@ final class Utils {
         return String.format(builder.toString(), args.toArray());
     }
 
+    private static enum FormatConversion {
+
+        PERCENT('%', null),
+        NEWLINE('n', null),
+        DATE('d', "date"),
+        LOGGER('c', "logger"),
+        TAG('t', "tag"),
+        LEVEL('p', "level"),
+        MESSAGE('m', "message"),
+        CALLER('C', "caller"),
+        TRACE('T', "trace");
+
+        public static final Pattern REGEXP;
+        public static final int MODIFIER_GROUP = 1;
+        public static final int CONVERSION_GROUP = 4;
+        public static final int OPTIONS_GROUP = 5;
+
+        static {
+            StringBuilder builder = new StringBuilder();
+            builder.append("%((-?\\d+)?(\\.[-\\+]?\\d+)?)");
+            builder.append("(");
+            for (FormatConversion formatConversion : values()) {
+                if (formatConversion.longConversion != null) {
+                    builder.append(formatConversion.longConversion).append("|");
+                }
+            }
+            builder.append("\\w)");
+            builder.append("(\\{.*?\\})?");
+
+            REGEXP = Pattern.compile(builder.toString());
+        }
+
+        private final char shortConversion;
+        private final String longConversion;
+
+        private FormatConversion(char shortConversion, String longConversion) {
+            this.shortConversion = shortConversion;
+            this.longConversion = longConversion;
+        }
+
+        public boolean checkConversion(String conversion) {
+            return (longConversion != null && longConversion.equals(conversion))
+                    || (conversion.length() == 1 && shortConversion == conversion.charAt(0));
+        }
+
+        public String format(String options, Class<?> calledClass,
+                             String logger, String tag, Logger.Level level, String message) {
+            return "<" + shortConversion + ">";
+        }
+
+    }
+
+    public static String format2(String loggerFormat,
+                                 Class<?> calledClass,
+                                 String logger, String tag, Logger.Level level, String message) {
+        StringBuilder builder = new StringBuilder();
+
+        int index = 0;
+        while (true) {
+            Matcher matcher = FormatConversion.REGEXP.matcher(loggerFormat);
+            if (!matcher.find(index)) {
+                break;
+            }
+
+            String modifier = matcher.group(FormatConversion.MODIFIER_GROUP);
+            String conversion = matcher.group(FormatConversion.CONVERSION_GROUP);
+            String options = matcher.group(FormatConversion.OPTIONS_GROUP);
+            if (options != null) {
+                options = options.substring(1, options.length() - 1);
+            }
+
+            String replacement = ""; // todo call FormatConversion.format()
+
+            builder.append(loggerFormat.substring(index, matcher.start()));
+            builder.append(String.format("%" + modifier + "s", replacement));
+            index = matcher.end();
+        }
+        builder.append(loggerFormat.substring(index));
+
+        return builder.toString();
+    }
+
 }

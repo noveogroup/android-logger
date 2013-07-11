@@ -45,4 +45,9 @@ public class UtilsTest {
         System.out.println(Utils.format("asdasd %% asdasd %nasd %C %M %L", Utils.class, "logger", "tag", Logger.Level.INFO, "message", new Throwable()));
     }
 
+    @Test
+    public void format2Test() {
+        System.out.println(Utils.format2("asdasd %% asdasd %5.8nasd %C %M{asdasd} %L{} %logger", Utils.class, "logger", "tag", Logger.Level.INFO, "message"));
+    }
+
 }
