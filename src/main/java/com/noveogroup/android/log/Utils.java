@@ -38,11 +38,26 @@ final class Utils {
     }
 
     /**
+     * Returns stack trace element corresponding to a class that calls
+     * logging methods.
+     * <p/>
+     * This method compares names of the packages of stack trace elements
+     * with the package of this library to find information about caller.
+     *
+     * @return the caller stack trace element.
+     */
+    public static StackTraceElement getCaller() {
+        // todo implement
+        throw new UnsupportedOperationException();
+    }
+
+    /**
      * Returns caller's {@link StackTraceElement}.
      *
      * @param aClass a class used as starting point to find a caller.
      * @return the caller stack trace element.
      */
+    // todo use getCaller()
     public static StackTraceElement getCaller(Class<?> aClass) {
         String className = aClass.getName();
 
@@ -68,6 +83,7 @@ final class Utils {
      * @param aClass a class used as starting point to find a caller.
      * @return the class name of a caller.
      */
+    // todo delete this method
     public static String getCallerClassName(Class<?> aClass) {
         return getCaller(aClass).getClassName();
     }
@@ -81,6 +97,7 @@ final class Utils {
      * @param maxLength the desired maximum length of result.
      * @return the shortened class name.
      */
+    // todo move to PatternHandler
     public static String shortenClassName(String className, int maxLength) {
         if (className == null) return null;
         if (maxLength > className.length()) return className;
@@ -112,6 +129,7 @@ final class Utils {
         return builder.toString();
     }
 
+    // todo move to PatternHandler
     private static final Pattern FORMAT_ARG = Pattern.compile("(%%|%(([-\\+]?\\d+)?(\\.[-\\+]?\\d+)?)(\\w)(\\{.*?\\})?)");
 
     //    %F              - a file name where the logging request was issued
@@ -125,7 +143,7 @@ final class Utils {
     //    %p              - a logging level
     //    %e{length}      - an exception stack trace. length can be any number
     //    %t              - a tag
-    // todo JavaDoc
+    // todo delete after PatternHandler is implemented
     public static String format(String loggerFormat,
                                 Class<?> calledClass,
                                 String logger, String tag, Logger.Level level, String message, Throwable throwable) {
@@ -204,6 +222,7 @@ final class Utils {
         return String.format(builder.toString(), args.toArray());
     }
 
+    // todo delete after PatternHandler is implemented
     private static enum FormatConversion {
 
         PERCENT('%', null),
