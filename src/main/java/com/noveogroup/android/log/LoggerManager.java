@@ -33,7 +33,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * THe logger manager.
+ * The logger manager.
  * <p/>
  * To configure this logger manager you can include an
  * {@code android-logger.properties} file in src directory.
