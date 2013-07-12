@@ -31,6 +31,7 @@ import android.util.Log;
 /**
  * Helper for sending log messages using the standard {@link Log}.
  */
+// todo add Logger.getName() - but : LoggerManager.getLogger("com.example.bla.bla.bla").getName() == "the same" ?
 public interface Logger {
 
     /**

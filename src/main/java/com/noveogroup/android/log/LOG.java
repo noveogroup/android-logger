@@ -35,6 +35,8 @@ package com.noveogroup.android.log;
  * LoggerManager.getLogger().someMethod(arguments);
  * </code>
  */
+// todo replace by Log class from https://github.com/noveogroup/logback-android
+// todo may be using class LoggerFactory from SLF4J will be better
 public final class LOG {
 
     private LOG() {

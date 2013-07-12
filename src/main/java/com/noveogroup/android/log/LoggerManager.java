@@ -178,6 +178,7 @@ public final class LoggerManager {
     /**
      * Root logger that has {@code null} as a name.
      */
+    // todo use Logger.ROOT_LOGGER_NAME instead
     public static final Logger ROOT = getLogger((String) null);
 
     /**
@@ -186,6 +187,7 @@ public final class LoggerManager {
      * @param aClass the class.
      * @return the {@link Logger} implementation.
      */
+    // todo check this method as fast as https://github.com/qos-ch/logback/blob/master/logback-classic/src/main/java/ch/qos/logback/classic/LoggerContext.java
     public static Logger getLogger(Class<?> aClass) {
         return findLogger(aClass == null ? null : aClass.getName());
     }
