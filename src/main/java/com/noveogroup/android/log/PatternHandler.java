@@ -34,8 +34,18 @@ import java.util.Formatter;
 /**
  * The basic implementation of {@link Handler} interface.
  * <p/>
- * This log handler is configured with a tag and a message patterns.
- * Pattern is format string written according to a special rules described
+ * This log handler is configured with a logging level, a tag and
+ * a message patterns.
+ * <p/>
+ * The logging level parameter is the minimal level of log messages printed
+ * by this handler instance. The logging level can be {@code null} which
+ * means no messages should be printed using this logger.
+ * <p/>
+ * <b>Attention</b>: Android may set its own requirement for logging level
+ * using {@link Log#isLoggable(String, int)} method. This logger doesn't take
+ * it into account in {@link #isEnabled(Logger.Level)} method.
+ * <p/>
+ * The patterns are format strings written according to a special rules described
  * below. Log messages will be formatted and printed as it is specified in
  * the tag and the message pattern. The tag pattern configures log tag used
  * to print messages. The message pattern configures a head of the message but
