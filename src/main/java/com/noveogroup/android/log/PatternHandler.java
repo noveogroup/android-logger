@@ -210,9 +210,22 @@ import java.util.Formatter;
  */
 public class PatternHandler implements Handler {
 
-    private volatile Logger.Level level;
-    private volatile String tagPattern;
-    private volatile String messagePattern;
+    private final Logger.Level level;
+    private final String tagPattern;
+    private final String messagePattern;
+
+    /**
+     * Creates new {@link PatternHandler}.
+     *
+     * @param level          the level.
+     * @param tagPattern     the tag pattern.
+     * @param messagePattern the message pattern.
+     */
+    public PatternHandler(Logger.Level level, String tagPattern, String messagePattern) {
+        this.level = level;
+        this.tagPattern = tagPattern;
+        this.messagePattern = messagePattern;
+    }
 
     /**
      * Returns the level.
@@ -221,15 +234,6 @@ public class PatternHandler implements Handler {
      */
     public Logger.Level getLevel() {
         return level;
-    }
-
-    /**
-     * Updates the level.
-     *
-     * @param level new level.
-     */
-    public void setLevel(Logger.Level level) {
-        this.level = level;
     }
 
     /**
@@ -242,30 +246,12 @@ public class PatternHandler implements Handler {
     }
 
     /**
-     * Updates the tag messagePattern.
-     *
-     * @param tagPattern new tag messagePattern.
-     */
-    public void setTagPattern(String tagPattern) {
-        this.tagPattern = tagPattern;
-    }
-
-    /**
      * Returns the message messagePattern.
      *
      * @return the message messagePattern.
      */
     public String getMessagePattern() {
         return messagePattern;
-    }
-
-    /**
-     * Updates the message messagePattern.
-     *
-     * @param messagePattern new message messagePattern.
-     */
-    public void setMessagePattern(String messagePattern) {
-        this.messagePattern = messagePattern;
     }
 
     @Override

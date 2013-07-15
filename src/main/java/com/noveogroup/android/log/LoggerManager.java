@@ -61,7 +61,8 @@ public final class LoggerManager {
         throw new UnsupportedOperationException();
     }
 
-    private static final Logger DEFAULT_LOGGER = new SimpleLogger("XXX", Logger.Level.VERBOSE);
+    private static final Handler DEFAULT_HANDLER = new PatternHandler(null, "%logger", "%date %caller%n");
+    private static final Logger DEFAULT_LOGGER = new SimpleLogger("XXX", DEFAULT_HANDLER);
 
     private static final int MAX_LOG_TAG_LENGTH = 23;
 
@@ -69,8 +70,7 @@ public final class LoggerManager {
     private static final String CONF_ROOT = "root";
     private static final String CONF_LOGGER = "logger.";
     private static final Pattern CONF_LOGGER_REGEX = Pattern.compile("(.*?):(.*)");
-    private static final Logger.Level CONF_DEFAULT_LEVEL = Logger.Level.VERBOSE;
-    private static final Map<String, Logger> loggerMap;
+    private static final Map<String, Handler> handlerMap;
 
     private static void loadProperties(Properties properties) throws IOException {
         InputStream inputStream = null;
@@ -91,8 +91,9 @@ public final class LoggerManager {
         }
     }
 
-    private static Logger decodeLogger(String loggerString) {
-        Matcher matcher = CONF_LOGGER_REGEX.matcher(loggerString);
+    private static Handler decodeHandler(String handlerString) {
+        // todo implement handler decoding from new format
+        Matcher matcher = CONF_LOGGER_REGEX.matcher(handlerString);
         if (matcher.matches()) {
             String levelString = matcher.group(1);
             String tag = matcher.group(2);
@@ -102,19 +103,19 @@ public final class LoggerManager {
                 tag = trimmedTag;
             }
             try {
-                return new SimpleLogger(tag, Logger.Level.valueOf(levelString));
+                return new PatternHandler(Logger.Level.valueOf(levelString), tag, null);
             } catch (IllegalArgumentException e) {
                 DEFAULT_LOGGER.w(String.format("Cannot parse '%s' as logging level. Only %s are allowed",
                         levelString, Arrays.toString(Logger.Level.values())));
-                return new SimpleLogger(loggerString, CONF_DEFAULT_LEVEL);
+                return new PatternHandler(null, handlerString, null);
             }
         } else {
-            return new SimpleLogger(loggerString, CONF_DEFAULT_LEVEL);
+            return new PatternHandler(null, handlerString, null);
         }
     }
 
-    private static Map<String, Logger> loadConfiguration() {
-        Map<String, Logger> loggerMap = new HashMap<String, Logger>();
+    private static Map<String, Handler> loadConfiguration() {
+        Map<String, Handler> handlerMap = new HashMap<String, Handler>();
 
         // read properties file
         Properties properties = new Properties();
@@ -122,15 +123,15 @@ public final class LoggerManager {
             loadProperties(properties);
         } catch (IOException e) {
             DEFAULT_LOGGER.e(String.format("Cannot configure logger from '%s'. Default configuration will be used", PROPERTIES_NAME), e);
-            loggerMap.put(null, DEFAULT_LOGGER);
-            return loggerMap;
+            handlerMap.put(null, DEFAULT_HANDLER);
+            return handlerMap;
         }
 
         // something is wrong if property file is empty
         if (!properties.propertyNames().hasMoreElements()) {
             DEFAULT_LOGGER.e("Logger configuration file is empty. Default configuration will be used");
-            loggerMap.put(null, DEFAULT_LOGGER);
-            return loggerMap;
+            handlerMap.put(null, DEFAULT_HANDLER);
+            return handlerMap;
         }
 
         // parse properties to logger map
@@ -139,31 +140,31 @@ public final class LoggerManager {
             String propertyValue = properties.getProperty(propertyName);
 
             if (propertyName.equals(CONF_ROOT)) {
-                loggerMap.put(null, decodeLogger(propertyValue));
+                handlerMap.put(null, decodeHandler(propertyValue));
             } else if (propertyName.startsWith(CONF_LOGGER)) {
                 String loggerName = propertyName.substring(CONF_LOGGER.length());
-                loggerMap.put(loggerName, decodeLogger(propertyValue));
+                handlerMap.put(loggerName, decodeHandler(propertyValue));
             } else {
                 DEFAULT_LOGGER.e(String.format("unknown key '%s' in '%s' file", propertyName, PROPERTIES_NAME));
             }
         }
 
         // logger map should have root logger (corresponding to "null" key)
-        if (!loggerMap.containsKey(null)) {
-            loggerMap.put(null, DEFAULT_LOGGER);
+        if (!handlerMap.containsKey(null)) {
+            handlerMap.put(null, DEFAULT_HANDLER);
         }
 
-        return loggerMap;
+        return handlerMap;
     }
 
     static {
-        loggerMap = Collections.unmodifiableMap(loadConfiguration());
+        handlerMap = Collections.unmodifiableMap(loadConfiguration());
     }
 
-    private static Logger findLogger(String name) {
+    private static Handler findHandler(String name) {
         String currentKey = null;
         if (name != null) {
-            for (String key : loggerMap.keySet()) {
+            for (String key : handlerMap.keySet()) {
                 if (key != null && name.startsWith(key)) {
                     if (currentKey == null || currentKey.length() < key.length()) {
                         currentKey = key;
@@ -171,14 +172,20 @@ public final class LoggerManager {
                 }
             }
         }
-        Logger logger = loggerMap.get(currentKey);
-        return logger != null ? logger : DEFAULT_LOGGER;
+        Handler handler = handlerMap.get(currentKey);
+        return handler != null ? handler : DEFAULT_HANDLER;
+    }
+
+    // todo check this method as fast as https://github.com/qos-ch/logback/blob/master/logback-classic/src/main/java/ch/qos/logback/classic/LoggerContext.java
+    private static Logger findLogger(String name) {
+        return new SimpleLogger(name, findHandler(name));
     }
 
     /**
      * Root logger that has {@code null} as a name.
      */
     // todo use Logger.ROOT_LOGGER_NAME instead
+    // todo root logger == logger with null as name ?
     public static final Logger ROOT = getLogger((String) null);
 
     /**
@@ -187,7 +194,6 @@ public final class LoggerManager {
      * @param aClass the class.
      * @return the {@link Logger} implementation.
      */
-    // todo check this method as fast as https://github.com/qos-ch/logback/blob/master/logback-classic/src/main/java/ch/qos/logback/classic/LoggerContext.java
     public static Logger getLogger(Class<?> aClass) {
         return findLogger(aClass == null ? null : aClass.getName());
     }
