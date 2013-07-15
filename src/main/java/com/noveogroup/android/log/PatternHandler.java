@@ -34,8 +34,18 @@ import java.util.Formatter;
 /**
  * The basic implementation of {@link Handler} interface.
  * <p/>
- * This log handler is configured with a tag and a message patterns.
- * Pattern is format string written according to a special rules described
+ * This log handler is configured with a logging level, a tag and
+ * a message patterns.
+ * <p/>
+ * The logging level parameter is the minimal level of log messages printed
+ * by this handler instance. The logging level can be {@code null} which
+ * means no messages should be printed using this logger.
+ * <p/>
+ * <b>Attention</b>: Android may set its own requirement for logging level
+ * using {@link Log#isLoggable(String, int)} method. This logger doesn't take
+ * it into account in {@link #isEnabled(Logger.Level)} method.
+ * <p/>
+ * The patterns are format strings written according to a special rules described
  * below. Log messages will be formatted and printed as it is specified in
  * the tag and the message pattern. The tag pattern configures log tag used
  * to print messages. The message pattern configures a head of the message but
@@ -200,9 +210,22 @@ import java.util.Formatter;
  */
 public class PatternHandler implements Handler {
 
-    private volatile Logger.Level level;
-    private volatile String tagPattern;
-    private volatile String messagePattern;
+    private final Logger.Level level;
+    private final String tagPattern;
+    private final String messagePattern;
+
+    /**
+     * Creates new {@link PatternHandler}.
+     *
+     * @param level          the level.
+     * @param tagPattern     the tag pattern.
+     * @param messagePattern the message pattern.
+     */
+    public PatternHandler(Logger.Level level, String tagPattern, String messagePattern) {
+        this.level = level;
+        this.tagPattern = tagPattern;
+        this.messagePattern = messagePattern;
+    }
 
     /**
      * Returns the level.
@@ -211,15 +234,6 @@ public class PatternHandler implements Handler {
      */
     public Logger.Level getLevel() {
         return level;
-    }
-
-    /**
-     * Updates the level.
-     *
-     * @param level new level.
-     */
-    public void setLevel(Logger.Level level) {
-        this.level = level;
     }
 
     /**
@@ -232,30 +246,12 @@ public class PatternHandler implements Handler {
     }
 
     /**
-     * Updates the tag messagePattern.
-     *
-     * @param tagPattern new tag messagePattern.
-     */
-    public void setTagPattern(String tagPattern) {
-        this.tagPattern = tagPattern;
-    }
-
-    /**
      * Returns the message messagePattern.
      *
      * @return the message messagePattern.
      */
     public String getMessagePattern() {
         return messagePattern;
-    }
-
-    /**
-     * Updates the message messagePattern.
-     *
-     * @param messagePattern new message messagePattern.
-     */
-    public void setMessagePattern(String messagePattern) {
-        this.messagePattern = messagePattern;
     }
 
     @Override
@@ -288,7 +284,9 @@ public class PatternHandler implements Handler {
             }
 
             // todo implement it
-            Log.println(level.intValue(), tagPattern, messagePattern + message);
+            Log.println(level.intValue(),
+                    (tagPattern == null ? "" : tagPattern),
+                    (messagePattern == null ? "" : messagePattern) + message);
         }
     }
 
