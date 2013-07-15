@@ -216,10 +216,10 @@ import java.util.Formatter;
  * <th>Example</th>
  * <th>Result</th>
  * </tr>
- * <tr> <td>%6(text)</td>  <td><pre>' text'</pre></td> </tr>
- * <tr> <td>%-6(text)</td> <td><pre>'text  '</pre></td> </tr>
- * <tr> <td>%.3(text)</td> <td><pre>'tex'</pre></td>   </tr>
- * <tr> <td>%.-3(text)</td> <td><pre>'ext'</pre></td>   </tr>
+ * <tr> <td>%6(text)</td>   <td><pre>'  text'</pre></td> </tr>
+ * <tr> <td>%-6(text)</td>  <td><pre>'text  '</pre></td> </tr>
+ * <tr> <td>%.3(text)</td>  <td><pre>'tex'</pre></td>    </tr>
+ * <tr> <td>%.-3(text)</td> <td><pre>'ext'</pre></td>    </tr>
  * </table>
  */
 public class PatternHandler implements Handler {
