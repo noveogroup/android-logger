@@ -214,7 +214,7 @@ public final class LoggerManager {
      * @return the {@link Logger} implementation.
      */
     public static Logger getLogger() {
-        return findLogger(Utils.getCallerClassName(LoggerManager.class));
+        return findLogger(Utils.getCallerClassName());
     }
 
 }
