@@ -284,7 +284,9 @@ public class PatternHandler implements Handler {
             }
 
             // todo implement it
-            Log.println(level.intValue(), tagPattern, messagePattern + message);
+            Log.println(level.intValue(),
+                    (tagPattern == null ? "" : tagPattern),
+                    (messagePattern == null ? "" : messagePattern) + message);
         }
     }
 
