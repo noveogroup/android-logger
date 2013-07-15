@@ -31,6 +31,22 @@ package com.noveogroup.android.log;
  */
 public abstract class AbstractLogger implements Logger {
 
+    private final String name;
+
+    /**
+     * Constructor of {@link AbstractLogger}.
+     *
+     * @param name the name of the logger.
+     */
+    public AbstractLogger(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
     @Override
     public void v(String message, Throwable throwable) {
         print(Logger.Level.VERBOSE, message, throwable);
