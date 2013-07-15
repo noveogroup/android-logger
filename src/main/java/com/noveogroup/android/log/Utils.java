@@ -31,10 +31,78 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-final class Utils {
+public final class Utils {
 
     private Utils() {
         throw new UnsupportedOperationException();
+    }
+
+    private static final String PACKAGE_NAME = Logger.class.getPackage().getName();
+
+    private static final class CallerResolver extends SecurityManager {
+        public Class<?> getCaller() {
+            Class[] classContext = getClassContext();
+            // sometimes class context is null (usually on new Android devices)
+            if (classContext == null || classContext.length <= 0) {
+                return null; // if class context is null or empty
+            }
+
+            boolean packageFound = false;
+            for (Class aClass : classContext) {
+                if (!packageFound) {
+                    if (aClass.getPackage().getName().startsWith(PACKAGE_NAME)) {
+                        packageFound = true;
+                    }
+                } else {
+                    if (!aClass.getPackage().getName().startsWith(PACKAGE_NAME)) {
+                        return aClass;
+                    }
+                }
+            }
+            return classContext[classContext.length - 1];
+        }
+    }
+
+    private static final CallerResolver CALLER_RESOLVER = new CallerResolver();
+
+    private static StackTraceElement getCallerStackTrace() {
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        if (stackTrace == null || stackTrace.length <= 0) {
+            return null; // if stack trace is null or empty
+        }
+
+        boolean packageFound = false;
+        for (StackTraceElement stackTraceElement : stackTrace) {
+            if (!packageFound) {
+                if (stackTraceElement.getClassName().startsWith(PACKAGE_NAME)) {
+                    packageFound = true;
+                }
+            } else {
+                if (!stackTraceElement.getClassName().startsWith(PACKAGE_NAME)) {
+                    return stackTraceElement;
+                }
+            }
+        }
+        return stackTrace[stackTrace.length - 1];
+    }
+
+    /**
+     * Returns a name of a class that calls logging methods.
+     * <p/>
+     * Can be much faster than {@link #getCaller()} because
+     * this method tries to use {@link SecurityManager} to get
+     * caller context.
+     *
+     * @return the caller's name.
+     */
+    public static String getCallerClassName() {
+        Class<?> caller = CALLER_RESOLVER.getCaller();
+        if (caller == null) {
+            StackTraceElement callerStackTrace = getCallerStackTrace();
+            return callerStackTrace == null ? null : callerStackTrace.getClassName();
+        } else {
+            return caller.getName();
+        }
     }
 
     /**
@@ -47,8 +115,7 @@ final class Utils {
      * @return the caller stack trace element.
      */
     public static StackTraceElement getCaller() {
-        // todo implement
-        throw new UnsupportedOperationException();
+        return getCallerStackTrace();
     }
 
     /**

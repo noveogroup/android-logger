@@ -6,18 +6,6 @@ import org.junit.Test;
 public class UtilsTest {
 
     @Test
-    public void getCallerTest() {
-        Assert.assertEquals("com.noveogroup.android.log.UtilsTest.getCallerTest(UtilsTest.java:10)",
-                Utils.getCaller(Utils.class).toString());
-    }
-
-    @Test
-    public void getCallerClassNameTest() {
-        Assert.assertEquals("com.noveogroup.android.log.UtilsTest",
-                Utils.getCallerClassName(Utils.class));
-    }
-
-    @Test
     public void shortenClassNameTest() {
         Assert.assertEquals(null, Utils.shortenClassName(null, 10));
 
