@@ -1,0 +1,12 @@
+apply plugin: 'android'
+
+dependencies {
+    compile files('libs/android-logger-1.2.1.jar')
+    compile files('libs/android-logger-1.2.1-javadoc.jar')
+    compile files('libs/android-logger-1.2.1-sources.jar')
+}
+
+android {
+    compileSdkVersion 17
+    buildToolsVersion "17.0"
+}
