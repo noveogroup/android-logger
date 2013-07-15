@@ -117,32 +117,46 @@ import java.util.Formatter;
  * <td>com.example.android.MainActivity</td>
  * </tr>
  * <tr>
- * <td>%logger{2}</td>
+ * <td>%logger{0}</td>
  * <td>com.example.android.MainActivity</td>
- * <td>com.example</td>
+ * <td>com.example.android.MainActivity</td>
  * </tr>
  * <tr>
- * <td>%logger{-2}</td>
+ * <td>%logger{3}</td>
  * <td>com.example.android.MainActivity</td>
- * <td>android.MainActivity</td>
+ * <td>com.example.android</td>
  * </tr>
  * <tr>
+ * <td>%logger{-1}</td>
+ * <td>com.example.android.MainActivity</td>
+ * <td>example.android.MainActivity</td>
+ * </tr>
+ * <tr>
+ * <td>%logger{.0}</td>
+ * <td>com.example.android.MainActivity</td>
+ * <td>com.example.android.MainActivity</td>
+ * </tr>
  * <td>%logger{.30}</td>
  * <td>com.example.android.MainActivity</td>
- * <td>*.example.android.MainActivity</td>
+ * <td>com.example.android.*</td>
  * </tr>
  * <tr>
  * <td>%logger{.15}</td>
  * <td>com.example.android.MainActivity</td>
- * <td>*.MainActivity</td>
+ * <td>com.example.*</td>
  * </tr>
  * <tr>
- * <td>%logger{3.18}</td>
+ * <td>%logger{.-25}</td>
+ * <td>com.example.android.MainActivity</td>
+ * <td>*.android.MainActivity</td>
+ * </tr>
+ * <tr>
+ * <td>%logger{3.-18}</td>
  * <td>com.example.android.MainActivity</td>
  * <td>*.example.android</td>
  * </tr>
  * <tr>
- * <td>%logger{-3.10}</td>
+ * <td>%logger{-3.-10}</td>
  * <td>com.example.android.MainActivity$SubClass</td>
  * <td>MainActivity$SubClass</td>
  * </tr>
@@ -166,7 +180,7 @@ import java.util.Formatter;
  * <td>com.example.android.MainActivity:154</td>
  * </tr>
  * <tr>
- * <td>%caller{-3.15}</td>
+ * <td>%caller{-3.-15}</td>
  * <td>Class com.example.android.MainActivity at line 154</td>
  * <td>MainActivity:154</td>
  * </tr>
@@ -183,11 +197,11 @@ import java.util.Formatter;
  * <th>Result</th>
  * </tr>
  * <tr>
- * <td>[%50(%d %caller{-3.15})]</td>
+ * <td>[%50(%d %caller{-3.-15})]</td>
  * <td><pre>[          2013-07-12 19:45:26.315 MainActivity:154]</pre></td>
  * </tr>
  * <tr>
- * <td>[%-50(%d %caller{-3.15})]</td>
+ * <td>[%-50(%d %caller{-3.-15})]</td>
  * <td><pre>[2013-07-12 19:45:26.315 MainActivity:154          ]</pre></td>
  * </tr>
  * </table>
@@ -202,9 +216,9 @@ import java.util.Formatter;
  * <th>Example</th>
  * <th>Result</th>
  * </tr>
- * <tr> <td>%6(text)</td>  <td><pre>'  text'</pre></td> </tr>
+ * <tr> <td>%6(text)</td>  <td><pre>' text'</pre></td> </tr>
  * <tr> <td>%-6(text)</td> <td><pre>'text  '</pre></td> </tr>
- * <tr> <td>%.3(text)</td>  <td><pre>'tex'</pre></td>   </tr>
+ * <tr> <td>%.3(text)</td> <td><pre>'tex'</pre></td>   </tr>
  * <tr> <td>%.-3(text)</td> <td><pre>'ext'</pre></td>   </tr>
  * </table>
  */
