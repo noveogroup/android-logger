@@ -26,6 +26,8 @@
 
 package com.noveogroup.android.log;
 
+import android.util.Log;
+
 import java.text.SimpleDateFormat;
 import java.util.Formatter;
 
@@ -198,9 +200,27 @@ import java.util.Formatter;
  */
 public class PatternHandler implements Handler {
 
-    private String tagPattern;
+    private volatile Logger.Level level;
+    private volatile String tagPattern;
+    private volatile String messagePattern;
 
-    private String messagePattern;
+    /**
+     * Returns the level.
+     *
+     * @return the level.
+     */
+    public Logger.Level getLevel() {
+        return level;
+    }
+
+    /**
+     * Updates the level.
+     *
+     * @param level new level.
+     */
+    public void setLevel(Logger.Level level) {
+        this.level = level;
+    }
 
     /**
      * Returns the tag messagePattern.
@@ -239,10 +259,37 @@ public class PatternHandler implements Handler {
     }
 
     @Override
+    public boolean isEnabled(Logger.Level level) {
+        return this.level != null && level != null && this.level.includes(level);
+    }
+
+    @Override
     public void print(String loggerName, Logger.Level level,
                       Throwable throwable, String messageFormat, Object... args) throws IllegalArgumentException {
-        // todo implement
-        throw new UnsupportedOperationException();
+        if (isEnabled(level)) {
+            String message;
+
+            if (messageFormat == null) {
+                if (args != null && args.length > 0) {
+                    throw new IllegalArgumentException("message format is not set but arguments are presented");
+                }
+
+                if (throwable == null) {
+                    message = "";
+                } else {
+                    message = Log.getStackTraceString(throwable);
+                }
+            } else {
+                if (throwable == null) {
+                    message = String.format(messageFormat, args);
+                } else {
+                    message = String.format(messageFormat, args) + '\n' + Log.getStackTraceString(throwable);
+                }
+            }
+
+            // todo implement it
+            Log.println(level.intValue(), tagPattern, messagePattern + message);
+        }
     }
 
 }

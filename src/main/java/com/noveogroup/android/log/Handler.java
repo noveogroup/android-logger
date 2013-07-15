@@ -34,7 +34,18 @@ import java.util.Formatter;
 public interface Handler {
 
     /**
+     * Checks if the specified log level is enabled or not for this handler.
+     *
+     * @param level the level.
+     * @return Are messages with this level allowed to be logged or not.
+     */
+    public boolean isEnabled(Logger.Level level);
+
+    /**
      * Prints a log message.
+     * <p/>
+     * This method should automatically check using {@link #isEnabled(Logger.Level)} method
+     * if the message is allowed to be logged or not.
      * <p/>
      * The format string of the log message should be formatted
      * according to rules of the standard format string described
