@@ -119,43 +119,6 @@ public final class Utils {
     }
 
     /**
-     * Returns caller's {@link StackTraceElement}.
-     *
-     * @param aClass a class used as starting point to find a caller.
-     * @return the caller stack trace element.
-     */
-    // todo use getCaller()
-    public static StackTraceElement getCaller(Class<?> aClass) {
-        String className = aClass.getName();
-
-        boolean packageFound = false;
-        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-        for (StackTraceElement stackTraceElement : stackTrace) {
-            if (!packageFound) {
-                if (stackTraceElement.getClassName().equals(className)) {
-                    packageFound = true;
-                }
-            } else {
-                if (!stackTraceElement.getClassName().equals(className)) {
-                    return stackTraceElement;
-                }
-            }
-        }
-        return stackTrace[stackTrace.length - 1];
-    }
-
-    /**
-     * Returns caller's class name.
-     *
-     * @param aClass a class used as starting point to find a caller.
-     * @return the class name of a caller.
-     */
-    // todo delete this method
-    public static String getCallerClassName(Class<?> aClass) {
-        return getCaller(aClass).getClassName();
-    }
-
-    /**
      * Shortens class name till the specified length.
      * <p/>
      * Note that only packages can be shortened so this method returns at least simple class name.
@@ -245,7 +208,7 @@ public final class Utils {
                 } else if ("F".equals(conversion)) { // a file name where the logging request was issued
                     replacement = "%" + modifier + "s";
                     if (caller == null) {
-                        caller = getCaller(calledClass);
+                        caller = getCaller();
                     }
                     String fileName = caller.getFileName();
                     args.add(fileName == null ? fileName : "<Unknown Source>");
@@ -253,7 +216,7 @@ public final class Utils {
                 } else if ("C".equals(conversion)) { // a class name where the logging request was issued
                     replacement = "%" + modifier + "s";
                     if (caller == null) {
-                        caller = getCaller(calledClass);
+                        caller = getCaller();
                     }
                     if (options != null) {
                         args.add(shortenClassName(caller.getClassName(), Integer.valueOf(options)));
@@ -264,14 +227,14 @@ public final class Utils {
                 } else if ("M".equals(conversion)) { // a method name where the logging request was issued
                     replacement = "%" + modifier + "s";
                     if (caller == null) {
-                        caller = getCaller(calledClass);
+                        caller = getCaller();
                     }
                     args.add(caller.getMethodName());
 
                 } else if ("L".equals(conversion)) { // a line where the logging request was issued
                     replacement = "%" + modifier + "s";
                     if (caller == null) {
-                        caller = getCaller(calledClass);
+                        caller = getCaller();
                     }
                     args.add(String.valueOf(caller.getLineNumber()));
 
