@@ -61,7 +61,7 @@ public final class LoggerManager {
         throw new UnsupportedOperationException();
     }
 
-    private static final Handler DEFAULT_HANDLER = new PatternHandler(null, "%logger", "%date %caller%n");
+    private static final Handler DEFAULT_HANDLER = new PatternHandler(Logger.Level.VERBOSE, "%logger", "%date %caller%n");
     private static final Logger DEFAULT_LOGGER = new SimpleLogger("XXX", DEFAULT_HANDLER);
 
     private static final int MAX_LOG_TAG_LENGTH = 23;
@@ -107,10 +107,10 @@ public final class LoggerManager {
             } catch (IllegalArgumentException e) {
                 DEFAULT_LOGGER.w(String.format("Cannot parse '%s' as logging level. Only %s are allowed",
                         levelString, Arrays.toString(Logger.Level.values())));
-                return new PatternHandler(null, handlerString, null);
+                return new PatternHandler(Logger.Level.VERBOSE, handlerString, null);
             }
         } else {
-            return new PatternHandler(null, handlerString, null);
+            return new PatternHandler(Logger.Level.VERBOSE, handlerString, null);
         }
     }
 
