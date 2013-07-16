@@ -34,6 +34,11 @@ import android.util.Log;
 public interface Logger {
 
     /**
+     * Case insensitive String constant used to retrieve the name of the root logger.
+     */
+    public static final String ROOT_LOGGER_NAME = org.slf4j.Logger.ROOT_LOGGER_NAME;
+
+    /**
      * Enumeration of priorities of log messages.
      */
     public static enum Level {

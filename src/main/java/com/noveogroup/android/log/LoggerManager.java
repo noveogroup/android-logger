@@ -62,7 +62,7 @@ public final class LoggerManager {
     }
 
     private static final Handler DEFAULT_HANDLER = new PatternHandler(Logger.Level.VERBOSE, "%logger", "%date %caller%n");
-    private static final Logger DEFAULT_LOGGER = new SimpleLogger("XXX", DEFAULT_HANDLER);
+    private static final Logger DEFAULT_LOGGER = new SimpleLogger(Logger.ROOT_LOGGER_NAME, DEFAULT_HANDLER);
 
     private static final int MAX_LOG_TAG_LENGTH = 23;
 
@@ -138,11 +138,13 @@ public final class LoggerManager {
             String propertyName = (String) names.nextElement();
             String propertyValue = properties.getProperty(propertyName);
 
-            // todo fix: use Logger.ROOT_LOGGER_NAME and equalsIgnoreCase
             if (propertyName.equals(CONF_ROOT)) {
                 handlerMap.put(null, decodeHandler(propertyValue));
             } else if (propertyName.startsWith(CONF_LOGGER)) {
                 String loggerName = propertyName.substring(CONF_LOGGER.length());
+                if (loggerName.equalsIgnoreCase(Logger.ROOT_LOGGER_NAME)) {
+                    loggerName = null;
+                }
                 handlerMap.put(loggerName, decodeHandler(propertyValue));
             } else {
                 DEFAULT_LOGGER.e(String.format("unknown key '%s' in '%s' file", propertyName, PROPERTIES_NAME));
