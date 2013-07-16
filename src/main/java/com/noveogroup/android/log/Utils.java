@@ -125,6 +125,7 @@ public final class Utils {
      *
      * @param className the class name.
      * @param maxLength the desired maximum length of result.
+     * @param count the desired maximum count of packages
      * @return the shortened class name.
      */
     public static String shortenClassName(String className, int count, int maxLength) {
