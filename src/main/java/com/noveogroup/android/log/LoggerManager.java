@@ -70,7 +70,6 @@ public final class LoggerManager {
     private static final String CONF_ROOT = "root";
     private static final String CONF_LOGGER = "logger.";
     private static final Pattern CONF_LOGGER_REGEX = Pattern.compile("(.*?):(.*)");
-    private static final Map<String, Handler> handlerMap;
 
     private static void loadProperties(Properties properties) throws IOException {
         InputStream inputStream = null;
@@ -139,6 +138,7 @@ public final class LoggerManager {
             String propertyName = (String) names.nextElement();
             String propertyValue = properties.getProperty(propertyName);
 
+            // todo fix: use Logger.ROOT_LOGGER_NAME and equalsIgnoreCase
             if (propertyName.equals(CONF_ROOT)) {
                 handlerMap.put(null, decodeHandler(propertyValue));
             } else if (propertyName.startsWith(CONF_LOGGER)) {
@@ -157,14 +157,12 @@ public final class LoggerManager {
         return handlerMap;
     }
 
-    static {
-        handlerMap = Collections.unmodifiableMap(loadConfiguration());
-    }
+    private static final Map<String, Handler> HANDLER_MAP = Collections.unmodifiableMap(loadConfiguration());
 
     private static Handler findHandler(String name) {
         String currentKey = null;
         if (name != null) {
-            for (String key : handlerMap.keySet()) {
+            for (String key : HANDLER_MAP.keySet()) {
                 if (key != null && name.startsWith(key)) {
                     if (currentKey == null || currentKey.length() < key.length()) {
                         currentKey = key;
@@ -172,31 +170,11 @@ public final class LoggerManager {
                 }
             }
         }
-        Handler handler = handlerMap.get(currentKey);
+        Handler handler = HANDLER_MAP.get(currentKey);
         return handler != null ? handler : DEFAULT_HANDLER;
     }
 
-    // todo check this method as fast as https://github.com/qos-ch/logback/blob/master/logback-classic/src/main/java/ch/qos/logback/classic/LoggerContext.java
-    private static Logger findLogger(String name) {
-        return new SimpleLogger(name, findHandler(name));
-    }
-
-    /**
-     * Root logger that has {@code null} as a name.
-     */
-    // todo use Logger.ROOT_LOGGER_NAME instead
-    // todo root logger == logger with null as name ?
-    public static final Logger ROOT = getLogger((String) null);
-
-    /**
-     * Returns logger corresponding to the specified class.
-     *
-     * @param aClass the class.
-     * @return the {@link Logger} implementation.
-     */
-    public static Logger getLogger(Class<?> aClass) {
-        return findLogger(aClass == null ? null : aClass.getName());
-    }
+    private static final Map<String, Logger> LOGGER_CACHE = new WeakHashMap<String, Logger>();
 
     /**
      * Returns logger corresponding to the specified name.
@@ -205,7 +183,33 @@ public final class LoggerManager {
      * @return the {@link Logger} implementation.
      */
     public static Logger getLogger(String name) {
-        return findLogger(name);
+        Logger logger;
+
+        // try to find a logger in the cache
+        synchronized (LOGGER_CACHE) {
+            logger = LOGGER_CACHE.get(name);
+        }
+
+        // load logger from configuration
+        if (logger == null) {
+            logger = new SimpleLogger(name, findHandler(name));
+            synchronized (LOGGER_CACHE) {
+                LOGGER_CACHE.put(logger.getName(), logger);
+            }
+        }
+
+        // return logger
+        return logger;
+    }
+
+    /**
+     * Returns logger corresponding to the specified class.
+     *
+     * @param aClass the class.
+     * @return the {@link Logger} implementation.
+     */
+    public static Logger getLogger(Class<?> aClass) {
+        return getLogger(aClass == null ? null : aClass.getName());
     }
 
     /**
@@ -214,7 +218,7 @@ public final class LoggerManager {
      * @return the {@link Logger} implementation.
      */
     public static Logger getLogger() {
-        return findLogger(Utils.getCallerClassName());
+        return getLogger(Utils.getCallerClassName());
     }
 
 }
