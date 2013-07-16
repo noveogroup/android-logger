@@ -198,6 +198,7 @@ Developed By
 
 * [Noveo Group][1]
 * Pavel Stepanov - <pstepanov@noveogroup.com>
+* Margarita Kurushina <mkurushina@noveogroup.com>
 
 License
 =======
