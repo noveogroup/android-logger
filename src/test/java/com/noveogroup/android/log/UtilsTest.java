@@ -9,15 +9,52 @@ public class UtilsTest {
     public void shortenClassNameTest() {
         Assert.assertEquals(null, Utils.shortenClassName(null, 0, 10));
 
-        String className = "com.noveogroup.SomeClass";
-        Assert.assertEquals("*.SomeClass", Utils.shortenClassName(className, 0, -1));
-        Assert.assertEquals("com.noveogroup.SomeClass", Utils.shortenClassName(className, 0, 0));
-        Assert.assertEquals("*.SomeClass", Utils.shortenClassName(className, 0, -11));
-        Assert.assertEquals("*.SomeClass", Utils.shortenClassName(className, 0, -21));
-        Assert.assertEquals("*.noveogroup.SomeClass", Utils.shortenClassName(className, 0, -22));
-        Assert.assertEquals("*.noveogroup.SomeClass", Utils.shortenClassName(className, 0, -23));
-        Assert.assertEquals("com.noveogroup.SomeClass", Utils.shortenClassName(className, 0, -24));
-        Assert.assertEquals("com.noveogroup.SomeClass", Utils.shortenClassName(className, 0, Integer.MAX_VALUE));
+        String className = "com.example.android.MainActivity";
+
+        Assert.assertEquals("com.example.android.MainActivity",
+                Utils.shortenClassName(className, 0, 0));
+        Assert.assertEquals("MainActivity",
+                Utils.shortenClassName(className, -3, 0));
+        Assert.assertEquals("com.example.android",
+                Utils.shortenClassName(className, 3, 0));
+        Assert.assertEquals("example.android.MainActivity",
+                Utils.shortenClassName(className, -1, 0));
+        Assert.assertEquals("com.example.android.MainActivity",
+                Utils.shortenClassName(className, 7, 0));
+        Assert.assertEquals("MainActivity",
+                Utils.shortenClassName(className, -7, 0));
+        Assert.assertEquals("com.example.android.MainActivity",
+                Utils.shortenClassName(className, Integer.MAX_VALUE, 0));
+        Assert.assertEquals("MainActivity",
+                Utils.shortenClassName(className, Integer.MIN_VALUE, 0));
+
+        Assert.assertEquals("com.*",
+                Utils.shortenClassName(className, 0, 1));
+        Assert.assertEquals("*.MainActivity",
+                Utils.shortenClassName(className, 0, -1));
+        Assert.assertEquals("com.example.android.*",
+                Utils.shortenClassName(className, 0, 32));
+        Assert.assertEquals("com.example.android.MainActivity",
+                Utils.shortenClassName(className, 0, 33));
+        Assert.assertEquals("*.android.MainActivity",
+                Utils.shortenClassName(className, 0, -25));
+        Assert.assertEquals("com.example.*",
+                Utils.shortenClassName(className, 0, 15));
+        Assert.assertEquals("com.example.android.MainActivity",
+                Utils.shortenClassName(className, 0, 40));
+        Assert.assertEquals("com.example.android.MainActivity",
+                Utils.shortenClassName(className, 0, -40));
+        Assert.assertEquals("com.example.android.MainActivity",
+                Utils.shortenClassName(className, 0, Integer.MAX_VALUE));
+        Assert.assertEquals("*.MainActivity",
+                Utils.shortenClassName(className, 0, Integer.MIN_VALUE));
+
+        Assert.assertEquals("*.example.android",
+                Utils.shortenClassName(className, 3, -18));
+        Assert.assertEquals("MainActivity$SubClass",
+                Utils.shortenClassName("com.example.android.MainActivity$SubClass", -3, -10));
+        Assert.assertEquals("com.example.android.MainActivity$SubClass",
+                Utils.shortenClassName("com.example.android.MainActivity$SubClass", Integer.MAX_VALUE, Integer.MAX_VALUE));
 
         String loggerName = "com...Logger";
         Assert.assertEquals("*.Logger", Utils.shortenClassName(loggerName, 0, -1));
