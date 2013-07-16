@@ -98,14 +98,14 @@ public final class LoggerManager {
             String tag = matcher.group(2);
             if (tag.length() > 23) {
                 String trimmedTag = tag.substring(0, MAX_LOG_TAG_LENGTH);
-                DEFAULT_LOGGER.w(String.format("Android doesn't supports tags %d characters longer. Tag '%s' will be trimmed to '%s'", MAX_LOG_TAG_LENGTH, tag, trimmedTag));
+                DEFAULT_LOGGER.w("Android doesn't support tags %d characters longer. Tag '%s' will be trimmed to '%s'", MAX_LOG_TAG_LENGTH, tag, trimmedTag);
                 tag = trimmedTag;
             }
             try {
                 return new PatternHandler(Logger.Level.valueOf(levelString), tag, null);
             } catch (IllegalArgumentException e) {
-                DEFAULT_LOGGER.w(String.format("Cannot parse '%s' as logging level. Only %s are allowed",
-                        levelString, Arrays.toString(Logger.Level.values())));
+                DEFAULT_LOGGER.w("Cannot parse '%s' as logging level. Only %s are allowed",
+                        levelString, Arrays.toString(Logger.Level.values()));
                 return new PatternHandler(Logger.Level.VERBOSE, handlerString, null);
             }
         } else {
@@ -121,7 +121,7 @@ public final class LoggerManager {
         try {
             loadProperties(properties);
         } catch (IOException e) {
-            DEFAULT_LOGGER.e(String.format("Cannot configure logger from '%s'. Default configuration will be used", PROPERTIES_NAME), e);
+            DEFAULT_LOGGER.e(e, "Cannot configure logger from '%s'. Default configuration will be used", PROPERTIES_NAME);
             handlerMap.put(null, DEFAULT_HANDLER);
             return handlerMap;
         }
@@ -147,7 +147,7 @@ public final class LoggerManager {
                 }
                 handlerMap.put(loggerName, decodeHandler(propertyValue));
             } else {
-                DEFAULT_LOGGER.e(String.format("unknown key '%s' in '%s' file", propertyName, PROPERTIES_NAME));
+                DEFAULT_LOGGER.e("unknown key '%s' in '%s' file", propertyName, PROPERTIES_NAME);
             }
         }
 
