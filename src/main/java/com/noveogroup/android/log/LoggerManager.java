@@ -69,7 +69,7 @@ public final class LoggerManager {
     private static final String PROPERTIES_NAME = "android-logger.properties";
     private static final String CONF_ROOT = "root";
     private static final String CONF_LOGGER = "logger.";
-    private static final Pattern CONF_LOGGER_REGEX = Pattern.compile("(.*?):(.*)");
+    private static final Pattern CONF_LOGGER_REGEX = Pattern.compile("(.*?):(.*?)(:(.*))?");
 
     private static void loadProperties(Properties properties) throws IOException {
         InputStream inputStream = null;
@@ -91,25 +91,26 @@ public final class LoggerManager {
     }
 
     private static Handler decodeHandler(String handlerString) {
-        // todo implement handler decoding from new format
         Matcher matcher = CONF_LOGGER_REGEX.matcher(handlerString);
         if (matcher.matches()) {
             String levelString = matcher.group(1);
             String tag = matcher.group(2);
+            String message = matcher.group(4);
             if (tag.length() > 23) {
                 String trimmedTag = tag.substring(0, MAX_LOG_TAG_LENGTH);
                 DEFAULT_LOGGER.w("Android doesn't support tags %d characters longer. Tag '%s' will be trimmed to '%s'", MAX_LOG_TAG_LENGTH, tag, trimmedTag);
                 tag = trimmedTag;
             }
             try {
-                return new PatternHandler(Logger.Level.valueOf(levelString), tag, null);
+                return new PatternHandler(Logger.Level.valueOf(levelString), tag, message);
             } catch (IllegalArgumentException e) {
                 DEFAULT_LOGGER.w("Cannot parse '%s' as logging level. Only %s are allowed",
                         levelString, Arrays.toString(Logger.Level.values()));
-                return new PatternHandler(Logger.Level.VERBOSE, handlerString, null);
+                return null;
             }
         } else {
-            return new PatternHandler(Logger.Level.VERBOSE, handlerString, null);
+            DEFAULT_LOGGER.w("Wrong format of logger configuration: '%s'", handlerString);
+            return null;
         }
     }
 
@@ -138,16 +139,19 @@ public final class LoggerManager {
             String propertyName = (String) names.nextElement();
             String propertyValue = properties.getProperty(propertyName);
 
-            if (propertyName.equals(CONF_ROOT)) {
-                handlerMap.put(null, decodeHandler(propertyValue));
-            } else if (propertyName.startsWith(CONF_LOGGER)) {
-                String loggerName = propertyName.substring(CONF_LOGGER.length());
-                if (loggerName.equalsIgnoreCase(Logger.ROOT_LOGGER_NAME)) {
-                    loggerName = null;
+            Handler handler = decodeHandler(propertyValue);
+            if (handler != null) {
+                if (propertyName.equals(CONF_ROOT)) {
+                    handlerMap.put(null, handler);
+                } else if (propertyName.startsWith(CONF_LOGGER)) {
+                    String loggerName = propertyName.substring(CONF_LOGGER.length());
+                    if (loggerName.equalsIgnoreCase(Logger.ROOT_LOGGER_NAME)) {
+                        loggerName = null;
+                    }
+                    handlerMap.put(loggerName, handler);
+                } else {
+                    DEFAULT_LOGGER.e("unknown key '%s' in '%s' file", propertyName, PROPERTIES_NAME);
                 }
-                handlerMap.put(loggerName, decodeHandler(propertyValue));
-            } else {
-                DEFAULT_LOGGER.e("unknown key '%s' in '%s' file", propertyName, PROPERTIES_NAME);
             }
         }
 
