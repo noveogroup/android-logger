@@ -128,6 +128,7 @@ public final class Utils {
      * @param count the desired maximum count of packages
      * @return the shortened class name.
      */
+    // todo optimize it
     public static String shortenClassName(String className, int count, int maxLength) {
 
         className = shortenPackagesName(className, count);
@@ -193,6 +194,7 @@ public final class Utils {
         }
     }
 
+    // todo optimize it
     private static String shortenPackagesName(String className, int count) {
         if (className == null) return null;
         if (count == 0) return className;
