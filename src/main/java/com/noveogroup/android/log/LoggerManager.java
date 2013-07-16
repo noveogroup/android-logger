@@ -164,8 +164,13 @@ public final class LoggerManager {
         if (name != null) {
             for (String key : HANDLER_MAP.keySet()) {
                 if (key != null && name.startsWith(key)) {
-                    if (currentKey == null || currentKey.length() < key.length()) {
-                        currentKey = key;
+                    // check that key corresponds to a name of sub-package
+                    if (key.length() >= name.length()
+                            || name.charAt(key.length()) == '.' || name.charAt(key.length()) == '$') {
+                        // update current best matching key
+                        if (currentKey == null || currentKey.length() < key.length()) {
+                            currentKey = key;
+                        }
                     }
                 }
             }
