@@ -32,10 +32,9 @@ package com.noveogroup.android.log;
  * This class gets logger using {@link LoggerManager#getLogger()} and
  * delegates calls to it.
  */
-// todo rename to Log
-public final class LOG {
+public final class Log {
 
-    private LOG() {
+    private Log() {
         throw new UnsupportedOperationException();
     }
 
