@@ -298,9 +298,13 @@ public class PatternHandler implements Handler {
             }
 
             // todo implement it
-            Log.println(level.intValue(),
-                    (tagPattern == null ? "" : tagPattern),
-                    (messagePattern == null ? "" : messagePattern) + message);
+            String tag = tagPattern == null ? "" : tagPattern;
+            String messageHead = messagePattern == null ? "" : messagePattern;
+            // todo move it into PatternHandler
+            if (!messageHead.isEmpty() && !Character.isWhitespace(messageHead.charAt(0))) {
+                messageHead = messageHead + " ";
+            }
+            Log.println(level.intValue(), tag, messageHead + message);
         }
     }
 
