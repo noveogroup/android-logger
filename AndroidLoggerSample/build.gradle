@@ -1,9 +1,9 @@
 apply plugin: 'android'
 
 dependencies {
-    compile files('libs/android-logger-1.2.1.jar')
-    compile files('libs/android-logger-1.2.1-javadoc.jar')
-    compile files('libs/android-logger-1.2.1-sources.jar')
+    compile files('libs/android-logger-1.2.3.jar')
+    compile files('libs/android-logger-1.2.3-javadoc.jar')
+    compile files('libs/android-logger-1.2.3-sources.jar')
 }
 
 android {

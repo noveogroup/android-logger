@@ -1,6 +1,6 @@
 package com.noveogroup.android.sample.log.downloader;
 
-import com.noveogroup.android.log.LOG;
+import com.noveogroup.android.log.Log;
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
 
@@ -22,7 +22,7 @@ public class Downloader {
                 LOGGER.i("start downloading ...");
                 try {
                     Thread.sleep(1000);
-                    LOG.e("... downloading ...");
+                    Log.e("... downloading ...");
                     Thread.sleep(1000);
                 } catch (InterruptedException ignored) {
                 }
