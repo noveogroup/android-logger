@@ -301,7 +301,7 @@ public class PatternHandler implements Handler {
             String tag = tagPattern == null ? "" : tagPattern;
             String messageHead = messagePattern == null ? "" : messagePattern;
             // todo move it into PatternHandler
-            if (!messageHead.isEmpty() && !Character.isWhitespace(messageHead.charAt(0))) {
+            if (messageHead.length() > 0 && !Character.isWhitespace(messageHead.charAt(0))) {
                 messageHead = messageHead + " ";
             }
             Log.println(level.intValue(), tag, messageHead + message);
