@@ -1,41 +1,50 @@
 <!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="android-logger : Useful logger for Android based on standard android.util.Log class. Simple lightweight (&lt; 50 Kb) implementation of SLF4J API. Easy but powerful configuration via properties file and some additional helpful logging methods. Easy analogue of popular log4j library." />
 
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-    <title>android-logger by noveogroup</title>
+    <title>android-logger</title>
   </head>
 
   <body>
-    <header>
-      <div class="inner">
-        <h1>android-logger</h1>
-        <h2>Useful logger for Android based on standard android.util.Log class. Simple lightweight (&lt; 50 Kb) implementation of SLF4J API. Easy but powerful configuration via properties file and some additional helpful logging methods. Easy analogue of popular log4j library.</h2>
-        <a href="https://github.com/noveogroup/android-logger" class="button"><small>View project on</small>GitHub</a>
-      </div>
-    </header>
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <h1>Android Logger</h1>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/noveogroup/android-logger">View on GitHub</a>
+
+          <h1 id="project_title">android-logger</h1>
+          <h2 id="project_tagline">Useful logger for Android based on standard android.util.Log class. Simple lightweight (&lt; 50 Kb) implementation of SLF4J API. Easy but powerful configuration via properties file and some additional helpful logging methods. Easy analogue of popular log4j library.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/noveogroup/android-logger/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/noveogroup/android-logger/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="android-logger" class="anchor" href="#android-logger"><span class="octicon octicon-link"></span></a>Android Logger</h1>
 
 <p>Useful logger for Android based on standard android.util.Log class.
 Simple lightweight (&lt; 50 Kb) implementation of SLF4J API. Easy but powerful
 configuration via properties file and some additional helpful logging methods.
 Easy analogue of popular log4j library.</p>
 
-<h2>Downloads</h2>
+<p><strong>Android SDK Version</strong>: API 7 [ Android 2.1 ]</p>
+
+<p><strong>Code Samples</strong>: <a href="https://github.com/noveogroup/android-logger/tree/sample">[here]</a></p>
+
+<h2>
+<a name="downloads" class="anchor" href="#downloads"><span class="octicon octicon-link"></span></a>Downloads</h2>
 
 <ul>
 <li><a href="https://github.com/noveogroup/android-logger/blob/gh-downloads/android-logger-1.2.1.jar?raw=true">android-logger-1.2.1.jar</a></li>
@@ -43,7 +52,8 @@ Easy analogue of popular log4j library.</p>
 <li><a href="https://github.com/noveogroup/android-logger/blob/gh-downloads/android-logger-1.2.1-javadoc.jar?raw=true">android-logger-1.2.1-javadoc.jar</a></li>
 </ul><p><a href="https://github.com/noveogroup/android-logger/tree/gh-downloads">Previous versions</a></p>
 
-<h2>Maven Dependency</h2>
+<h2>
+<a name="maven-dependency" class="anchor" href="#maven-dependency"><span class="octicon octicon-link"></span></a>Maven Dependency</h2>
 
 <pre><code>&lt;dependency&gt;
     &lt;groupId&gt;com.noveogroup.android&lt;/groupId&gt;
@@ -52,7 +62,21 @@ Easy analogue of popular log4j library.</p>
 &lt;/dependency&gt;
 </code></pre>
 
-<h2>Getting Started</h2>
+<h2>
+<a name="gradle-dependency" class="anchor" href="#gradle-dependency"><span class="octicon octicon-link"></span></a>Gradle Dependency</h2>
+
+<pre><code>'com.noveogroup.android:android-logger:1.2.1'
+</code></pre>
+
+<h2>
+<a name="forks" class="anchor" href="#forks"><span class="octicon octicon-link"></span></a>Forks</h2>
+
+<ul>
+<li>
+<a href="https://github.com/jromero/android-logger">jromero/android-logger</a>.
+Logging tags can be generated automatically using logger name.</li>
+</ul><h2>
+<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h2>
 
 <p>If you want to use Android Logger in your Android application you need to do
 just the following simple steps:</p>
@@ -80,14 +104,18 @@ logger.com.example.ui=MyApplication-UI
 <p>The configuration manages which log tag will be used to print messages and
 which logging level filter will be applied.</p>
 
-<pre><code>logger.&lt;package/classname&gt;=&lt;level&gt;:&lt;tag&gt;
+<pre><code>logger.&lt;package/classname&gt;=&lt;level&gt;:&lt;tag&gt;:&lt;message head&gt;
+# or
+logger.&lt;package/classname&gt;=&lt;level&gt;:&lt;tag&gt;
 # or
 logger.&lt;package/classname&gt;=&lt;tag&gt;
 </code></pre>
 
 <p>The rest of messages will be managed by root logger:</p>
 
-<pre><code>root=&lt;level&gt;:&lt;tag&gt;
+<pre><code>root=&lt;level&gt;:&lt;tag&gt;:&lt;message head&gt;
+# or
+root=&lt;level&gt;:&lt;tag&gt;
 # or
 root=&lt;tag&gt;
 </code></pre>
@@ -127,22 +155,23 @@ public class MainActivity extends Activity {
 </code></pre>
 
 <ul>
-<li>You can use LOG to make logging calls shorter.</li>
-</ul><p>Any call like LOG.someMethod() is equal to LoggerManager.getLogger().someMethod().
+<li>You can use Log class to make logging calls shorter.</li>
+</ul><p>Any call like Log.someMethod() is equal to LoggerManager.getLogger().someMethod().
 So, there will be some additional overhead to get a logger each time.</p>
 
-<pre><code>import static com.noveogroup.android.log.LOG;
+<pre><code>import static com.noveogroup.android.log.Log;
 
 public class Bar {
 
   public void foo() {
-    LOG.i("some log message");
+    Log.i("some log message");
   }
 
 }
 </code></pre>
 
-<h2>SLF4J compatibility</h2>
+<h2>
+<a name="slf4j-compatibility" class="anchor" href="#slf4j-compatibility"><span class="octicon octicon-link"></span></a>SLF4J compatibility</h2>
 
 <p>Android Logger is SLF4J compatible. For example, you can write such code in
 your library:</p>
@@ -176,17 +205,50 @@ critical for some Android applications.
 Android Logger is SLF4J compatible too. So you can just add its JAR as
 a library to get all your log messages in Android LogCat.</p>
 
-<h1>Known Issues</h1>
+<h2>
+<a name="logback" class="anchor" href="#logback"><span class="octicon octicon-link"></span></a>LOGBack</h2>
+
+<p>The main ideas of this library was integrated into LOGBack logger.
+The result is available at <a href="https://github.com/noveogroup/logback-android">https://github.com/noveogroup/logback-android</a>.
+You can download JAR file here: <a href="https://github.com/noveogroup/android-logger/blob/gh-downloads/logback-android-1.0.10-3-SNAPSHOT-android-logger.jar?raw=true">logback-android-1.0.10-3-SNAPSHOT-android-logger.jar</a></p>
+
+<p>Use ch.qos.logback.classic.android.Log class:</p>
+
+<pre><code>package com.example.ui;
+
+import ch.qos.logback.classic.android.Log;
+
+public class MainActivity extends Activity {
+
+  private void foo(int value) {
+    Log.i("entered MainActivity::foo value=%d", value);
+
+    try {
+      // some code
+    } catch(IOException e) {
+      Log.e("I/O error occurred", e);
+    }
+  }
+
+}
+</code></pre>
+
+<h1>
+<a name="known-issues" class="anchor" href="#known-issues"><span class="octicon octicon-link"></span></a>Known Issues</h1>
 
 <ol>
 <li>...</li>
-</ol><h1>Developed By</h1>
+</ol><h1>
+<a name="developed-by" class="anchor" href="#developed-by"><span class="octicon octicon-link"></span></a>Developed By</h1>
 
 <ul>
 <li><a href="http://noveogroup.com/">Noveo Group</a></li>
 <li>Pavel Stepanov - <a href="mailto:pstepanov@noveogroup.com">pstepanov@noveogroup.com</a>
 </li>
-</ul><h1>License</h1>
+<li>Margarita Kurushina - <a href="mailto:mkurushina@noveogroup.com">mkurushina@noveogroup.com</a>
+</li>
+</ul><h1>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h1>
 
 <pre><code>Copyright (c) 2013 Noveo Group
 
@@ -212,25 +274,18 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 </code></pre>
-        </section>
-
-        <aside id="sidebar">
-          <a href="https://github.com/noveogroup/android-logger/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/noveogroup/android-logger/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
-
-          <p class="repo-owner"><a href="https://github.com/noveogroup/android-logger"></a> is maintained by <a href="https://github.com/noveogroup">noveogroup</a>.</p>
-
-          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
+      </section>
     </div>
 
-  
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">android-logger maintained by <a href="https://github.com/noveogroup">noveogroup</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
   </body>
 </html>
