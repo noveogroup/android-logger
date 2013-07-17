@@ -69,12 +69,16 @@ The configuration manages which log tag will be used to print messages and
 which logging level filter will be applied.
 
 
+    logger.<package/classname>=<level>:<tag>:<message head>
+    # or
     logger.<package/classname>=<level>:<tag>
     # or
     logger.<package/classname>=<tag>
 
 The rest of messages will be managed by root logger:
 
+    root=<level>:<tag>:<message head>
+    # or
     root=<level>:<tag>
     # or
     root=<tag>
@@ -112,9 +116,9 @@ You can use LoggerManager to get a logger instance to print messages.
 
     }
 
- - You can use LOG to make logging calls shorter.
+ - You can use Log class to make logging calls shorter.
 
-Any call like LOG.someMethod() is equal to LoggerManager.getLogger().someMethod().
+Any call like Log.someMethod() is equal to LoggerManager.getLogger().someMethod().
 So, there will be some additional overhead to get a logger each time.
 
     import static com.noveogroup.android.log.Log;
@@ -122,7 +126,7 @@ So, there will be some additional overhead to get a logger each time.
     public class Bar {
 
       public void foo() {
-        LOG.i("some log message");
+        Log.i("some log message");
       }
 
     }
