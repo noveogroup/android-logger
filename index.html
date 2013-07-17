@@ -44,9 +44,9 @@ Easy analogue of popular log4j library.</p>
 <a name="downloads" class="anchor" href="#downloads"><span class="octicon octicon-link"></span></a>Downloads</h2>
 
 <ul>
-<li><a href="https://github.com/noveogroup/android-logger/blob/gh-downloads/android-logger-1.2.1.jar?raw=true">android-logger-1.2.1.jar</a></li>
-<li><a href="https://github.com/noveogroup/android-logger/blob/gh-downloads/android-logger-1.2.1-sources.jar?raw=true">android-logger-1.2.1-sources.jar</a></li>
-<li><a href="https://github.com/noveogroup/android-logger/blob/gh-downloads/android-logger-1.2.1-javadoc.jar?raw=true">android-logger-1.2.1-javadoc.jar</a></li>
+<li><a href="https://github.com/noveogroup/android-logger/blob/gh-downloads/android-logger-1.2.3.jar?raw=true">android-logger-1.2.3.jar</a></li>
+<li><a href="https://github.com/noveogroup/android-logger/blob/gh-downloads/android-logger-1.2.3-sources.jar?raw=true">android-logger-1.2.3-sources.jar</a></li>
+<li><a href="https://github.com/noveogroup/android-logger/blob/gh-downloads/android-logger-1.2.3-javadoc.jar?raw=true">android-logger-1.2.3-javadoc.jar</a></li>
 </ul><p><a href="https://github.com/noveogroup/android-logger/tree/gh-downloads">Previous versions</a></p>
 
 <h2>
@@ -55,14 +55,14 @@ Easy analogue of popular log4j library.</p>
 <pre><code>&lt;dependency&gt;
     &lt;groupId&gt;com.noveogroup.android&lt;/groupId&gt;
     &lt;artifactId&gt;android-logger&lt;/artifactId&gt;
-    &lt;version&gt;1.2.1&lt;/version&gt;
+    &lt;version&gt;1.2.3&lt;/version&gt;
 &lt;/dependency&gt;
 </code></pre>
 
 <h2>
 <a name="gradle-dependency" class="anchor" href="#gradle-dependency"><span class="octicon octicon-link"></span></a>Gradle Dependency</h2>
 
-<pre><code>'com.noveogroup.android:android-logger:1.2.1'
+<pre><code>'com.noveogroup.android:android-logger:1.2.3'
 </code></pre>
 
 <h2>
@@ -79,8 +79,8 @@ Logging tags can be generated automatically using logger name.</li>
 just the following simple steps:</p>
 
 <ul>
-<li><p>Add Android Logger as a library.</p></li>
-<li><p>You need to configure Android Logger</p></li>
+<li><p>Add Android Logger as a library OR add it as Maven or Gradle dependency.</p></li>
+<li><p>Configure Android Logger.</p></li>
 </ul><p>Place the following android-logger.properties file to your source directory (src/android-logger.properties):</p>
 
 <pre><code># Android Logger configuration example
@@ -202,40 +202,7 @@ critical for some Android applications.
 Android Logger is SLF4J compatible too. So you can just add its JAR as
 a library to get all your log messages in Android LogCat.</p>
 
-<h2>
-<a name="logback" class="anchor" href="#logback"><span class="octicon octicon-link"></span></a>LOGBack</h2>
-
-<p>The main ideas of this library was integrated into LOGBack logger.
-The result is available at <a href="https://github.com/noveogroup/logback-android">https://github.com/noveogroup/logback-android</a>.
-You can download JAR file here: <a href="https://github.com/noveogroup/android-logger/blob/gh-downloads/logback-android-1.0.10-3-SNAPSHOT-android-logger.jar?raw=true">logback-android-1.0.10-3-SNAPSHOT-android-logger.jar</a></p>
-
-<p>Use ch.qos.logback.classic.android.Log class:</p>
-
-<pre><code>package com.example.ui;
-
-import ch.qos.logback.classic.android.Log;
-
-public class MainActivity extends Activity {
-
-  private void foo(int value) {
-    Log.i("entered MainActivity::foo value=%d", value);
-
-    try {
-      // some code
-    } catch(IOException e) {
-      Log.e("I/O error occurred", e);
-    }
-  }
-
-}
-</code></pre>
-
 <h1>
-<a name="known-issues" class="anchor" href="#known-issues"><span class="octicon octicon-link"></span></a>Known Issues</h1>
-
-<ol>
-<li>...</li>
-</ol><h1>
 <a name="developed-by" class="anchor" href="#developed-by"><span class="octicon octicon-link"></span></a>Developed By</h1>
 
 <ul>
