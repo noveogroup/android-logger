@@ -192,11 +192,6 @@ Use ch.qos.logback.classic.android.Log class:
 
     }
 
-Known Issues
-============
-
-1. ...
-
 Developed By
 ============
 
