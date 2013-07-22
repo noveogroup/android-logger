@@ -26,11 +26,6 @@
 
 package com.noveogroup.android.log;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public final class Utils {
 
     private Utils() {
@@ -116,6 +111,45 @@ public final class Utils {
      */
     public static StackTraceElement getCaller() {
         return getCallerStackTrace();
+    }
+
+    /**
+     * Shorten string
+     *
+     * @param string modified string.
+     * @param count the desired minimum length of result.
+     * @param length the desired maximum of string length.
+     * <p/>
+     * <table border=1>
+     * <tr>
+     * <th>Example</th>
+     * <th>Result</th>
+     * </tr>
+     * <tr> <td>%6(text)</td>   <td><pre>'  text'</pre></td> </tr>
+     * <tr> <td>%-6(text)</td>  <td><pre>'text  '</pre></td> </tr>
+     * <tr> <td>%.3(text)</td>  <td><pre>'tex'</pre></td>    </tr>
+     * <tr> <td>%.-3(text)</td> <td><pre>'ext'</pre></td>    </tr>
+     * </table>
+     */
+    public static String shorten(String string, int count, int length) {
+
+        if (string == null) return null;
+
+        String resultString = string;
+        if (Math.abs(length) < resultString.length()) {
+            if (length > 0)
+                resultString = string.substring(0, length);
+            if (length < 0)
+                resultString = string.substring(string.length() + length, string.length());
+        }
+
+        if (Math.abs(count) > resultString.length()) {
+            if (count != 0) {
+                return String.format("%" + count + "s", resultString);
+            }
+        }
+
+        return resultString;
     }
 
     /**
