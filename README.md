@@ -33,12 +33,6 @@ Gradle Dependency
 
     'com.noveogroup.android:android-logger:1.3.0'
 
-Forks
------
-
- - [jromero/android-logger](https://github.com/jromero/android-logger).
-   Logging tags can be generated automatically using logger name.
-
 Getting Started
 ---------------
 
