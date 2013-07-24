@@ -84,9 +84,8 @@ public abstract class Pattern {
         @Override
         protected String doApply(StackTraceElement caller, String loggerName, Logger.Level level) {
             if (caller == null) {
-               throw new IllegalArgumentException("Caller not found");
-            }
-            else return Utils.shortenClassName(caller.toString(), callerCount, callerLength);
+                throw new IllegalArgumentException("Caller not found");
+            } else return Utils.shortenClassName(caller.toString(), callerCount, callerLength);
         }
 
         @Override
@@ -148,20 +147,26 @@ public abstract class Pattern {
         return false;
     }
 
-    // %d{HH:mm:ss} %5level %60(%logger{30,30} %caller{30,30}):%n
     public static class Compiler {
 
         private String patternString;
-        private  int position;
+        private int position;
         private List<ConcatenatePattern> queue;
 
+        private final String PERCENT_REGEX = "%%";
+        private final String NEWLINE_REGEX = "%n";
+        private final String LEVEL_REGEX = "%(\\d+)?(\\.(\\d+))?level";
+        private final String LOGGER_REGEX = "%(\\d+)?(\\.(\\d+))?logger(\\{(\\d+)?(\\.(\\d+))?\\})?";
+        private final String CALLER_REGEX = "%(\\d+)?(\\.(\\d+))?caller(\\{(\\d+)?(\\.(\\d+))?\\})?";
+        private final String DATE_REGEX = "date(\\{(.*?)\\})?";
+        private final String CONCAT_REGEX  = "%(\\d+)?(\\.(\\d+))?(";
 
         public Pattern compile(String string) {
             position = 0;
             queue = new ArrayList<ConcatenatePattern>();
             queue.add(new ConcatenatePattern(0, 0, new ArrayList<Pattern>()));
 
-            while (string.length() > position + 1) {
+            while (string.length() > position) {
                 int index = string.indexOf("%", position);
                 if (index == -1) {
                     queue.get(queue.size() - 1).addPattern(new PlainPattern(0, 0, string.substring(position)));
@@ -177,31 +182,58 @@ public abstract class Pattern {
         }
 
         private void parse(String string) {
-            Matcher matcher = java.util.regex.Pattern.compile("%%").matcher(string);
+
+            Matcher matcher = java.util.regex.Pattern.compile(PERCENT_REGEX).matcher(string);
             if (matcher.find(position)) {
                 queue.get(queue.size() - 1).addPattern(new PlainPattern(0, 0, "%"));
                 position = matcher.end();
                 return;
             }
-            matcher = java.util.regex.Pattern.compile("%n").matcher(string);
+            matcher = java.util.regex.Pattern.compile(NEWLINE_REGEX).matcher(string);
             if (matcher.find(position)) {
                 queue.get(queue.size() - 1).addPattern(new PlainPattern(0, 0, "\n"));
                 position = matcher.end();
                 return;
             }
-            matcher = java.util.regex.Pattern.compile("%(\\d)?(\\.(\\d))?level").matcher(string);
+            matcher = java.util.regex.Pattern.compile(LEVEL_REGEX).matcher(string);
             if (matcher.find(position)) {
-                int count = Integer.parseInt(matcher.group(1));
-                int length = Integer.parseInt(matcher.group(3));
+                int count = Integer.parseInt(matcher.group(1) == null ? "0" : matcher.group(1));
+                int length = Integer.parseInt(matcher.group(3) == null ? "0" : matcher.group(3));
                 queue.get(queue.size() - 1).addPattern(new LevelPattern(count, length));
                 position = matcher.end();
                 return;
             }
-            else {
-                throw new IllegalArgumentException();
+            matcher = java.util.regex.Pattern.compile(LOGGER_REGEX).matcher(string);
+            if (matcher.find(position)) {
+                int count = Integer.parseInt(matcher.group(1) == null ? "0" : matcher.group(1));
+                int length = Integer.parseInt(matcher.group(3) == null ? "0" : matcher.group(3));
+                int countLogger = Integer.parseInt(matcher.group(5) == null ? "0" : matcher.group(5));
+                int lengthLogger = Integer.parseInt(matcher.group(7) == null ? "0" : matcher.group(7));
+                queue.get(queue.size() - 1).addPattern(new LoggerPattern(count, length, countLogger, lengthLogger));
+                position = matcher.end();
+                return;
             }
-        }
+            matcher = java.util.regex.Pattern.compile(CALLER_REGEX).matcher(string);
+            if (matcher.find(position)) {
+                int count = Integer.parseInt(matcher.group(1) == null ? "0" : matcher.group(1));
+                int length = Integer.parseInt(matcher.group(3) == null ? "0" : matcher.group(3));
+                int countCaller = Integer.parseInt(matcher.group(5) == null ? "0" : matcher.group(5));
+                int lengthCaller = Integer.parseInt(matcher.group(7) == null ? "0" : matcher.group(7));
+                queue.get(queue.size() - 1).addPattern(new CallerPattern(count, length, countCaller, lengthCaller));
+                position = matcher.end();
+                return;
+            }
+            matcher = java.util.regex.Pattern.compile(DATE_REGEX).matcher(string);
+            if (matcher.find(position)) {
+                String dateFormat = matcher.group(2);
+                queue.get(queue.size() - 1).addPattern(new DatePattern(0, 0, dateFormat));
+                position = matcher.end();
+                return;
+            }
 
+
+            throw new IllegalArgumentException();
+        }
 
 
         // "date({(.*?)})?"

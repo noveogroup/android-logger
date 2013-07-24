@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.regex.Matcher;
 
 public class PatternTest {
 
@@ -73,25 +74,41 @@ public class PatternTest {
 
         Pattern.Compiler compiler = new Pattern.Compiler();
 
-        Assert.assertEquals("abc%de", compiler.compile("abc%%de").apply(caller, loggerName, level));
+        Assert.assertEquals("%e", compiler.compile("%%e").apply(caller, loggerName, level));
         Assert.assertEquals("abc\nde", compiler.compile("abc%nde").apply(caller, loggerName, level));
         Assert.assertEquals("%de", compiler.compile("%%de").apply(caller, loggerName, level));
         Assert.assertEquals("%\nde", compiler.compile("%%%nde").apply(caller, loggerName, level));
         Assert.assertEquals("%%%", compiler.compile("%%%%%%").apply(caller, loggerName, level));
 
         Assert.assertEquals("D", compiler.compile("%1.1level").apply(caller, loggerName, level));
+        Assert.assertEquals("abc%de\nfD", compiler.compile("abc%%de%nf%1.1level").apply(caller, loggerName, level));
 
-/*
-        Matcher matcher = java.util.regex.Pattern.compile("%(\\d)?(\\.(\\d))?level").matcher("%1.1level");
-
-        Assert.assertEquals(true, matcher.find(0));
-
-       Integer count = Integer.decode(matcher.group(1));
-       Integer length = Integer.decode(matcher.group(2).substring(2));
+        Assert.assertEquals("com.noveo.android", compiler.compile("%logger").apply(caller, loggerName, level));
+        Assert.assertEquals("com.noveo.android&main", compiler.compile("%logger&main").apply(caller, loggerName, level));
+        Assert.assertEquals("abc%de\nfc", compiler.compile("abc%%de%nf%1.1logger{1}").apply(caller, loggerName, level));
 
 
-        Assert.assertEquals( new Integer(1) , count);
-        Assert.assertEquals(new Integer(1), Integer.decode(matcher.group(2).substring(2)));*/
+        /*Matcher matcher = java.util.regex.Pattern.compile("^%(\\d+)?(\\.(\\d+))?logger(\\{(\\d+)?(\\.(\\d+))?\\})?").matcher("a%12logger{32.466}");
+
+        Assert.assertEquals(true, matcher.find());
+
+        int count = Integer.parseInt(matcher.group(1));
+        int length = Integer.parseInt(matcher.group(3) == null ? "0" : matcher.group(3));
+        int countLogger = Integer.parseInt(matcher.group(5));
+        int lengthLogger = Integer.parseInt(matcher.group(7));
+
+        Assert.assertEquals(12, count);
+        Assert.assertEquals(0, length);
+        Assert.assertEquals(32, countLogger);
+        Assert.assertEquals(466, lengthLogger);*/
+
+        Matcher matcher = java.util.regex.Pattern.compile("date(\\{(.*?)\\})?").matcher("%date{HH:mm:ss}");
+        Assert.assertEquals(true, matcher.find());
+
+        String dateFormat = matcher.group(2);
+
+        Assert.assertEquals("HH:mm:ss", dateFormat);
+
 
     }
 
