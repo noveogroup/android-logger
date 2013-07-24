@@ -33,7 +33,12 @@ public abstract class Pattern {
 
         public DatePattern(int count, int length, String dateFormat) {
             super(count, length);
-            this.dateFormat = new SimpleDateFormat(dateFormat);
+            if (dateFormat != null) {
+                this.dateFormat = new SimpleDateFormat(dateFormat);
+            } else {
+                this.dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+            }
+
         }
 
         @Override
@@ -150,7 +155,14 @@ public abstract class Pattern {
     }
 
     public static Pattern compile(String pattern) {
-        return new Compiler().compile(pattern);
+        try {
+            return new Compiler().compile(pattern);
+        } catch (Exception e) {
+            LoggerManager.getLogger(Logger.ROOT_LOGGER_NAME)
+                    .e(e, "cannot parse pattern: '%s'", pattern);
+            return new PlainPattern(0, 0, pattern);
+        }
+
     }
 
     public static class Compiler {
@@ -170,7 +182,7 @@ public abstract class Pattern {
         private final java.util.regex.Pattern CALLER_PATTERN =
                 java.util.regex.Pattern.compile("%(\\d+)?(\\.(\\d+))?caller(\\{(\\d+)?(\\.(\\d+))?\\})?");
         private final java.util.regex.Pattern DATE_PATTERN =
-                java.util.regex.Pattern.compile("%date(\\{(.*?)\\})?");
+                java.util.regex.Pattern.compile("%date(\\{?(.*?)\\}?)?");
         private final java.util.regex.Pattern CONCATENATE_PATTERN =
                 java.util.regex.Pattern.compile("%(\\d+)?(\\.(\\d+))?\\(");
         private final java.util.regex.Pattern DATE_PATTERN_SHORT =
