@@ -156,7 +156,7 @@ public abstract class Pattern {
 
     public static Pattern compile(String pattern) {
         try {
-            return new Compiler().compile(pattern);
+            return pattern == null ? null : new Compiler().compile(pattern);
         } catch (Exception e) {
             LoggerManager.getLogger(Logger.ROOT_LOGGER_NAME)
                     .e(e, "cannot parse pattern: '%s'", pattern);
@@ -195,6 +195,10 @@ public abstract class Pattern {
                 java.util.regex.Pattern.compile("%(\\d+)?(\\.(\\d+))?C(\\{(\\d+)?(\\.(\\d+))?\\})?");
 
         public Pattern compile(String string) {
+            if (string == null) {
+                return null;
+            }
+
             this.position = 0;
             this.patternString = string;
             this.queue = new ArrayList<ConcatenatePattern>();
