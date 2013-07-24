@@ -87,6 +87,8 @@ public class PatternTest {
         Assert.assertEquals("com.noveo.android&main", compiler.compile("%logger&main").apply(caller, loggerName, level));
         Assert.assertEquals("abc%de\nfc", compiler.compile("abc%%de%nf%1.1logger{1}").apply(caller, loggerName, level));
 
+        Assert.assertEquals("%\nde%", compiler.compile("%%%nde%%").apply(caller, loggerName, level));
+
 
         /*Matcher matcher = java.util.regex.Pattern.compile("^%(\\d+)?(\\.(\\d+))?logger(\\{(\\d+)?(\\.(\\d+))?\\})?").matcher("a%12logger{32.466}");
 
@@ -102,8 +104,9 @@ public class PatternTest {
         Assert.assertEquals(32, countLogger);
         Assert.assertEquals(466, lengthLogger);*/
 
-        Matcher matcher = java.util.regex.Pattern.compile("date(\\{(.*?)\\})?").matcher("%date{HH:mm:ss}");
-        Assert.assertEquals(true, matcher.find());
+        Matcher matcher = java.util.regex.Pattern.compile("%date(\\{(.*?)\\})?").matcher("blabla%date{HH:mm:ss}blbla");
+
+        Assert.assertEquals(true, matcher.find(0));
 
         String dateFormat = matcher.group(2);
 
