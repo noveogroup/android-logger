@@ -1,4 +1,4 @@
 Android Logger Sample
 =====================
 
-__Android Logger Version__: 1.2.1
+__Android Logger Version__: 1.3.0
