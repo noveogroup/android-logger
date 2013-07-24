@@ -6,6 +6,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 
+/**
+ * This class responsible for formatting messages for {@link PatternHandler}.
+ */
 public abstract class Pattern {
 
     public static class PlainPattern extends Pattern {
@@ -146,81 +149,88 @@ public abstract class Pattern {
         return false;
     }
 
+    public static Pattern compile(String pattern) {
+        return new Compiler().compile(pattern);
+    }
+
     public static class Compiler {
 
+        private String patternString;
         private int position;
         private List<ConcatenatePattern> queue;
 
-        private final java.util.regex.Pattern PERCENT_PATTERN = java.util.regex.Pattern.compile("%%");
-        private final java.util.regex.Pattern NEWLINE_PATTERN = java.util.regex.Pattern.compile("%n");
-        private final java.util.regex.Pattern LEVEL_PATTERN = java.util.regex.Pattern.compile("%(\\d+)?(\\.(\\d+))?level");
-        private final java.util.regex.Pattern LOGGER_PATTERN = java.util.regex.Pattern.compile("%(\\d+)?(\\.(\\d+))?logger(\\{(\\d+)?(\\.(\\d+))?\\})?");
-        private final java.util.regex.Pattern CALLER_PATTERN = java.util.regex.Pattern.compile("%(\\d+)?(\\.(\\d+))?caller(\\{(\\d+)?(\\.(\\d+))?\\})?");
-        private final java.util.regex.Pattern DATE_PATTERN = java.util.regex.Pattern.compile("%date(\\{(.*?)\\})?");
-        private final java.util.regex.Pattern DATE_PATTERN_SHORT = java.util.regex.Pattern.compile("%d(\\{(.*?)\\})?");
-        private final java.util.regex.Pattern LEVEL_PATTERN_SHORT = java.util.regex.Pattern.compile("%(\\d+)?(\\.(\\d+))?p");
-        private final java.util.regex.Pattern LOGGER_PATTERN_SHORT = java.util.regex.Pattern.compile("%(\\d+)?(\\.(\\d+))?c(\\{(\\d+)?(\\.(\\d+))?\\})?");
-        private final java.util.regex.Pattern CALLER_PATTERN_SHORT = java.util.regex.Pattern.compile("%(\\d+)?(\\.(\\d+))?C(\\{(\\d+)?(\\.(\\d+))?\\})?");
-
-
+        private final java.util.regex.Pattern PERCENT_PATTERN =
+                java.util.regex.Pattern.compile("%%");
+        private final java.util.regex.Pattern NEWLINE_PATTERN =
+                java.util.regex.Pattern.compile("%n");
+        private final java.util.regex.Pattern LEVEL_PATTERN =
+                java.util.regex.Pattern.compile("%(\\d+)?(\\.(\\d+))?level");
+        private final java.util.regex.Pattern LOGGER_PATTERN =
+                java.util.regex.Pattern.compile("%(\\d+)?(\\.(\\d+))?logger(\\{(\\d+)?(\\.(\\d+))?\\})?");
+        private final java.util.regex.Pattern CALLER_PATTERN =
+                java.util.regex.Pattern.compile("%(\\d+)?(\\.(\\d+))?caller(\\{(\\d+)?(\\.(\\d+))?\\})?");
+        private final java.util.regex.Pattern DATE_PATTERN =
+                java.util.regex.Pattern.compile("%date(\\{(.*?)\\})?");
+        private final java.util.regex.Pattern CONCATENATE_PATTERN =
+                java.util.regex.Pattern.compile("%(\\d+)?(\\.(\\d+))?\\(");
+        private final java.util.regex.Pattern DATE_PATTERN_SHORT =
+                java.util.regex.Pattern.compile("%d(\\{(.*?)\\})?");
+        private final java.util.regex.Pattern LEVEL_PATTERN_SHORT =
+                java.util.regex.Pattern.compile("%(\\d+)?(\\.(\\d+))?p");
+        private final java.util.regex.Pattern LOGGER_PATTERN_SHORT =
+                java.util.regex.Pattern.compile("%(\\d+)?(\\.(\\d+))?c(\\{(\\d+)?(\\.(\\d+))?\\})?");
+        private final java.util.regex.Pattern CALLER_PATTERN_SHORT =
+                java.util.regex.Pattern.compile("%(\\d+)?(\\.(\\d+))?C(\\{(\\d+)?(\\.(\\d+))?\\})?");
 
         public Pattern compile(String string) {
-            position = 0;
-            queue = new ArrayList<ConcatenatePattern>();
+            this.position = 0;
+            this.patternString = string;
+            this.queue = new ArrayList<ConcatenatePattern>();
             queue.add(new ConcatenatePattern(0, 0, new ArrayList<Pattern>()));
 
             while (string.length() > position) {
+
                 int index = string.indexOf("%", position);
+                int bracketIndex = string.indexOf(")", position);
+                if (queue.size() > 1 && bracketIndex < index) {
+                    queue.get(queue.size() - 1).addPattern(new PlainPattern(0, 0, string.substring(position, bracketIndex)));
+                    queue.get(queue.size() - 2).addPattern(queue.remove(queue.size() - 1));
+                    position = bracketIndex + 1;
+                }
                 if (index == -1) {
                     queue.get(queue.size() - 1).addPattern(new PlainPattern(0, 0, string.substring(position)));
                     break;
                 } else {
                     queue.get(queue.size() - 1).addPattern(new PlainPattern(0, 0, string.substring(position, index)));
                     position = index;
-                    parse(string);
+                    parse();
                 }
             }
 
             return queue.get(0);
         }
 
-        private void parse(String string) {
-            //todo add function - params: patterns, return matcher
-            //todo add shorten patterns with order
-            //todo add javaDoc
-            //todo add concatenate regex
-            Matcher matcher = PERCENT_PATTERN.matcher(string);
-            if (matcher.find(position) && matcher.start() == position) {
+        private void parse() {
+            Matcher matcher;
+            if ((matcher = findPattern(PERCENT_PATTERN)) != null) {
                 queue.get(queue.size() - 1).addPattern(new PlainPattern(0, 0, "%"));
                 position = matcher.end();
                 return;
             }
-            matcher = NEWLINE_PATTERN.matcher(string);
-            if (matcher.find(position) && matcher.start() == position) {
+            if ((matcher = findPattern(NEWLINE_PATTERN)) != null) {
                 queue.get(queue.size() - 1).addPattern(new PlainPattern(0, 0, "\n"));
                 position = matcher.end();
                 return;
             }
-            matcher = LEVEL_PATTERN.matcher(string);
-            if (matcher.find(position) && matcher.start() == position) {
+            if ((matcher = findPattern(LEVEL_PATTERN)) != null || (matcher = findPattern(LEVEL_PATTERN_SHORT)) != null) {
                 int count = Integer.parseInt(matcher.group(1) == null ? "0" : matcher.group(1));
                 int length = Integer.parseInt(matcher.group(3) == null ? "0" : matcher.group(3));
                 queue.get(queue.size() - 1).addPattern(new LevelPattern(count, length));
                 position = matcher.end();
                 return;
             }
-            matcher = LOGGER_PATTERN.matcher(string);
-            if (matcher.find(position) && matcher.start() == position) {
-                int count = Integer.parseInt(matcher.group(1) == null ? "0" : matcher.group(1));
-                int length = Integer.parseInt(matcher.group(3) == null ? "0" : matcher.group(3));
-                int countLogger = Integer.parseInt(matcher.group(5) == null ? "0" : matcher.group(5));
-                int lengthLogger = Integer.parseInt(matcher.group(7) == null ? "0" : matcher.group(7));
-                queue.get(queue.size() - 1).addPattern(new LoggerPattern(count, length, countLogger, lengthLogger));
-                position = matcher.end();
-                return;
-            }
-            matcher = CALLER_PATTERN.matcher(string);
-            if (matcher.find(position) && matcher.start() == position) {
+            // the order is important because short logger pattern may match long caller occurrence
+            if ((matcher = findPattern(CALLER_PATTERN)) != null || (matcher = findPattern(CALLER_PATTERN_SHORT)) != null) {
                 int count = Integer.parseInt(matcher.group(1) == null ? "0" : matcher.group(1));
                 int length = Integer.parseInt(matcher.group(3) == null ? "0" : matcher.group(3));
                 int countCaller = Integer.parseInt(matcher.group(5) == null ? "0" : matcher.group(5));
@@ -229,10 +239,25 @@ public abstract class Pattern {
                 position = matcher.end();
                 return;
             }
-            matcher = DATE_PATTERN.matcher(string);
-            if (matcher.find(position) && matcher.start() == position) {
+            if ((matcher = findPattern(LOGGER_PATTERN)) != null || (matcher = findPattern(LOGGER_PATTERN_SHORT)) != null) {
+                int count = Integer.parseInt(matcher.group(1) == null ? "0" : matcher.group(1));
+                int length = Integer.parseInt(matcher.group(3) == null ? "0" : matcher.group(3));
+                int countLogger = Integer.parseInt(matcher.group(5) == null ? "0" : matcher.group(5));
+                int lengthLogger = Integer.parseInt(matcher.group(7) == null ? "0" : matcher.group(7));
+                queue.get(queue.size() - 1).addPattern(new LoggerPattern(count, length, countLogger, lengthLogger));
+                position = matcher.end();
+                return;
+            }
+            if ((matcher = findPattern(DATE_PATTERN)) != null || (matcher = findPattern(DATE_PATTERN_SHORT)) != null) {
                 String dateFormat = matcher.group(2);
                 queue.get(queue.size() - 1).addPattern(new DatePattern(0, 0, dateFormat));
+                position = matcher.end();
+                return;
+            }
+            if ((matcher = findPattern(CONCATENATE_PATTERN)) != null) {
+                int count = Integer.parseInt(matcher.group(1) == null ? "0" : matcher.group(1));
+                int length = Integer.parseInt(matcher.group(3) == null ? "0" : matcher.group(3));
+                queue.add(new ConcatenatePattern(count, length, new ArrayList<Pattern>()));
                 position = matcher.end();
                 return;
             }
@@ -240,7 +265,10 @@ public abstract class Pattern {
             throw new IllegalArgumentException();
         }
 
-        //
+        private Matcher findPattern(java.util.regex.Pattern pattern) {
+            Matcher matcher = pattern.matcher(patternString);
+            return matcher.find(position) && matcher.start() == position ? matcher : null;
+        }
 
     }
 

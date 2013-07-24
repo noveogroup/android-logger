@@ -1,16 +1,16 @@
-package com.noveogroup.android.log;
+package com.example;
 
+import com.noveogroup.android.log.Logger;
+import com.noveogroup.android.log.Pattern;
+import com.noveogroup.android.log.Utils;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.regex.Matcher;
 
 public class PatternTest {
-
-    // %d{HH:mm:ss} %5level %60(%logger{30,30} %caller{30,30}):%n
 
     StackTraceElement caller = Utils.getCaller();
     Logger.Level level = Logger.Level.DEBUG;
@@ -24,11 +24,8 @@ public class PatternTest {
     Pattern loggerPattern = new Pattern.LoggerPattern(0, 0, 30, 0);
     Pattern callerPattern = new Pattern.CallerPattern(0, 0, 30, 0);
 
-    ArrayList<Pattern> patterns = new ArrayList<Pattern>();
-    Pattern concatenatePattern = new Pattern.ConcatenatePattern(0, 0, patterns);
-
-    ArrayList<Pattern> patternsChild = new ArrayList<Pattern>();
-    Pattern concatenatePatternChild = new Pattern.ConcatenatePattern(60, 0, patternsChild);
+    Pattern.ConcatenatePattern concatenatePattern = new Pattern.ConcatenatePattern(0, 0, new ArrayList<Pattern>());
+    Pattern.ConcatenatePattern concatenatePatternChild = new Pattern.ConcatenatePattern(60, 0, new ArrayList<Pattern>());
 
 
     @Test
@@ -45,28 +42,28 @@ public class PatternTest {
         Assert.assertEquals("\n",
                 tabPattern.apply(caller, loggerName, level));
 
-        Assert.assertEquals("sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)",
+        Assert.assertEquals("com.example.PatternTest.<init>(PatternTest.java:15)",
                 callerPattern.apply(caller, loggerName, level));
 
         Assert.assertEquals("com.noveo.android",
                 loggerPattern.apply(caller, loggerName, level));
 
 
-        patterns.add(dataPattern);
-        patterns.add(spacePattern);
-        patterns.add(levelPattern);
-        patterns.add(spacePattern);
+        concatenatePattern.addPattern(dataPattern);
+        concatenatePattern.addPattern(spacePattern);
+        concatenatePattern.addPattern(levelPattern);
+        concatenatePattern.addPattern(spacePattern);
 
-        patternsChild.add(loggerPattern);
-        patternsChild.add(spacePattern);
-        patternsChild.add(callerPattern);
+        concatenatePatternChild.addPattern(loggerPattern);
+        concatenatePatternChild.addPattern(spacePattern);
+        concatenatePatternChild.addPattern(callerPattern);
 
-        patterns.add(concatenatePatternChild);
-        patterns.add(colonPattern);
-        patterns.add(tabPattern);
+        concatenatePattern.addPattern(concatenatePatternChild);
+        concatenatePattern.addPattern(colonPattern);
+        concatenatePattern.addPattern(tabPattern);
 
-      /*  Assert.assertEquals("log",
-                concatenatePattern.apply(caller, loggerName, level));*/
+        Assert.assertEquals("HH:mm:ss D com.noveo.android com.example.PatternTest.<init>(PatternTest.java:15):\n".substring(8),
+                concatenatePattern.apply(caller, loggerName, level).substring(8));
     }
 
     @Test
@@ -90,29 +87,13 @@ public class PatternTest {
         Assert.assertEquals("%\nde%", compiler.compile("%%%nde%%").apply(caller, loggerName, level));
 
 
-        /*Matcher matcher = java.util.regex.Pattern.compile("^%(\\d+)?(\\.(\\d+))?logger(\\{(\\d+)?(\\.(\\d+))?\\})?").matcher("a%12logger{32.466}");
+        Assert.assertEquals("D", compiler.compile("%1.1p").apply(caller, loggerName, level));
 
-        Assert.assertEquals(true, matcher.find());
+        Assert.assertEquals("com.example%com.noveo%", compiler.compile("%caller{2}%%%c{2}%%").apply(caller, loggerName, level));
 
-        int count = Integer.parseInt(matcher.group(1));
-        int length = Integer.parseInt(matcher.group(3) == null ? "0" : matcher.group(3));
-        int countLogger = Integer.parseInt(matcher.group(5));
-        int lengthLogger = Integer.parseInt(matcher.group(7));
-
-        Assert.assertEquals(12, count);
-        Assert.assertEquals(0, length);
-        Assert.assertEquals(32, countLogger);
-        Assert.assertEquals(466, lengthLogger);*/
-
-        Matcher matcher = java.util.regex.Pattern.compile("%date(\\{(.*?)\\})?").matcher("blabla%date{HH:mm:ss}blbla");
-
-        Assert.assertEquals(true, matcher.find(0));
-
-        String dateFormat = matcher.group(2);
-
-        Assert.assertEquals("HH:mm:ss", dateFormat);
-
-
+        Assert.assertEquals(
+                "HH:mm:ss DEBUG                  com.noveo.android com.example.PatternTest.*:\n".substring(8),
+                compiler.compile("%d{HH:mm:ss} %5level %60(%logger{30.30} %caller{30.30}):%n").apply(caller, loggerName, level).substring(8));
     }
 
 }
