@@ -73,15 +73,24 @@ public class UtilsTest {
         Assert.assertEquals(null, Utils.shorten(null, 0, 0));
         Assert.assertEquals("          ", Utils.shorten("", 10, 10));
 
-        Assert.assertEquals("  text", Utils.shorten("text", 6, 0));
-        Assert.assertEquals("text  ", Utils.shorten("text", -6, 0));
-        Assert.assertEquals("tex", Utils.shorten("text", 0, 3));
-        Assert.assertEquals("ext", Utils.shorten("text", 0, -3));
+        Assert.assertEquals("  text",
+                Utils.shorten("text", 6, 0));
+        Assert.assertEquals("text  ",
+                Utils.shorten("text", -6, 0));
+        Assert.assertEquals("tex",
+                Utils.shorten("text", 0, 3));
+        Assert.assertEquals("ext",
+                Utils.shorten("text", 0, -3));
 
-        Assert.assertEquals("   nov", Utils.shorten("noveogroup", 6, 3));
-        Assert.assertEquals("   oup", Utils.shorten("noveogroup", 6, -3));
-        Assert.assertEquals("noveogroup", Utils.shorten("noveogroup", 6, 0));
-        Assert.assertEquals("noveogroup", Utils.shorten("noveogroup", 0, 0));
-        Assert.assertEquals("noveogroup", Utils.shorten("noveogroup", 0, Integer.MAX_VALUE));
+        Assert.assertEquals("   nov",
+                Utils.shorten("noveogroup", 6, 3));
+        Assert.assertEquals("   oup",
+                Utils.shorten("noveogroup", 6, -3));
+        Assert.assertEquals("noveogroup",
+                Utils.shorten("noveogroup", 6, 0));
+        Assert.assertEquals("noveogroup",
+                Utils.shorten("noveogroup", 0, 0));
+        Assert.assertEquals("noveogroup",
+                Utils.shorten("noveogroup", 0, Integer.MAX_VALUE));
     }
 }
