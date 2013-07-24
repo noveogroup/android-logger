@@ -227,6 +227,8 @@ public class PatternHandler implements Handler {
     private final Logger.Level level;
     private final String tagPattern;
     private final String messagePattern;
+    private final Pattern compiledTagPattern;
+    private final Pattern compiledMessagePattern;
 
     /**
      * Creates new {@link PatternHandler}.
@@ -238,7 +240,9 @@ public class PatternHandler implements Handler {
     public PatternHandler(Logger.Level level, String tagPattern, String messagePattern) {
         this.level = level;
         this.tagPattern = tagPattern;
+        this.compiledTagPattern = Pattern.compile(tagPattern);
         this.messagePattern = messagePattern;
+        this.compiledMessagePattern = Pattern.compile(messagePattern);
     }
 
     /**
@@ -297,10 +301,15 @@ public class PatternHandler implements Handler {
                 }
             }
 
-            // todo implement it
-            String tag = tagPattern == null ? "" : tagPattern;
-            String messageHead = messagePattern == null ? "" : messagePattern;
-            // todo move it into PatternHandler
+            StackTraceElement caller = null;
+            if ((compiledTagPattern != null && compiledTagPattern.isCallerNeeded())
+                    || (compiledMessagePattern != null && compiledMessagePattern.isCallerNeeded())) {
+                caller = Utils.getCaller();
+            }
+
+            String tag = compiledTagPattern == null ? "" : compiledTagPattern.apply(caller, loggerName, level);
+            String messageHead = compiledMessagePattern == null ? "" : compiledMessagePattern.apply(caller, loggerName, level);
+
             if (messageHead.length() > 0 && !Character.isWhitespace(messageHead.charAt(0))) {
                 messageHead = messageHead + " ";
             }

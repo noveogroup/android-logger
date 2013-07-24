@@ -144,9 +144,8 @@ public final class Utils {
         }
 
         if (Math.abs(count) > resultString.length()) {
-            if (count != 0) {
-                return String.format("%" + count + "s", resultString);
-            }
+
+            return String.format("%" + count + "s", resultString);
         }
 
         return resultString;
