@@ -86,6 +86,8 @@ public class PatternTest {
 
         Assert.assertEquals("%\nde%", compiler.compile("%%%nde%%").apply(caller, loggerName, level));
 
+        compiler.compile("%d").apply(caller, loggerName, level);
+
 
         Assert.assertEquals("D", compiler.compile("%1.1p").apply(caller, loggerName, level));
 
