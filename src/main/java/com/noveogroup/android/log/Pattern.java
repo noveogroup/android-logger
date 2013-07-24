@@ -33,7 +33,12 @@ public abstract class Pattern {
 
         public DatePattern(int count, int length, String dateFormat) {
             super(count, length);
-            this.dateFormat = new SimpleDateFormat(dateFormat);
+            if (dateFormat != null) {
+                this.dateFormat = new SimpleDateFormat(dateFormat);
+            } else {
+                this.dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+            }
+
         }
 
         @Override
@@ -150,7 +155,14 @@ public abstract class Pattern {
     }
 
     public static Pattern compile(String pattern) {
-        return new Compiler().compile(pattern);
+        try {
+            return pattern == null ? null : new Compiler().compile(pattern);
+        } catch (Exception e) {
+            LoggerManager.getLogger(Logger.ROOT_LOGGER_NAME)
+                    .e(e, "cannot parse pattern: '%s'", pattern);
+            return new PlainPattern(0, 0, pattern);
+        }
+
     }
 
     public static class Compiler {
@@ -183,6 +195,10 @@ public abstract class Pattern {
                 java.util.regex.Pattern.compile("%(\\d+)?(\\.(\\d+))?C(\\{(\\d+)?(\\.(\\d+))?\\})?");
 
         public Pattern compile(String string) {
+            if (string == null) {
+                return null;
+            }
+
             this.position = 0;
             this.patternString = string;
             this.queue = new ArrayList<ConcatenatePattern>();
