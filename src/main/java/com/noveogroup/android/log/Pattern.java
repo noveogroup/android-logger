@@ -182,7 +182,7 @@ public abstract class Pattern {
         private final java.util.regex.Pattern CALLER_PATTERN =
                 java.util.regex.Pattern.compile("%(\\d+)?(\\.(\\d+))?caller(\\{(\\d+)?(\\.(\\d+))?\\})?");
         private final java.util.regex.Pattern DATE_PATTERN =
-                java.util.regex.Pattern.compile("%date(\\{?(.*?)\\}?)?");
+                java.util.regex.Pattern.compile("%date(\\{(.*?)\\})?");
         private final java.util.regex.Pattern CONCATENATE_PATTERN =
                 java.util.regex.Pattern.compile("%(\\d+)?(\\.(\\d+))?\\(");
         private final java.util.regex.Pattern DATE_PATTERN_SHORT =
