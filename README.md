@@ -169,8 +169,8 @@ Developed By
 ============
 
 * [Noveo Group][1]
-* Pavel Stepanov - <pstepanov@noveogroup.com>
-* Margarita Kurushina - <mkurushina@noveogroup.com>
+* [Pavel Stepanov](https://github.com/stefan-nsk) - <pstepanov@noveogroup.com>
+* [Margarita Kurushina](https://github.com/mymargaret) - <mkurushina@noveogroup.com>
 
 License
 =======
