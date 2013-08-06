@@ -115,7 +115,7 @@ You can use LoggerManager to get a logger instance to print messages.
 Any call like Log.someMethod() is equal to LoggerManager.getLogger().someMethod().
 So, there will be some additional overhead to get a logger each time.
 
-    import static com.noveogroup.android.log.Log;
+    import com.noveogroup.android.log.Log;
 
     public class Bar {
 
