@@ -98,7 +98,7 @@ public class AndroidLoggerAdapter extends MarkerIgnoringBase {
 
     @Override
     public void trace(String msg, Throwable t) {
-        log(Logger.Level.VERBOSE, msg);
+        log(Logger.Level.VERBOSE, msg, t);
     }
 
     @Override
@@ -128,7 +128,7 @@ public class AndroidLoggerAdapter extends MarkerIgnoringBase {
 
     @Override
     public void debug(String msg, Throwable t) {
-        log(Logger.Level.DEBUG, msg);
+        log(Logger.Level.DEBUG, msg, t);
     }
 
     @Override
@@ -158,7 +158,7 @@ public class AndroidLoggerAdapter extends MarkerIgnoringBase {
 
     @Override
     public void info(String msg, Throwable t) {
-        log(Logger.Level.INFO, msg);
+        log(Logger.Level.INFO, msg, t);
     }
 
     @Override
@@ -188,7 +188,7 @@ public class AndroidLoggerAdapter extends MarkerIgnoringBase {
 
     @Override
     public void warn(String msg, Throwable t) {
-        log(Logger.Level.WARN, msg);
+        log(Logger.Level.WARN, msg, t);
     }
 
     @Override
