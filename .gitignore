@@ -1,6 +1,7 @@
 # Gradle
 .gradle
 build
+local.properties
 
 # IntelliJ IDEA
 .idea

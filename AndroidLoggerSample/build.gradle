@@ -1,10 +1,18 @@
 apply plugin: 'android'
 
 dependencies {
-    compile 'com.noveogroup.android:android-logger:1.3.0'
+    compile 'com.noveogroup.android:android-logger:1.3.1'
+    compile 'org.slf4j:slf4j-api:1.7.5'
 }
 
 android {
-    compileSdkVersion 17
-    buildToolsVersion "17.0"
+    compileSdkVersion project.compileSdkVersion
+    buildToolsVersion project.buildToolsVersion
+
+    defaultConfig {
+        versionCode 1
+        versionName '1.0'
+        minSdkVersion project.minSdkVersion
+        targetSdkVersion project.targetSdkVersion
+    }
 }
