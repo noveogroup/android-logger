@@ -13,9 +13,9 @@ __Code Samples__: [[here]](https://github.com/noveogroup/android-logger/tree/sam
 Downloads
 ---------
 
- - [android-logger-1.3.0.jar](https://github.com/noveogroup/android-logger/blob/gh-downloads/android-logger-1.3.0.jar?raw=true)
- - [android-logger-1.3.0-sources.jar](https://github.com/noveogroup/android-logger/blob/gh-downloads/android-logger-1.3.0-sources.jar?raw=true)
- - [android-logger-1.3.0-javadoc.jar](https://github.com/noveogroup/android-logger/blob/gh-downloads/android-logger-1.3.0-javadoc.jar?raw=true)
+ - [android-logger-1.3.1.jar](https://github.com/noveogroup/android-logger/blob/gh-downloads/android-logger-1.3.1.jar?raw=true)
+ - [android-logger-1.3.1-sources.jar](https://github.com/noveogroup/android-logger/blob/gh-downloads/android-logger-1.3.1-sources.jar?raw=true)
+ - [android-logger-1.3.1-javadoc.jar](https://github.com/noveogroup/android-logger/blob/gh-downloads/android-logger-1.3.1-javadoc.jar?raw=true)
 
 [Previous versions](https://github.com/noveogroup/android-logger/tree/gh-downloads)
 
@@ -25,13 +25,13 @@ Maven Dependency
     <dependency>
         <groupId>com.noveogroup.android</groupId>
         <artifactId>android-logger</artifactId>
-        <version>1.3.0</version>
+        <version>1.3.1</version>
     </dependency>
 
 Gradle Dependency
 -----------------
 
-    'com.noveogroup.android:android-logger:1.3.0'
+    'com.noveogroup.android:android-logger:1.3.1'
 
 Getting Started
 ---------------
