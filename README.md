@@ -21,17 +21,19 @@ Downloads
 
 Maven Dependency
 ----------------
-
-    <dependency>
-        <groupId>com.noveogroup.android</groupId>
-        <artifactId>android-logger</artifactId>
-        <version>1.3.1</version>
-    </dependency>
+```xml
+<dependency>
+    <groupId>com.noveogroup.android</groupId>
+    <artifactId>android-logger</artifactId>
+    <version>1.3.1</version>
+</dependency>
+```
 
 Gradle Dependency
 -----------------
-
-    'com.noveogroup.android:android-logger:1.3.1'
+```groovy
+'com.noveogroup.android:android-logger:1.3.1'
+```
 
 Getting Started
 ---------------
@@ -45,37 +47,42 @@ just the following simple steps:
 
 Place the following android-logger.properties file to your source directory (src/android-logger.properties):
 
-    # Android Logger configuration example
-    
-    # By default logger will print only ERROR (and higher) messages
-    # with "MyApplication" tag
-    root=ERROR:MyApplication
-    
-    # DEBUG (and higher) messages from classes of com.example.database
-    # will be logged with "MyApplication-Database" tag
-    logger.com.example.database=DEBUG:MyApplication-Database
-    
-    # All messages from classes of com.example.ui will be logged with
-    # "MyApplication-UI" tag
-    logger.com.example.ui=MyApplication-UI
+```properties
+# Android Logger configuration example
+
+# By default logger will print only ERROR (and higher) messages
+# with "MyApplication" tag
+root=ERROR:MyApplication
+
+# DEBUG (and higher) messages from classes of com.example.database
+# will be logged with "MyApplication-Database" tag
+logger.com.example.database=DEBUG:MyApplication-Database
+
+# All messages from classes of com.example.ui will be logged with
+# "MyApplication-UI" tag
+logger.com.example.ui=MyApplication-UI
+```
 
 The configuration manages which log tag will be used to print messages and
 which logging level filter will be applied.
 
-
-    logger.<package/classname>=<level>:<tag>:<message head>
-    # or
-    logger.<package/classname>=<level>:<tag>
-    # or
-    logger.<package/classname>=<tag>
+```properties
+logger.<package/classname>=<level>:<tag>:<message head>
+# or
+logger.<package/classname>=<level>:<tag>
+# or
+logger.<package/classname>=<tag>
+```
 
 The rest of messages will be managed by root logger:
 
-    root=<level>:<tag>:<message head>
-    # or
-    root=<level>:<tag>
-    # or
-    root=<tag>
+```properties
+root=<level>:<tag>:<message head>
+# or
+root=<level>:<tag>
+# or
+root=<tag>
+```
 
 You can use VERBOSE, DEBUG, INFO, WARN, ERROR, ASSERT as level in
 configuration files.
@@ -84,46 +91,50 @@ configuration files.
 
 You can use LoggerManager to get a logger instance to print messages.
 
-    package com.example.ui;
+```java
+package com.example.ui;
 
-    import com.noveogroup.android.log.Logger;
-    import com.noveogroup.android.log.LoggerManager;
+import com.noveogroup.android.log.Logger;
+import com.noveogroup.android.log.LoggerManager;
 
-    public class MainActivity extends Activity {
+public class MainActivity extends Activity {
 
-      // get a logger instance by name
-      private static final Logger logger = LoggerManager.getLogger("com.example.ui.MyActivity");
-      // get a logger instance by class
-      private static final Logger logger = LoggerManager.getLogger(MainActivity.class);
-      // just to use current class
-      private static final Logger logger = LoggerManager.getLogger();
+  // get a logger instance by name
+  private static final Logger logger = LoggerManager.getLogger("com.example.ui.MyActivity");
+  // get a logger instance by class
+  private static final Logger logger = LoggerManager.getLogger(MainActivity.class);
+  // just to use current class
+  private static final Logger logger = LoggerManager.getLogger();
 
-      private void foo(int value) {
-        logger.i("entered MainActivity::foo value=%d", value);
-        
-        try {
-          // some code
-        } catch(IOException e) {
-          logger.e("I/O error occurred", e);
-        }
-      }
-
+  private void foo(int value) {
+    logger.i("entered MainActivity::foo value=%d", value);
+    
+    try {
+      // some code
+    } catch(IOException e) {
+      logger.e("I/O error occurred", e);
     }
+  }
+
+}
+```
 
  - You can use Log class to make logging calls shorter.
 
 Any call like Log.someMethod() is equal to LoggerManager.getLogger().someMethod().
 So, there will be some additional overhead to get a logger each time.
 
-    import com.noveogroup.android.log.Log;
+```java
+import com.noveogroup.android.log.Log;
 
-    public class Bar {
+public class Bar {
 
-      public void foo() {
-        Log.i("some log message");
-      }
+  public void foo() {
+    Log.i("some log message");
+  }
 
-    }
+}
+```
 
 SLF4J compatibility
 -------------------
@@ -131,24 +142,26 @@ SLF4J compatibility
 Android Logger is SLF4J compatible. For example, you can write such code in
 your library:
 
-    import org.slf4j.Logger;
-    import org.slf4j.LoggerFactory;
+```java
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-    public class Bar {
+public class Bar {
 
-      private static final Logger logger = LoggerFactory.getLogger(Bar.class);
+  private static final Logger logger = LoggerFactory.getLogger(Bar.class);
 
-      public void foo(int value) {
-        logger.info("entered Bar::foo value={}", value);
+  public void foo(int value) {
+    logger.info("entered Bar::foo value={}", value);
 
-        try {
-          // some code
-        } catch(IOException e) {
-          logger.error("I/O error occurred", e);
-        }
-      }
-
+    try {
+      // some code
+    } catch(IOException e) {
+      logger.error("I/O error occurred", e);
     }
+  }
+
+}
+```
 
 Suppose you compiled your library as JAR-file and publish it. After that anyone
 who uses your JAR library will be able to add any SLF4J implementation to
