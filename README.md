@@ -194,3 +194,7 @@ License
     THE SOFTWARE.
 
 [1]: http://noveogroup.com/
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/noveogroup/android-logger/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
