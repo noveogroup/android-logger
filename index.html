@@ -52,18 +52,18 @@ Easy analogue of popular log4j library.</p>
 <h2>
 <a name="maven-dependency" class="anchor" href="#maven-dependency"><span class="octicon octicon-link"></span></a>Maven Dependency</h2>
 
-<pre><code>&lt;dependency&gt;
-    &lt;groupId&gt;com.noveogroup.android&lt;/groupId&gt;
-    &lt;artifactId&gt;android-logger&lt;/artifactId&gt;
-    &lt;version&gt;1.3.1&lt;/version&gt;
-&lt;/dependency&gt;
-</code></pre>
+<div class="highlight highlight-xml"><pre><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>com.noveogroup.android<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>android-logger<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.3.1<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
 
 <h2>
 <a name="gradle-dependency" class="anchor" href="#gradle-dependency"><span class="octicon octicon-link"></span></a>Gradle Dependency</h2>
 
-<pre><code>'com.noveogroup.android:android-logger:1.3.1'
-</code></pre>
+<div class="highlight highlight-groovy"><pre><span class="s1">'com.noveogroup.android:android-logger:1.3.1'</span>
+</pre></div>
 
 <h2>
 <a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h2>
@@ -76,39 +76,39 @@ just the following simple steps:</p>
 <li><p>Configure Android Logger.</p></li>
 </ul><p>Place the following android-logger.properties file to your source directory (src/android-logger.properties):</p>
 
-<pre><code># Android Logger configuration example
+<div class="highlight highlight-properties"><pre><span class="c"># Android Logger configuration example</span>
 
-# By default logger will print only ERROR (and higher) messages
-# with "MyApplication" tag
-root=ERROR:MyApplication
+<span class="c"># By default logger will print only ERROR (and higher) messages</span>
+<span class="c"># with "MyApplication" tag</span>
+<span class="na">root</span><span class="o">=</span><span class="s">ERROR:MyApplication</span>
 
-# DEBUG (and higher) messages from classes of com.example.database
-# will be logged with "MyApplication-Database" tag
-logger.com.example.database=DEBUG:MyApplication-Database
+<span class="c"># DEBUG (and higher) messages from classes of com.example.database</span>
+<span class="c"># will be logged with "MyApplication-Database" tag</span>
+<span class="na">logger.com.example.database</span><span class="o">=</span><span class="s">DEBUG:MyApplication-Database</span>
 
-# All messages from classes of com.example.ui will be logged with
-# "MyApplication-UI" tag
-logger.com.example.ui=MyApplication-UI
-</code></pre>
+<span class="c"># All messages from classes of com.example.ui will be logged with</span>
+<span class="c"># "MyApplication-UI" tag</span>
+<span class="na">logger.com.example.ui</span><span class="o">=</span><span class="s">MyApplication-UI</span>
+</pre></div>
 
 <p>The configuration manages which log tag will be used to print messages and
 which logging level filter will be applied.</p>
 
-<pre><code>logger.&lt;package/classname&gt;=&lt;level&gt;:&lt;tag&gt;:&lt;message head&gt;
-# or
-logger.&lt;package/classname&gt;=&lt;level&gt;:&lt;tag&gt;
-# or
-logger.&lt;package/classname&gt;=&lt;tag&gt;
-</code></pre>
+<div class="highlight highlight-properties"><pre><span class="na">logger.&lt;package/classname&gt;</span><span class="o">=</span><span class="s">&lt;level&gt;:&lt;tag&gt;:&lt;message head&gt;</span>
+<span class="c"># or</span>
+<span class="na">logger.&lt;package/classname&gt;</span><span class="o">=</span><span class="s">&lt;level&gt;:&lt;tag&gt;</span>
+<span class="c"># or</span>
+<span class="na">logger.&lt;package/classname&gt;</span><span class="o">=</span><span class="s">&lt;tag&gt;</span>
+</pre></div>
 
 <p>The rest of messages will be managed by root logger:</p>
 
-<pre><code>root=&lt;level&gt;:&lt;tag&gt;:&lt;message head&gt;
-# or
-root=&lt;level&gt;:&lt;tag&gt;
-# or
-root=&lt;tag&gt;
-</code></pre>
+<div class="highlight highlight-properties"><pre><span class="na">root</span><span class="o">=</span><span class="s">&lt;level&gt;:&lt;tag&gt;:&lt;message head&gt;</span>
+<span class="c"># or</span>
+<span class="na">root</span><span class="o">=</span><span class="s">&lt;level&gt;:&lt;tag&gt;</span>
+<span class="c"># or</span>
+<span class="na">root</span><span class="o">=</span><span class="s">&lt;tag&gt;</span>
+</pre></div>
 
 <p>You can use VERBOSE, DEBUG, INFO, WARN, ERROR, ASSERT as level in
 configuration files.</p>
@@ -117,48 +117,48 @@ configuration files.</p>
 <li>You need to get logger instance to print messages</li>
 </ul><p>You can use LoggerManager to get a logger instance to print messages.</p>
 
-<pre><code>package com.example.ui;
+<div class="highlight highlight-java"><pre><span class="kn">package</span> <span class="n">com</span><span class="o">.</span><span class="na">example</span><span class="o">.</span><span class="na">ui</span><span class="o">;</span>
 
-import com.noveogroup.android.log.Logger;
-import com.noveogroup.android.log.LoggerManager;
+<span class="kn">import</span> <span class="nn">com.noveogroup.android.log.Logger</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.noveogroup.android.log.LoggerManager</span><span class="o">;</span>
 
-public class MainActivity extends Activity {
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainActivity</span> <span class="kd">extends</span> <span class="n">Activity</span> <span class="o">{</span>
 
-  // get a logger instance by name
-  private static final Logger logger = LoggerManager.getLogger("com.example.ui.MyActivity");
-  // get a logger instance by class
-  private static final Logger logger = LoggerManager.getLogger(MainActivity.class);
-  // just to use current class
-  private static final Logger logger = LoggerManager.getLogger();
+  <span class="c1">// get a logger instance by name</span>
+  <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">logger</span> <span class="o">=</span> <span class="n">LoggerManager</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="s">"com.example.ui.MyActivity"</span><span class="o">);</span>
+  <span class="c1">// get a logger instance by class</span>
+  <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">logger</span> <span class="o">=</span> <span class="n">LoggerManager</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">MainActivity</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="c1">// just to use current class</span>
+  <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">logger</span> <span class="o">=</span> <span class="n">LoggerManager</span><span class="o">.</span><span class="na">getLogger</span><span class="o">();</span>
 
-  private void foo(int value) {
-    logger.i("entered MainActivity::foo value=%d", value);
+  <span class="kd">private</span> <span class="kt">void</span> <span class="nf">foo</span><span class="o">(</span><span class="kt">int</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">logger</span><span class="o">.</span><span class="na">i</span><span class="o">(</span><span class="s">"entered MainActivity::foo value=%d"</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
 
-    try {
-      // some code
-    } catch(IOException e) {
-      logger.e("I/O error occurred", e);
-    }
-  }
+    <span class="k">try</span> <span class="o">{</span>
+      <span class="c1">// some code</span>
+    <span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">logger</span><span class="o">.</span><span class="na">e</span><span class="o">(</span><span class="s">"I/O error occurred"</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
 
-}
-</code></pre>
+<span class="o">}</span>
+</pre></div>
 
 <ul>
 <li>You can use Log class to make logging calls shorter.</li>
 </ul><p>Any call like Log.someMethod() is equal to LoggerManager.getLogger().someMethod().
 So, there will be some additional overhead to get a logger each time.</p>
 
-<pre><code>import com.noveogroup.android.log.Log;
+<div class="highlight highlight-java"><pre><span class="kn">import</span> <span class="nn">com.noveogroup.android.log.Log</span><span class="o">;</span>
 
-public class Bar {
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Bar</span> <span class="o">{</span>
 
-  public void foo() {
-    Log.i("some log message");
-  }
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">foo</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">Log</span><span class="o">.</span><span class="na">i</span><span class="o">(</span><span class="s">"some log message"</span><span class="o">);</span>
+  <span class="o">}</span>
 
-}
-</code></pre>
+<span class="o">}</span>
+</pre></div>
 
 <h2>
 <a name="slf4j-compatibility" class="anchor" href="#slf4j-compatibility"><span class="octicon octicon-link"></span></a>SLF4J compatibility</h2>
@@ -166,25 +166,25 @@ public class Bar {
 <p>Android Logger is SLF4J compatible. For example, you can write such code in
 your library:</p>
 
-<pre><code>import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+<div class="highlight highlight-java"><pre><span class="kn">import</span> <span class="nn">org.slf4j.Logger</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.slf4j.LoggerFactory</span><span class="o">;</span>
 
-public class Bar {
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Bar</span> <span class="o">{</span>
 
-  private static final Logger logger = LoggerFactory.getLogger(Bar.class);
+  <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">logger</span> <span class="o">=</span> <span class="n">LoggerFactory</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">Bar</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
 
-  public void foo(int value) {
-    logger.info("entered Bar::foo value={}", value);
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">foo</span><span class="o">(</span><span class="kt">int</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">logger</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"entered Bar::foo value={}"</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
 
-    try {
-      // some code
-    } catch(IOException e) {
-      logger.error("I/O error occurred", e);
-    }
-  }
+    <span class="k">try</span> <span class="o">{</span>
+      <span class="c1">// some code</span>
+    <span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">logger</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"I/O error occurred"</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
 
-}
-</code></pre>
+<span class="o">}</span>
+</pre></div>
 
 <p>Suppose you compiled your library as JAR-file and publish it. After that anyone
 who uses your JAR library will be able to add any SLF4J implementation to
@@ -252,6 +252,16 @@ THE SOFTWARE.
       </div>
     </div>
 
-  
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-52302473-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
   </body>
 </html>
