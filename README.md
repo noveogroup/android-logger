@@ -45,9 +45,8 @@ just the following simple steps:
 
  - Configure Android Logger.
 
-Place the following android-logger.properties file to your source directory (src/android-logger.properties):
+Place the following android-logger.properties file to your source directory (src/main/resources/android-logger.properties):
 
-```properties
 # Android Logger configuration example
 
 # By default logger will print only ERROR (and higher) messages
