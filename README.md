@@ -13,9 +13,9 @@ __Code Samples__: [[here]](https://github.com/noveogroup/android-logger/tree/sam
 Downloads
 ---------
 
- - [android-logger-1.3.2.jar](http://search.maven.org/remotecontent?filepath=com/noveogroup/android/android-logger/1.3.1/android-logger-1.3.2.jar)
- - [android-logger-1.3.2-sources.jar](http://search.maven.org/remotecontent?filepath=com/noveogroup/android/android-logger/1.3.1/android-logger-1.3.2-sources.jar)
- - [android-logger-1.3.2-javadoc.jar](http://search.maven.org/remotecontent?filepath=com/noveogroup/android/android-logger/1.3.1/android-logger-1.3.2-javadoc.jar)
+ - [android-logger-1.3.2.jar](http://search.maven.org/remotecontent?filepath=com/noveogroup/android/android-logger/1.3.2/android-logger-1.3.2.jar)
+ - [android-logger-1.3.2-sources.jar](http://search.maven.org/remotecontent?filepath=com/noveogroup/android/android-logger/1.3.2/android-logger-1.3.2-sources.jar)
+ - [android-logger-1.3.2-javadoc.jar](http://search.maven.org/remotecontent?filepath=com/noveogroup/android/android-logger/1.3.2/android-logger-1.3.2-javadoc.jar)
 
 Maven Dependency
 ----------------
