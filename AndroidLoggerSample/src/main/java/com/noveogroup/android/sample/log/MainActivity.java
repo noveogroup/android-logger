@@ -3,6 +3,7 @@ package com.noveogroup.android.sample.log;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+
 import com.noveogroup.android.log.Log;
 import com.noveogroup.android.sample.log.downloader.Downloader;
 
