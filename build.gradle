@@ -1,26 +1,19 @@
 buildscript {
-    repositories {
-        mavenCentral()
-    }
+    repositories { mavenCentral() }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.7.+'
+        classpath 'com.android.tools.build:gradle:0.12.2'
     }
 }
 
 allprojects {
-    version = '1.0'
+    repositories { mavenCentral() }
 
-    repositories {
-        mavenCentral()
-    }
-
-    project.ext {
+    ext {
         compileSdkVersion = 19
-        buildToolsVersion = "19.0.1"
-
-        minSdkVersion = 9
-        targetSdkVersion = 19
+        buildToolsVersion = "20.0.0"
     }
 }
 
-apply plugin: 'android-reporting'
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.12'
+}

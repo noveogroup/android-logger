@@ -1,9 +1,4 @@
-apply plugin: 'android'
-
-dependencies {
-    compile 'com.noveogroup.android:android-logger:1.3.1'
-    compile 'org.slf4j:slf4j-api:1.7.5'
-}
+apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion project.compileSdkVersion
@@ -12,7 +7,14 @@ android {
     defaultConfig {
         versionCode 1
         versionName '1.0'
-        minSdkVersion project.minSdkVersion
-        targetSdkVersion project.targetSdkVersion
+        minSdkVersion 9
+        targetSdkVersion project.compileSdkVersion
     }
+
+    lintOptions { abortOnError false }
+}
+
+dependencies {
+    compile 'com.noveogroup.android:android-logger:1.3.1'
+    compile 'org.slf4j:slf4j-api:1.7.5'
 }
