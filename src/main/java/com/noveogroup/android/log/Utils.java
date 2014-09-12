@@ -210,6 +210,7 @@ public final class Utils {
                     }
 
                     builder.insert(builder.length(), className.substring(index, className.length()));
+                    break;
                 } else {
                     if (builder.length() > 0
                             && i + 1 > maxLength) {

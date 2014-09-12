@@ -42,7 +42,7 @@ public class PatternTest {
         Assert.assertEquals("\n",
                 tabPattern.apply(caller, loggerName, level));
 
-        Assert.assertEquals("com.example.PatternTest.<init>(PatternTest.java:15)",
+        Assert.assertEquals("com.example.PatternTest#<init>:15",
                 callerPattern.apply(caller, loggerName, level));
 
         Assert.assertEquals("com.noveo.android",
@@ -62,7 +62,7 @@ public class PatternTest {
         concatenatePattern.addPattern(colonPattern);
         concatenatePattern.addPattern(tabPattern);
 
-        Assert.assertEquals("HH:mm:ss D com.noveo.android com.example.PatternTest.<init>(PatternTest.java:15):\n".substring(8),
+        Assert.assertEquals("HH:mm:ss D          com.noveo.android com.example.PatternTest#<init>:15:\n".substring(8),
                 concatenatePattern.apply(caller, loggerName, level).substring(8));
     }
 
@@ -94,9 +94,16 @@ public class PatternTest {
 
         Assert.assertEquals("com.example%com.noveo%", compiler.compile("%caller{2}%%%c{2}%%").apply(caller, loggerName, level));
 
+        Assert.assertEquals("PatternTest#<init>:15", compiler.compile("%caller{-2}").apply(caller, loggerName, level));
+        Assert.assertEquals("com.example", compiler.compile("%caller{+2}").apply(caller, loggerName, level));
+        Assert.assertEquals("*.PatternTest#<init>:15", compiler.compile("%caller{.-20}").apply(caller, loggerName, level));
+        Assert.assertEquals("com.example.*", compiler.compile("%caller{.+20}").apply(caller, loggerName, level));
+        Assert.assertEquals("PatternTest#<init>:15", compiler.compile("%caller{-2.-20}").apply(caller, loggerName, level));
+        Assert.assertEquals("com.example", compiler.compile("%caller{+2.+20}").apply(caller, loggerName, level));
+
         Assert.assertEquals(
-                "HH:mm:ss DEBUG                  com.noveo.android com.example.PatternTest.*:\n".substring(8),
-                compiler.compile("%d{HH:mm:ss} %5level %60(%logger{30.30} %caller{30.30}):%n").apply(caller, loggerName, level).substring(8));
+                "HH:mm:ss DEBUG                      com.noveo.android PatternTest#<init>:15:\n".substring(8),
+                compiler.compile("%d{HH:mm:ss} %5level %60(%logger{30.30} %caller{-2.20}):%n").apply(caller, loggerName, level).substring(8));
     }
 
 }

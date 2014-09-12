@@ -93,7 +93,15 @@ public abstract class Pattern {
         protected String doApply(StackTraceElement caller, String loggerName, Logger.Level level) {
             if (caller == null) {
                 throw new IllegalArgumentException("Caller not found");
-            } else return Utils.shortenClassName(caller.toString(), callerCount, callerLength);
+            } else {
+                String callerString;
+                if (caller.getLineNumber() < 0) {
+                    callerString = String.format("%s#%s", caller.getClassName(), caller.getMethodName());
+                } else {
+                    callerString = String.format("%s#%s:%d", caller.getClassName(), caller.getMethodName(), caller.getLineNumber());
+                }
+                return Utils.shortenClassName(callerString, callerCount, callerLength);
+            }
         }
 
         @Override
@@ -176,23 +184,23 @@ public abstract class Pattern {
         private final java.util.regex.Pattern NEWLINE_PATTERN =
                 java.util.regex.Pattern.compile("%n");
         private final java.util.regex.Pattern LEVEL_PATTERN =
-                java.util.regex.Pattern.compile("%(\\d+)?(\\.(\\d+))?level");
+                java.util.regex.Pattern.compile("%([+-]?\\d+)?(\\.([+-]?\\d+))?level");
         private final java.util.regex.Pattern LOGGER_PATTERN =
-                java.util.regex.Pattern.compile("%(\\d+)?(\\.(\\d+))?logger(\\{(\\d+)?(\\.(\\d+))?\\})?");
+                java.util.regex.Pattern.compile("%([+-]?\\d+)?(\\.([+-]?\\d+))?logger(\\{([+-]?\\d+)?(\\.([+-]?\\d+))?\\})?");
         private final java.util.regex.Pattern CALLER_PATTERN =
-                java.util.regex.Pattern.compile("%(\\d+)?(\\.(\\d+))?caller(\\{(\\d+)?(\\.(\\d+))?\\})?");
+                java.util.regex.Pattern.compile("%([+-]?\\d+)?(\\.([+-]?\\d+))?caller(\\{([+-]?\\d+)?(\\.([+-]?\\d+))?\\})?");
         private final java.util.regex.Pattern DATE_PATTERN =
                 java.util.regex.Pattern.compile("%date(\\{(.*?)\\})?");
         private final java.util.regex.Pattern CONCATENATE_PATTERN =
-                java.util.regex.Pattern.compile("%(\\d+)?(\\.(\\d+))?\\(");
+                java.util.regex.Pattern.compile("%([+-]?\\d+)?(\\.([+-]?\\d+))?\\(");
         private final java.util.regex.Pattern DATE_PATTERN_SHORT =
                 java.util.regex.Pattern.compile("%d(\\{(.*?)\\})?");
         private final java.util.regex.Pattern LEVEL_PATTERN_SHORT =
-                java.util.regex.Pattern.compile("%(\\d+)?(\\.(\\d+))?p");
+                java.util.regex.Pattern.compile("%([+-]?\\d+)?(\\.([+-]?\\d+))?p");
         private final java.util.regex.Pattern LOGGER_PATTERN_SHORT =
-                java.util.regex.Pattern.compile("%(\\d+)?(\\.(\\d+))?c(\\{(\\d+)?(\\.(\\d+))?\\})?");
+                java.util.regex.Pattern.compile("%([+-]?\\d+)?(\\.([+-]?\\d+))?c(\\{([+-]?\\d+)?(\\.([+-]?\\d+))?\\})?");
         private final java.util.regex.Pattern CALLER_PATTERN_SHORT =
-                java.util.regex.Pattern.compile("%(\\d+)?(\\.(\\d+))?C(\\{(\\d+)?(\\.(\\d+))?\\})?");
+                java.util.regex.Pattern.compile("%([+-]?\\d+)?(\\.([+-]?\\d+))?C(\\{([+-]?\\d+)?(\\.([+-]?\\d+))?\\})?");
 
         public Pattern compile(String string) {
             if (string == null) {
