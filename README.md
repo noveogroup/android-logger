@@ -87,6 +87,8 @@ root=<tag>
 You can use VERBOSE, DEBUG, INFO, WARN, ERROR, ASSERT as level in
 configuration files.
 
+Format of <tag> and <message head> is desribed below in [Patterns](#patterns) section.
+
  - You need to get logger instance to print messages
 
 You can use LoggerManager to get a logger instance to print messages.
@@ -135,6 +137,116 @@ public class Bar {
 
 }
 ```
+
+### Patterns
+
+You can configure format of tags and messages headers in your configuration file.
+
+For example, the following configuration file:
+
+```properties
+logger.ROOT=INFO:MyApplication:%caller{-2}
+```
+
+will generate the following output:
+
+```text
+PatternTest#<init>:15 your message
+```
+
+So, the logger insert inforation about caller before the message.
+
+The patterns are format strings written according to a special rules described
+below. Log messages will be formatted and printed as it is specified in
+the tag and the message pattern. The tag pattern configures log tag used
+to print messages. The message pattern configures a head of the message but
+not whole message printed to log.
+
+| The tag pattern | The message pattern | Resulting tag | Resulting message                  |
+|-----------------|---------------------|---------------|------------------------------------|
+| TAG             | %d{yyyy-MM-dd}:     | TAG           | %d{yyyy-MM-dd}: <incoming message> |
+
+The tag and the message patterns are wrote according to similar rules.
+So we will show only one pattern in further examples.
+
+The patterns is strings that contains a set of placeholders and other
+special marks. Each special mark should start with '%' sign. To escape
+this sign you can double it.
+
+#### Conversion marks
+
+##### Mark %%
+
+Escapes special sign. Prints just one '%' instead.
+
+##### Mark %n
+
+Prints a new line character '\n'.
+
+##### Marks %d{date format} and %date{date format}
+
+Prints date/time of a message. Date format should be supported by SimpleDateFormat.
+Default date format is "yyyy-MM-dd HH:mm:ss.SSS".
+
+##### Marks %p and %level
+
+Prints logging level of a message.
+
+##### Marks %c{count.length} and %logger{count.length}
+
+Prints a name of the logger. The algorithm will shorten some part of
+full logger name to the specified length. You can find examples below.
+
+| Conversion specifier | Logger name                               | Result                           |
+|----------------------|-------------------------------------------|----------------------------------|
+| %logger              | com.example.android.MainActivity          | com.example.android.MainActivity |
+| %logger{0}           | com.example.android.MainActivity          | com.example.android.MainActivity |
+| %logger{3}           | com.example.android.MainActivity          | com.example.android              |
+| %logger{-1}          | com.example.android.MainActivity          | example.android.MainActivity     |
+| %logger{.0}          | com.example.android.MainActivity          | com.example.android.MainActivity |
+| %logger{.30}         | com.example.android.MainActivity          | com.example.android.*            |
+| %logger{.15}         | com.example.android.MainActivity          | com.example.*                    |
+| %logger{.-25}        | com.example.android.MainActivity          | *.android.MainActivity           |
+| %logger{3.-18}       | com.example.android.MainActivity          | *.example.android                |
+| %logger{-3.-10}      | com.example.android.MainActivity$SubClass | MainActivity$SubClass            |
+
+##### Marks %C{count.length} and %caller{count.length}
+
+Prints information about a caller class which causes the logging event.
+Additional parameters 'count' and 'length' means the same as the parameters of %logger.
+
+Examples:
+
+| Conversion specifier | Caller                                             | Result                               |
+|----------------------|----------------------------------------------------|--------------------------------------|
+| %caller              | Class com.example.android.MainActivity at line 154 | com.example.android.MainActivity:154 |
+| %caller{-3.-15}      | Class com.example.android.MainActivity at line 154 | MainActivity:154                     |
+
+##### Mark %(...)
+
+Special mark used to grouping parts of message.
+Format modifiers (if specified) are applied on whole group.
+
+Examples:
+
+| Example                    | Result                                               |
+|----------------------------|------------------------------------------------------|
+| [%50(%d %caller{-3.-15})]  | [          2013-07-12 19:45:26.315 MainActivity:154] |
+| [%-50(%d %caller{-3.-15})] | [2013-07-12 19:45:26.315 MainActivity:154          ] |
+
+#### Format modifiers
+
+After special sign '%' user can add format modifiers. The modifiers
+is similar to standard modifiers of Formatter conversions.
+
+| Example    | Result   |
+|------------|----------|
+| %6(text)   | '  text' |
+| %-6(text)  | 'text  ' |
+| %.3(text)  | 'tex'    |
+| %.-3(text) | 'ext'    |
+
+For an additional information see sources of *com.noveogroup.android.log.PatternHandler* class
 
 SLF4J compatibility
 -------------------
