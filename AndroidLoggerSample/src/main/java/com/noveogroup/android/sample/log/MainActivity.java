@@ -12,6 +12,12 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        Log.v("test VERBOSE");
+        Log.d("test DEBUG");
+        Log.i("test INFO");
+        Log.w("test WARN");
+        Log.e("test ERROR");
+        Log.a("test ASSERT");
     }
 
     public void onSampleSimple(View view) {
