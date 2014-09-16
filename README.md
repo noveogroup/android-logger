@@ -220,6 +220,18 @@ Examples:
 | %caller              | Class com.example.android.MainActivity at line 154 | com.example.android.MainActivity:154 |
 | %caller{-3.-15}      | Class com.example.android.MainActivity at line 154 | MainActivity:154                     |
 
+##### Marks %s and %source
+
+Prints source of class which causes the logging event.
+
+Examples:
+
+| Conversion specifier | Caller                                             | Result                  |
+|----------------------|----------------------------------------------------|-------------------------|
+| %source or %s        | Class com.example.android.MainActivity at line 154 | (MainActivity.java:154) |
+| %source or %s        | Native                                             | (native)                |
+| %source or %s        | Unknown                                            | (unknown)               |
+
 ##### Mark %(...)
 
 Special mark used to grouping parts of message.
