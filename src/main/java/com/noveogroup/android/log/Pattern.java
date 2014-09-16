@@ -110,6 +110,41 @@ public abstract class Pattern {
         }
     }
 
+    public static class SourcePattern extends Pattern {
+
+        public SourcePattern(int count, int length) {
+            super(count, length);
+        }
+
+        @Override
+        protected String doApply(StackTraceElement caller, String loggerName, Logger.Level level) {
+            if (caller == null) {
+                throw new IllegalArgumentException("Caller not found");
+            } else {
+                StringBuilder builder = new StringBuilder();
+                if (caller.isNativeMethod()) {
+                    builder.append("(native)");
+                } else {
+                    if (caller.getFileName() == null) {
+                        builder.append("(unknown)");
+                    } else {
+                        if (caller.getLineNumber() >= 0) {
+                            builder.append(String.format("(%s:%d)", caller.getFileName(), caller.getLineNumber()));
+                        } else {
+                            builder.append(String.format("(%s)", caller.getFileName()));
+                        }
+                    }
+                }
+                return builder.toString();
+            }
+        }
+
+        @Override
+        protected boolean isCallerNeeded() {
+            return true;
+        }
+    }
+
     public static class ConcatenatePattern extends Pattern {
 
         private final List<Pattern> patternList;
@@ -189,6 +224,8 @@ public abstract class Pattern {
                 java.util.regex.Pattern.compile("%([+-]?\\d+)?(\\.([+-]?\\d+))?logger(\\{([+-]?\\d+)?(\\.([+-]?\\d+))?\\})?");
         private final java.util.regex.Pattern CALLER_PATTERN =
                 java.util.regex.Pattern.compile("%([+-]?\\d+)?(\\.([+-]?\\d+))?caller(\\{([+-]?\\d+)?(\\.([+-]?\\d+))?\\})?");
+        private final java.util.regex.Pattern SOURCE_PATTERN =
+                java.util.regex.Pattern.compile("%([+-]?\\d+)?(\\.([+-]?\\d+))?source");
         private final java.util.regex.Pattern DATE_PATTERN =
                 java.util.regex.Pattern.compile("%date(\\{(.*?)\\})?");
         private final java.util.regex.Pattern CONCATENATE_PATTERN =
@@ -201,6 +238,8 @@ public abstract class Pattern {
                 java.util.regex.Pattern.compile("%([+-]?\\d+)?(\\.([+-]?\\d+))?c(\\{([+-]?\\d+)?(\\.([+-]?\\d+))?\\})?");
         private final java.util.regex.Pattern CALLER_PATTERN_SHORT =
                 java.util.regex.Pattern.compile("%([+-]?\\d+)?(\\.([+-]?\\d+))?C(\\{([+-]?\\d+)?(\\.([+-]?\\d+))?\\})?");
+        private final java.util.regex.Pattern SOURCE_PATTERN_SHORT =
+                java.util.regex.Pattern.compile("%([+-]?\\d+)?(\\.([+-]?\\d+))?s");
 
         public Pattern compile(String string) {
             if (string == null) {
@@ -260,6 +299,13 @@ public abstract class Pattern {
                 int countCaller = Integer.parseInt(matcher.group(5) == null ? "0" : matcher.group(5));
                 int lengthCaller = Integer.parseInt(matcher.group(7) == null ? "0" : matcher.group(7));
                 queue.get(queue.size() - 1).addPattern(new CallerPattern(count, length, countCaller, lengthCaller));
+                position = matcher.end();
+                return;
+            }
+            if ((matcher = findPattern(SOURCE_PATTERN)) != null || (matcher = findPattern(SOURCE_PATTERN_SHORT)) != null) {
+                int count = Integer.parseInt(matcher.group(1) == null ? "0" : matcher.group(1));
+                int length = Integer.parseInt(matcher.group(3) == null ? "0" : matcher.group(3));
+                queue.get(queue.size() - 1).addPattern(new SourcePattern(count, length));
                 position = matcher.end();
                 return;
             }

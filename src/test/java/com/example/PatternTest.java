@@ -23,6 +23,7 @@ public class PatternTest {
     Pattern dataPattern = new Pattern.DatePattern(0, 0, "HH:mm:ss");
     Pattern loggerPattern = new Pattern.LoggerPattern(0, 0, 30, 0);
     Pattern callerPattern = new Pattern.CallerPattern(0, 0, 30, 0);
+    Pattern sourcePattern = new Pattern.SourcePattern(0, 0);
 
     Pattern.ConcatenatePattern concatenatePattern = new Pattern.ConcatenatePattern(0, 0, new ArrayList<Pattern>());
     Pattern.ConcatenatePattern concatenatePatternChild = new Pattern.ConcatenatePattern(60, 0, new ArrayList<Pattern>());
@@ -57,12 +58,13 @@ public class PatternTest {
         concatenatePatternChild.addPattern(loggerPattern);
         concatenatePatternChild.addPattern(spacePattern);
         concatenatePatternChild.addPattern(callerPattern);
+        concatenatePatternChild.addPattern(sourcePattern);
 
         concatenatePattern.addPattern(concatenatePatternChild);
         concatenatePattern.addPattern(colonPattern);
         concatenatePattern.addPattern(tabPattern);
 
-        Assert.assertEquals("HH:mm:ss D          com.noveo.android com.example.PatternTest#<init>:15:\n".substring(8),
+        Assert.assertEquals("HH:mm:ss D com.noveo.android com.example.PatternTest#<init>:15(PatternTest.java:15):\n".substring(8),
                 concatenatePattern.apply(caller, loggerName, level).substring(8));
     }
 
@@ -100,6 +102,9 @@ public class PatternTest {
         Assert.assertEquals("com.example.*", compiler.compile("%caller{.+20}").apply(caller, loggerName, level));
         Assert.assertEquals("PatternTest#<init>:15", compiler.compile("%caller{-2.-20}").apply(caller, loggerName, level));
         Assert.assertEquals("com.example", compiler.compile("%caller{+2.+20}").apply(caller, loggerName, level));
+
+        Assert.assertEquals("(PatternTest.java:15)", compiler.compile("%source").apply(caller, loggerName, level));
+        Assert.assertEquals("(PatternTest.java:15)", compiler.compile("%s").apply(caller, loggerName, level));
 
         Assert.assertEquals(
                 "HH:mm:ss DEBUG                      com.noveo.android PatternTest#<init>:15:\n".substring(8),
