@@ -188,6 +188,33 @@ import java.util.Formatter;
  * </td>
  * </tr>
  * <tr>
+ * <td>%s{count.length} %source{count.length}</td>
+ * <td>Prints source of class which causes the logging event. Examples:
+ * <table border=1>
+ * <tr>
+ * <th>Conversion specifier</th>
+ * <th>Caller</th>
+ * <th>Result</th>
+ * </tr>
+ * <tr>
+ * <td>%source or %s</td>
+ * <td>Class com.example.android.MainActivity at line 154</td>
+ * <td>(MainActivity.java:154)</td>
+ * </tr>
+ * <tr>
+ * <td>%source or %s</td>
+ * <td>Native</td>
+ * <td>(native)</td>
+ * </tr>
+ * <tr>
+ * <td>%source or %s</td>
+ * <td>Unknown</td>
+ * <td>(unknown)</td>
+ * </tr>
+ * </table>
+ * </td>
+ * </tr>
+ * <tr>
  * <td>%(...)</td>
  * <td>Special mark used to grouping parts of message. Format modifiers
  * (if specified) are applied on whole group. Examples:
