@@ -178,6 +178,17 @@ public abstract class Pattern {
         }
     }
 
+    public static class ThreadNamePattern extends Pattern {
+        public ThreadNamePattern(int count, int length) {
+            super(count, length);
+        }
+
+        @Override
+        protected String doApply(StackTraceElement caller, String loggerName, Logger.Level level) {
+            return Thread.currentThread().getName();
+        }
+    }
+
     private final int count;
     private final int length;
 
@@ -240,6 +251,8 @@ public abstract class Pattern {
                 java.util.regex.Pattern.compile("%([+-]?\\d+)?(\\.([+-]?\\d+))?C(\\{([+-]?\\d+)?(\\.([+-]?\\d+))?\\})?");
         private final java.util.regex.Pattern SOURCE_PATTERN_SHORT =
                 java.util.regex.Pattern.compile("%([+-]?\\d+)?(\\.([+-]?\\d+))?s");
+        private final java.util.regex.Pattern THREAD_NAME_PATTERN =
+                java.util.regex.Pattern.compile("%thread");
 
         public Pattern compile(String string) {
             if (string == null) {
@@ -321,6 +334,11 @@ public abstract class Pattern {
             if ((matcher = findPattern(DATE_PATTERN)) != null || (matcher = findPattern(DATE_PATTERN_SHORT)) != null) {
                 String dateFormat = matcher.group(2);
                 queue.get(queue.size() - 1).addPattern(new DatePattern(0, 0, dateFormat));
+                position = matcher.end();
+                return;
+            }
+            if((matcher = findPattern(THREAD_NAME_PATTERN)) != null){
+                queue.get(queue.size() - 1).addPattern(new ThreadNamePattern(0,0));
                 position = matcher.end();
                 return;
             }
