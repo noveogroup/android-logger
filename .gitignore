@@ -1,11 +1,10 @@
+# Android
+local.properties
+
 # Gradle
 .gradle
 build
-local.properties
 
-# IntelliJ IDEA
+# IntelliJ Idea
 .idea
 *.iml
-*.ipr
-*.iws
-out
