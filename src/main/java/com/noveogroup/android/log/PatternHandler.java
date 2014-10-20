@@ -215,6 +215,10 @@ import java.util.Formatter;
  * </td>
  * </tr>
  * <tr>
+ * <td>%t{count.length} %thread{count.length}</td>
+ * <td>Prints a name of the thread which causes the logging event.</td>
+ * </tr>
+ * <tr>
  * <td>%(...)</td>
  * <td>Special mark used to grouping parts of message. Format modifiers
  * (if specified) are applied on whole group. Examples:

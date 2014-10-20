@@ -24,7 +24,7 @@ public class PatternTest {
     Pattern loggerPattern = new Pattern.LoggerPattern(0, 0, 30, 0);
     Pattern callerPattern = new Pattern.CallerPattern(0, 0, 30, 0);
     Pattern sourcePattern = new Pattern.SourcePattern(0, 0);
-    Pattern threadPattern = new Pattern.ThreadNamePattern(0,0);
+    Pattern threadPattern = new Pattern.ThreadNamePattern(0, 0);
     Pattern.ConcatenatePattern concatenatePattern = new Pattern.ConcatenatePattern(0, 0, new ArrayList<Pattern>());
     Pattern.ConcatenatePattern concatenatePatternChild = new Pattern.ConcatenatePattern(60, 0, new ArrayList<Pattern>());
 
@@ -111,7 +111,8 @@ public class PatternTest {
         Assert.assertEquals("(PatternTest.java:15)", compiler.compile("%source").apply(caller, loggerName, level));
         Assert.assertEquals("(PatternTest.java:15)", compiler.compile("%s").apply(caller, loggerName, level));
 
-        Assert.assertEquals("[main]", compiler.compile("[%thread]").apply(caller,loggerName, level));
+        Assert.assertEquals("[main]", compiler.compile("[%thread]").apply(caller, loggerName, level));
+        Assert.assertEquals("[      main]", compiler.compile("[%10t]").apply(caller, loggerName, level));
 
         Assert.assertEquals(
                 "HH:mm:ss DEBUG                      com.noveo.android PatternTest#<init>:15:\n".substring(8),

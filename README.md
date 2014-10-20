@@ -232,6 +232,10 @@ Examples:
 | %source or %s        | Native                                             | (native)                |
 | %source or %s        | Unknown                                            | (unknown)               |
 
+##### Marks %t and %thread
+
+Prints a name of the thread which causes the logging event.
+
 ##### Mark %(...)
 
 Special mark used to grouping parts of message.

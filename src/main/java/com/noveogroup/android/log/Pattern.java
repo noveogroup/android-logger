@@ -252,7 +252,9 @@ public abstract class Pattern {
         private final java.util.regex.Pattern SOURCE_PATTERN_SHORT =
                 java.util.regex.Pattern.compile("%([+-]?\\d+)?(\\.([+-]?\\d+))?s");
         private final java.util.regex.Pattern THREAD_NAME_PATTERN =
-                java.util.regex.Pattern.compile("%thread");
+                java.util.regex.Pattern.compile("%([+-]?\\d+)?(\\.([+-]?\\d+))?thread");
+        private final java.util.regex.Pattern THREAD_NAME_PATTERN_SHORT =
+                java.util.regex.Pattern.compile("%([+-]?\\d+)?(\\.([+-]?\\d+))?t");
 
         public Pattern compile(String string) {
             if (string == null) {
@@ -337,8 +339,10 @@ public abstract class Pattern {
                 position = matcher.end();
                 return;
             }
-            if((matcher = findPattern(THREAD_NAME_PATTERN)) != null){
-                queue.get(queue.size() - 1).addPattern(new ThreadNamePattern(0,0));
+            if ((matcher = findPattern(THREAD_NAME_PATTERN)) != null || (matcher = findPattern(THREAD_NAME_PATTERN_SHORT)) != null) {
+                int count = Integer.parseInt(matcher.group(1) == null ? "0" : matcher.group(1));
+                int length = Integer.parseInt(matcher.group(3) == null ? "0" : matcher.group(3));
+                queue.get(queue.size() - 1).addPattern(new ThreadNamePattern(count, length));
                 position = matcher.end();
                 return;
             }
