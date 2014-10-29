@@ -10,6 +10,8 @@ __Android SDK Version__: API 7 [ Android 2.1 ]
 
 __Code Samples__: [[here]](https://github.com/noveogroup/android-logger/tree/sample)
 
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-android--logger-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1052)
+
 Downloads
 ---------
 
