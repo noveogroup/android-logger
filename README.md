@@ -15,9 +15,9 @@ __Code Samples__: [[here]](https://github.com/noveogroup/android-logger/tree/sam
 Downloads
 ---------
 
- - [android-logger-1.3.4.jar](http://search.maven.org/remotecontent?filepath=com/noveogroup/android/android-logger/1.3.4/android-logger-1.3.4.jar)
- - [android-logger-1.3.4-sources.jar](http://search.maven.org/remotecontent?filepath=com/noveogroup/android/android-logger/1.3.4/android-logger-1.3.4-sources.jar)
- - [android-logger-1.3.4-javadoc.jar](http://search.maven.org/remotecontent?filepath=com/noveogroup/android/android-logger/1.3.4/android-logger-1.3.4-javadoc.jar)
+ - [android-logger-1.3.5.jar](http://search.maven.org/remotecontent?filepath=com/noveogroup/android/android-logger/1.3.5/android-logger-1.3.5.jar)
+ - [android-logger-1.3.5-sources.jar](http://search.maven.org/remotecontent?filepath=com/noveogroup/android/android-logger/1.3.5/android-logger-1.3.5-sources.jar)
+ - [android-logger-1.3.5-javadoc.jar](http://search.maven.org/remotecontent?filepath=com/noveogroup/android/android-logger/1.3.5/android-logger-1.3.5-javadoc.jar)
 
 Maven Dependency
 ----------------
@@ -25,14 +25,14 @@ Maven Dependency
 <dependency>
     <groupId>com.noveogroup.android</groupId>
     <artifactId>android-logger</artifactId>
-    <version>1.3.4</version>
+    <version>1.3.5</version>
 </dependency>
 ```
 
 Gradle Dependency
 -----------------
 ```groovy
-'com.noveogroup.android:android-logger:1.3.4'
+'com.noveogroup.android:android-logger:1.3.5'
 ```
 
 Getting Started
