@@ -1,7 +1,7 @@
 buildscript {
-    repositories { jcenter() }
+    repositories { mavenLocal(); jcenter() }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.1'
+        classpath 'com.android.tools.build:gradle:1.1.0'
     }
 }
 
