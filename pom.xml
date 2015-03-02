@@ -11,7 +11,7 @@
 
     <groupId>com.noveogroup.android</groupId>
     <artifactId>android-logger</artifactId>
-    <version>1.3.5-SNAPSHOT</version>
+    <version>1.3.5</version>
     <packaging>jar</packaging>
 
     <name>Android Logger</name>
