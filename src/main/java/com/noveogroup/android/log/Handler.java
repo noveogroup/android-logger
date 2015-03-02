@@ -46,6 +46,21 @@ public interface Handler {
      * <p/>
      * This method should automatically check using {@link #isEnabled(Logger.Level)} method
      * if the message is allowed to be logged or not.
+     *
+     * @param loggerName a name of a logger that user used to log message.
+     * @param level      a level of the log message
+     * @param throwable  a throwable object or {@code null}.
+     * @param message    a log message. Can be {@code null}.
+     * @throws IllegalArgumentException if no format string is specified but arguments are presented.
+     */
+    public void print(String loggerName, Logger.Level level,
+                      Throwable throwable, String message) throws IllegalArgumentException;
+
+    /**
+     * Prints a log message.
+     * <p/>
+     * This method should automatically check using {@link #isEnabled(Logger.Level)} method
+     * if the message is allowed to be logged or not.
      * <p/>
      * The format string of the log message should be formatted
      * according to rules of the standard format string described

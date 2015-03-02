@@ -310,25 +310,21 @@ public class PatternHandler implements Handler {
 
     @Override
     public void print(String loggerName, Logger.Level level,
-                      Throwable throwable, String messageFormat, Object... args) throws IllegalArgumentException {
+                      Throwable throwable, String message) throws IllegalArgumentException {
         if (isEnabled(level)) {
-            String message;
+            String messageBody;
 
-            if (messageFormat == null) {
-                if (args != null && args.length > 0) {
-                    throw new IllegalArgumentException("message format is not set but arguments are presented");
-                }
-
+            if (message == null) {
                 if (throwable == null) {
-                    message = "";
+                    messageBody = "";
                 } else {
-                    message = Log.getStackTraceString(throwable);
+                    messageBody = Log.getStackTraceString(throwable);
                 }
             } else {
                 if (throwable == null) {
-                    message = String.format(messageFormat, args);
+                    messageBody = message;
                 } else {
-                    message = String.format(messageFormat, args) + '\n' + Log.getStackTraceString(throwable);
+                    messageBody = message + '\n' + Log.getStackTraceString(throwable);
                 }
             }
 
@@ -344,7 +340,19 @@ public class PatternHandler implements Handler {
             if (messageHead.length() > 0 && !Character.isWhitespace(messageHead.charAt(0))) {
                 messageHead = messageHead + " ";
             }
-            Log.println(level.intValue(), tag, messageHead + message);
+            Log.println(level.intValue(), tag, messageHead + messageBody);
+        }
+    }
+
+    @Override
+    public void print(String loggerName, Logger.Level level,
+                      Throwable throwable, String messageFormat, Object... args) throws IllegalArgumentException {
+        if (isEnabled(level)) {
+            if (messageFormat == null && args != null && args.length > 0) {
+                throw new IllegalArgumentException("message format is not set but arguments are presented");
+            }
+
+            print(loggerName, level, throwable, messageFormat == null ? null : String.format(messageFormat, args));
         }
     }
 
