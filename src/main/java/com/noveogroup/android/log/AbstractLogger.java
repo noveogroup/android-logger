@@ -48,6 +48,36 @@ public abstract class AbstractLogger implements Logger {
     }
 
     @Override
+    public boolean isVerboseEnabled() {
+        return isEnabled(Level.VERBOSE);
+    }
+
+    @Override
+    public boolean isDebugEnabled() {
+        return isEnabled(Level.DEBUG);
+    }
+
+    @Override
+    public boolean isInfoEnabled() {
+        return isEnabled(Level.INFO);
+    }
+
+    @Override
+    public boolean isWarnEnabled() {
+        return isEnabled(Level.WARN);
+    }
+
+    @Override
+    public boolean isErrorEnabled() {
+        return isEnabled(Level.ERROR);
+    }
+
+    @Override
+    public boolean isAssertEnabled() {
+        return isEnabled(Level.ASSERT);
+    }
+
+    @Override
     public void v(String message, Throwable throwable) {
         print(Logger.Level.VERBOSE, message, throwable);
     }

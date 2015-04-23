@@ -50,6 +50,72 @@ public final class Log {
     }
 
     /**
+     * Checks if {@link Logger.Level#VERBOSE VERBOSE} level is enabled or not.
+     *
+     * @return Are messages with {@link Logger.Level#VERBOSE VERBOSE} level
+     * allowed to be logged or not.
+     * @see Logger#isVerboseEnabled()
+     */
+    public static boolean isVerboseEnabled() {
+        return LoggerManager.getLogger().isVerboseEnabled();
+    }
+
+    /**
+     * Checks if {@link Logger.Level#DEBUG DEBUG} level is enabled or not.
+     *
+     * @return Are messages with {@link Logger.Level#DEBUG DEBUG} level
+     * allowed to be logged or not.
+     * @see Logger#isDebugEnabled()
+     */
+    public static boolean isDebugEnabled() {
+        return LoggerManager.getLogger().isDebugEnabled();
+    }
+
+    /**
+     * Checks if {@link Logger.Level#INFO INFO} level is enabled or not.
+     *
+     * @return Are messages with {@link Logger.Level#INFO INFO} level
+     * allowed to be logged or not.
+     * @see Logger#isInfoEnabled()
+     */
+    public static boolean isInfoEnabled() {
+        return LoggerManager.getLogger().isInfoEnabled();
+    }
+
+    /**
+     * Checks if {@link Logger.Level#WARN WARN} level is enabled or not.
+     *
+     * @return Are messages with {@link Logger.Level#WARN WARN} level
+     * allowed to be logged or not.
+     * @see Logger#isWarnEnabled()
+     */
+    public static boolean isWarnEnabled() {
+        return LoggerManager.getLogger().isWarnEnabled();
+    }
+
+    /**
+     * Checks if {@link Logger.Level#ERROR ERROR} level is enabled or not.
+     *
+     * @return Are messages with {@link Logger.Level#ERROR ERROR} level
+     * allowed to be logged or not.
+     * @see Logger#isErrorEnabled()
+     */
+    public static boolean isErrorEnabled() {
+        return LoggerManager.getLogger().isErrorEnabled();
+    }
+
+    /**
+     * Checks if {@link Logger.Level#ASSERT ASSERT} level is enabled or not.
+     *
+     * @return Are messages with {@link Logger.Level#ASSERT ASSERT} level
+     * allowed to be logged or not.
+     * @see Logger#isAssertEnabled()
+     */
+    public static boolean isAssertEnabled() {
+        return LoggerManager.getLogger().isAssertEnabled();
+    }
+
+    /**
      * Low-level logging call.
      *
      * @param level     a level of this log message

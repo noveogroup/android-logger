@@ -135,6 +135,66 @@ public interface Logger {
     public boolean isEnabled(Level level);
 
     /**
+     * Checks if {@link Level#VERBOSE VERBOSE} level is enabled or not.
+     *
+     * @return Are messages with {@link Level#VERBOSE VERBOSE} level
+     * allowed to be logged or not.
+     * @see Logger#isEnabled(Level)
+     * @see Level#VERBOSE
+     */
+    public boolean isVerboseEnabled();
+
+    /**
+     * Checks if {@link Level#DEBUG DEBUG} level is enabled or not.
+     *
+     * @return Are messages with {@link Level#DEBUG DEBUG} level
+     * allowed to be logged or not.
+     * @see Logger#isEnabled(Level)
+     * @see Level#DEBUG
+     */
+    public boolean isDebugEnabled();
+
+    /**
+     * Checks if {@link Level#INFO INFO} level is enabled or not.
+     *
+     * @return Are messages with {@link Level#INFO INFO} level
+     * allowed to be logged or not.
+     * @see Logger#isEnabled(Level)
+     * @see Level#INFO
+     */
+    public boolean isInfoEnabled();
+
+    /**
+     * Checks if {@link Level#WARN WARN} level is enabled or not.
+     *
+     * @return Are messages with {@link Level#WARN WARN} level
+     * allowed to be logged or not.
+     * @see Logger#isEnabled(Level)
+     * @see Level#WARN
+     */
+    public boolean isWarnEnabled();
+
+    /**
+     * Checks if {@link Level#ERROR ERROR} level is enabled or not.
+     *
+     * @return Are messages with {@link Level#ERROR ERROR} level
+     * allowed to be logged or not.
+     * @see Logger#isEnabled(Level)
+     * @see Level#ERROR
+     */
+    public boolean isErrorEnabled();
+
+    /**
+     * Checks if {@link Level#ASSERT ASSERT} level is enabled or not.
+     *
+     * @return Are messages with {@link Level#ASSERT ASSERT} level
+     * allowed to be logged or not.
+     * @see Logger#isEnabled(Level)
+     * @see Level#ASSERT
+     */
+    public boolean isAssertEnabled();
+
+    /**
      * Low-level logging call.
      *
      * @param level     a level of this log message
