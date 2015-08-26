@@ -25,6 +25,9 @@ public class MainActivity extends Activity {
         Log.e("test ERROR");
         Log.a("test ASSERT");
 
+        Log.i("formated %s", "message");
+        Log.i("not formated %s");
+
         SLF_LOGGER.trace("test trace : {}", "message 100%!");
         SLF_LOGGER.debug("test debug : {}", "message 100%!");
         SLF_LOGGER.info("test info  : {}", "message 100%!");
