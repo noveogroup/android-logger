@@ -27,6 +27,7 @@
 package org.slf4j.impl;
 
 import com.noveogroup.android.log.Logger;
+
 import org.slf4j.helpers.MarkerIgnoringBase;
 import org.slf4j.helpers.MessageFormatter;
 
@@ -52,23 +53,23 @@ public class AndroidLoggerAdapter extends MarkerIgnoringBase {
     }
 
     private void log(Logger.Level level, String msg) {
-        logger.print(level, msg, null);
+        logger.print(level, null, msg);
     }
 
     private void log(Logger.Level level, String format, Object arg) {
-        logger.print(level, MessageFormatter.format(format, arg).getMessage(), null);
+        logger.print(level, null, MessageFormatter.format(format, arg).getMessage());
     }
 
     private void log(Logger.Level level, String format, Object arg1, Object arg2) {
-        logger.print(level, MessageFormatter.format(format, arg1, arg2).getMessage(), null);
+        logger.print(level, null, MessageFormatter.format(format, arg1, arg2).getMessage());
     }
 
     private void log(Logger.Level level, String format, Object... arguments) {
-        logger.print(level, MessageFormatter.arrayFormat(format, arguments).getMessage(), null);
+        logger.print(level, null, MessageFormatter.arrayFormat(format, arguments).getMessage());
     }
 
     private void log(Logger.Level level, String msg, Throwable t) {
-        logger.print(level, msg, t);
+        logger.print(level, t, msg);
     }
 
     @Override
