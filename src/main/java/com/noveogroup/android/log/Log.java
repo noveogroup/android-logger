@@ -119,11 +119,11 @@ public final class Log {
      * Low-level logging call.
      *
      * @param level     a level of this log message
-     * @param message   a message you would like logged.
      * @param throwable an additional throwable object.
+     * @param message   a message you would like logged.
      */
-    public static void print(Logger.Level level, String message, Throwable throwable) {
-        LoggerManager.getLogger().print(level, message, throwable);
+    public static void print(Logger.Level level, Throwable throwable, String message) {
+        LoggerManager.getLogger().print(level, throwable, message);
     }
 
     /**
@@ -154,7 +154,6 @@ public final class Log {
      * @param message   a message you would like logged.
      * @param throwable an additional throwable object.
      */
-
     public static void d(String message, Throwable throwable) {
         LoggerManager.getLogger().d(message, throwable);
     }
@@ -322,6 +321,66 @@ public final class Log {
     /**
      * Send a {@link Logger.Level#VERBOSE} log message.
      *
+     * @param throwable an additional throwable object.
+     * @param message   a message you would like logged.
+     */
+    public static void v(Throwable throwable, String message) {
+        LoggerManager.getLogger().v(throwable, message);
+    }
+
+    /**
+     * Send a {@link Logger.Level#DEBUG} log message.
+     *
+     * @param throwable an additional throwable object.
+     * @param message   a message you would like logged.
+     */
+    public static void d(Throwable throwable, String message) {
+        LoggerManager.getLogger().d(throwable, message);
+    }
+
+    /**
+     * Send a {@link Logger.Level#INFO} log message.
+     *
+     * @param throwable an additional throwable object.
+     * @param message   a message you would like logged.
+     */
+    public static void i(Throwable throwable, String message) {
+        LoggerManager.getLogger().i(throwable, message);
+    }
+
+    /**
+     * Send a {@link Logger.Level#WARN} log message.
+     *
+     * @param throwable an additional throwable object.
+     * @param message   a message you would like logged.
+     */
+    public static void w(Throwable throwable, String message) {
+        LoggerManager.getLogger().w(throwable, message);
+    }
+
+    /**
+     * Send a {@link Logger.Level#ERROR} log message.
+     *
+     * @param throwable an additional throwable object.
+     * @param message   a message you would like logged.
+     */
+    public static void e(Throwable throwable, String message) {
+        LoggerManager.getLogger().e(throwable, message);
+    }
+
+    /**
+     * Send a {@link Logger.Level#ASSERT} log message.
+     *
+     * @param throwable an additional throwable object.
+     * @param message   a message you would like logged.
+     */
+    public static void a(Throwable throwable, String message) {
+        LoggerManager.getLogger().a(throwable, message);
+    }
+
+    /**
+     * Send a {@link Logger.Level#VERBOSE} log message.
+     *
      * @param messageFormat a message format you would like logged.
      * @param args          arguments for a formatter.
      */
@@ -377,6 +436,60 @@ public final class Log {
      */
     public static void a(String messageFormat, Object... args) {
         LoggerManager.getLogger().a(messageFormat, args);
+    }
+
+    /**
+     * Send a {@link Logger.Level#VERBOSE} log message.
+     *
+     * @param message a message you would like logged.
+     */
+    public static void v(String message) {
+        LoggerManager.getLogger().v(message);
+    }
+
+    /**
+     * Send a {@link Logger.Level#DEBUG} log message.
+     *
+     * @param message a message you would like logged.
+     */
+    public static void d(String message) {
+        LoggerManager.getLogger().d(message);
+    }
+
+    /**
+     * Send a {@link Logger.Level#INFO} log message.
+     *
+     * @param message a message you would like logged.
+     */
+    public static void i(String message) {
+        LoggerManager.getLogger().i(message);
+    }
+
+    /**
+     * Send a {@link Logger.Level#WARN} log message.
+     *
+     * @param message a message you would like logged.
+     */
+    public static void w(String message) {
+        LoggerManager.getLogger().w(message);
+    }
+
+    /**
+     * Send a {@link Logger.Level#ERROR} log message.
+     *
+     * @param message a message you would like logged.
+     */
+    public static void e(String message) {
+        LoggerManager.getLogger().e(message);
+    }
+
+    /**
+     * Send a {@link Logger.Level#ASSERT} log message.
+     *
+     * @param message a message you would like logged.
+     */
+    public static void a(String message) {
+        LoggerManager.getLogger().a(message);
     }
 
 }

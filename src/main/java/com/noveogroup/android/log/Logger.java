@@ -198,10 +198,10 @@ public interface Logger {
      * Low-level logging call.
      *
      * @param level     a level of this log message
-     * @param message   a message you would like logged.
      * @param throwable an additional throwable object.
+     * @param message   a message you would like logged.
      */
-    public void print(Level level, String message, Throwable throwable);
+    public void print(Level level, Throwable throwable, String message);
 
     /**
      * Low-level logging call.
@@ -360,6 +360,54 @@ public interface Logger {
     /**
      * Send a {@link Level#VERBOSE} log message.
      *
+     * @param throwable an additional throwable object.
+     * @param message   a message you would like logged.
+     */
+    public void v(Throwable throwable, String message);
+
+    /**
+     * Send a {@link Level#DEBUG} log message.
+     *
+     * @param throwable an additional throwable object.
+     * @param message   a message you would like logged.
+     */
+    public void d(Throwable throwable, String message);
+
+    /**
+     * Send a {@link Level#INFO} log message.
+     *
+     * @param throwable an additional throwable object.
+     * @param message   a message you would like logged.
+     */
+    public void i(Throwable throwable, String message);
+
+    /**
+     * Send a {@link Level#WARN} log message.
+     *
+     * @param throwable an additional throwable object.
+     * @param message   a message you would like logged.
+     */
+    public void w(Throwable throwable, String message);
+
+    /**
+     * Send a {@link Level#ERROR} log message.
+     *
+     * @param throwable an additional throwable object.
+     * @param message   a message you would like logged.
+     */
+    public void e(Throwable throwable, String message);
+
+    /**
+     * Send a {@link Level#ASSERT} log message.
+     *
+     * @param throwable an additional throwable object.
+     * @param message   a message you would like logged.
+     */
+    public void a(Throwable throwable, String message);
+
+    /**
+     * Send a {@link Level#VERBOSE} log message.
+     *
      * @param messageFormat a message format you would like logged.
      * @param args          arguments for a formatter.
      */
@@ -404,5 +452,47 @@ public interface Logger {
      * @param args          arguments for a formatter.
      */
     public void a(String messageFormat, Object... args);
+
+    /**
+     * Send a {@link Level#VERBOSE} log message.
+     *
+     * @param message a message you would like logged.
+     */
+    public void v(String message);
+
+    /**
+     * Send a {@link Level#DEBUG} log message.
+     *
+     * @param message a message you would like logged.
+     */
+    public void d(String message);
+
+    /**
+     * Send a {@link Level#INFO} log message.
+     *
+     * @param message a message you would like logged.
+     */
+    public void i(String message);
+
+    /**
+     * Send a {@link Level#WARN} log message.
+     *
+     * @param message a message you would like logged.
+     */
+    public void w(String message);
+
+    /**
+     * Send a {@link Level#ERROR} log message.
+     *
+     * @param message a message you would like logged.
+     */
+    public void e(String message);
+
+    /**
+     * Send a {@link Level#ASSERT} log message.
+     *
+     * @param message a message you would like logged.
+     */
+    public void a(String message);
 
 }

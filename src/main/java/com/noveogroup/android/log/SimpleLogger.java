@@ -51,7 +51,7 @@ public class SimpleLogger extends AbstractLogger {
     }
 
     @Override
-    public void print(Level level, String message, Throwable throwable) {
+    public void print(Level level, Throwable throwable, String message) {
         if (handler != null) {
             handler.print(getName(), level, throwable, message);
         }
