@@ -26,6 +26,8 @@
 
 package com.noveogroup.android.log;
 
+import org.slf4j.impl.AndroidLoggerAdapter;
+
 public final class Utils {
 
     private Utils() {
@@ -33,6 +35,7 @@ public final class Utils {
     }
 
     private static final String PACKAGE_NAME = Logger.class.getPackage().getName();
+    private static final String SLF4J_PACKAGE_NAME = AndroidLoggerAdapter.class.getPackage().getName();
 
     private static final class CallerResolver extends SecurityManager {
         public Class<?> getCaller() {
@@ -73,7 +76,7 @@ public final class Utils {
                     packageFound = true;
                 }
             } else {
-                if (!stackTraceElement.getClassName().startsWith(PACKAGE_NAME)) {
+                if (!stackTraceElement.getClassName().startsWith(PACKAGE_NAME) && !stackTraceElement.getClassName().startsWith(SLF4J_PACKAGE_NAME)) {
                     return stackTraceElement;
                 }
             }
